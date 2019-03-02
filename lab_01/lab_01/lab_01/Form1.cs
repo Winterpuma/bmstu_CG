@@ -17,6 +17,10 @@ namespace lab_01
         public Form1()
         {
             InitializeComponent();
+            dataGridView2.Rows.Add();
+            dataGridView2.Rows.Add();
+            dataGridView2.Rows.Add();
+            dataGridView2.Rows.Add();
         }
 
         // Auto numeration of Rows
