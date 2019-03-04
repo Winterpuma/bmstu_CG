@@ -22,5 +22,10 @@ namespace lab_01
         {
             return new Point((a.x + b.x + c.x) / 3, (a.y + b.y + c.y) / 3);
         }
+
+        public Point GetLineCenter(Point a, Point b)
+        {
+            return new Point((a.x + b.x) / 2, (a.y + b.y) / 2);
+        }
     }
 }

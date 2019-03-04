@@ -51,9 +51,9 @@
             this.Column2});
             this.dataGridView1.Location = new System.Drawing.Point(493, 70);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(183, 135);
+            this.dataGridView1.Size = new System.Drawing.Size(183, 212);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridView1_RowPrePaint);
+            this.dataGridView1.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridView_RowPrePaint);
             // 
             // Column1
             // 
@@ -105,9 +105,9 @@
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2});
-            this.dataGridView2.Location = new System.Drawing.Point(493, 245);
+            this.dataGridView2.Location = new System.Drawing.Point(493, 309);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(183, 135);
+            this.dataGridView2.Size = new System.Drawing.Size(183, 86);
             this.dataGridView2.TabIndex = 4;
             // 
             // dataGridViewTextBoxColumn1
