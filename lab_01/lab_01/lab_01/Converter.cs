@@ -43,7 +43,12 @@ namespace lab_01
 
         public PointF GetPointF(PointF point)
         {
-            return new PointF(GetX(point.X), GetY(point.Y));
+            return new PointF((int)GetX(point.X), (int)GetY(point.Y));
+        }
+
+        public PointF GetPointWithMargin(PointF point)
+        {
+            return new PointF((int)GetX(point.X) + 5, (int)GetY(point.Y) + 5);
         }
     }
 }

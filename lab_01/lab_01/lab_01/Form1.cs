@@ -26,6 +26,12 @@ namespace lab_01
         Graphics g;
         Pen figures = new Pen(Color.Black, 3);
         Pen highlight = new Pen(Color.Red, 4);
+
+        Pen myPen = new Pen(Color.Red, 3);
+        Font drawFont = new Font("Arial", 10);
+        SolidBrush drawBrush = new SolidBrush(Color.Black);
+        const int ds = 4; // dot size
+        const int ds2 = ds * 2;
         //List<PointF> drawlist;
 
         public Form1()
@@ -68,40 +74,78 @@ namespace lab_01
             // Gather data
             List<PointF> points = GetPointsList(dataGridView1);
             List<PointF> rect = GetPointsList(dataGridView2, 0);
+            PointF[] new_rect = new PointF[4];
+            PointF[] new_tr = new PointF[4];
 
             rect.Insert(1, new PointF(rect[0].X, rect[1].Y));
             rect.Add(new PointF(rect[2].X, rect[0].Y));
 
             // Find dots for task
-            PointF rect_center = GetLineCenter(rect[0], rect[2]);
             PointF[] res_tr = FindTriangle(points, rect);
-            PointF tr_center = GetWeightCenter(res_tr[0], res_tr[1], res_tr[2]);
+
+            // Point conversion
+            Converter conv = SetMinMax(rect, res_tr);
 
             // Draw
             g.Clear(panel1.BackColor);
-            for (int i = 0; i < points.Count; i++)
-                g.DrawEllipse(figures, points[i].X, points[i].Y, 5, 5);
+            
+            for (int i = 0; i < 3; i++)
+                new_tr[i] = conv.GetPointF(res_tr[i]);
+            for (int i = 0; i < 4; i++)
+                new_rect[i] = conv.GetPointF(rect[i]);
 
+            PointF tr_center = GetWeightCenter(new_tr[0], new_tr[1], new_tr[2]);
+            PointF rect_center = GetLineCenter(new_rect[0], new_rect[2]);
+
+
+            g.DrawPolygon(figures, new_tr);
+            g.DrawPolygon(figures, new_rect);
 
             for (int i = 0; i < 3; i++)
-                g.DrawEllipse(Pens.Aqua, res_tr[i].X, res_tr[i].Y, 8, 8);
+                g.DrawEllipse(highlight, res_tr[i].X-ds, res_tr[i].Y-ds, ds2, ds2);
 
             g.DrawLine(figures, rect_center, tr_center);
-            g.DrawEllipse(highlight, tr_center.X, tr_center.Y, 5, 5);
-            g.DrawEllipse(highlight, rect_center.X, rect_center.Y, 5, 5);
+            g.DrawEllipse(highlight, tr_center.X-ds, tr_center.Y-ds, ds2, ds2);
+            g.DrawEllipse(highlight, rect_center.X-ds, rect_center.Y-ds, ds2, ds2);
+            
 
-            g.DrawPolygon(figures, res_tr);
-            g.DrawPolygon(figures, rect.ToArray()); // rect
+            // Draw lables
+            for (int i = 0; i < 3; i++)
+            {
+                g.DrawString("(" + ((int)res_tr[i].X).ToString() + "," + ((int)res_tr[i].Y).ToString() + ")", drawFont, drawBrush, conv.GetPointWithMargin(res_tr[i]));
+            }
 
             panel1.Update();
             //draw(points, panel1, rect, res_tr);
         }
 
-        private void GetWeightCenter(PointF a, PointF b, PointF c, PointF res)
+        private Converter SetMinMax(List<PointF> rect, PointF[] res_tr)
         {
-            res.X = (a.X + b.X + c.X) / 3;
-            res.Y = (a.Y + b.Y + c.Y) / 3;
+            float min_x, min_y, max_x, max_y;
+            min_x = rect[0].X;
+            min_y = rect[0].Y;
+            max_x = rect[0].X;
+            max_y = rect[0].Y;
+
+            // NOTE EDIT
+            for (int i = 1; i < 4; i++)
+            {
+                min_x = Math.Min(min_x, rect[i].X);
+                min_y = Math.Min(min_y, rect[i].Y);
+                max_x = Math.Max(max_x, rect[i].X);
+                max_y = Math.Max(max_y, rect[i].Y);
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                min_x = Math.Min(min_x, res_tr[i].X);
+                min_y = Math.Min(min_y, res_tr[i].Y);
+                max_x = Math.Max(max_x, res_tr[i].X);
+                max_y = Math.Max(max_y, res_tr[i].Y);
+            }
+
+            return new Converter(new PointF(min_x, min_y), new PointF(max_x, max_y), panel1.Size, ds2);
         }
+
         private PointF GetWeightCenter(PointF a, PointF b, PointF c)
         {
             return new PointF((a.X + b.X + c.X) / 3, (a.Y + b.Y + c.Y) / 3);
@@ -161,24 +205,5 @@ namespace lab_01
             return min_points;
         }
 
-        private void draw(List<PointF> points, Panel panel, List<PointF> rect, PointF[] tr_points)
-        {
-            PointF tr_center = new PointF();
-            GetWeightCenter(tr_points[0], tr_points[1], tr_points[2], tr_center);
-
-            g.Clear(panel.BackColor);
-            for (int i = 0; i < points.Count; i++)
-                g.DrawEllipse(figures, points[i].X, points[i].Y, 5, 5);
-            
-
-            for (int i = 0; i < 3; i++)
-                g.DrawEllipse(Pens.Aqua, tr_points[i].X, tr_points[i].Y, 8, 8);
-
-            //g.DrawLine(pretty, GetLineCenter(rect[0], rect[1]), )
-
-            g.DrawPolygon(figures, rect.ToArray());
-
-            panel.Update();
-        }
     }
 }
