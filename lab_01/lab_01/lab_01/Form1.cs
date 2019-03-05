@@ -15,6 +15,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+// TODO
+// Corectness of input
+// Scaling
+
 namespace lab_01
 {
     public partial class Form1 : Form
@@ -22,7 +26,7 @@ namespace lab_01
         Graphics g;
         Pen figures = new Pen(Color.Black, 3);
         Pen highlight = new Pen(Color.Red, 4);
-        List<PointF> drawlist;
+        //List<PointF> drawlist;
 
         public Form1()
         {
@@ -61,17 +65,19 @@ namespace lab_01
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            // Gather data
             List<PointF> points = GetPointsList(dataGridView1);
             List<PointF> rect = GetPointsList(dataGridView2, 0);
 
             rect.Insert(1, new PointF(rect[0].X, rect[1].Y));
             rect.Add(new PointF(rect[2].X, rect[0].Y));
-            PointF rect_center = GetLineCenter(rect[0], rect[2]);
 
+            // Find dots for task
+            PointF rect_center = GetLineCenter(rect[0], rect[2]);
             PointF[] res_tr = FindTriangle(points, rect);
             PointF tr_center = GetWeightCenter(res_tr[0], res_tr[1], res_tr[2]);
 
+            // Draw
             g.Clear(panel1.BackColor);
             for (int i = 0; i < points.Count; i++)
                 g.DrawEllipse(figures, points[i].X, points[i].Y, 5, 5);
@@ -82,10 +88,10 @@ namespace lab_01
 
             g.DrawLine(figures, rect_center, tr_center);
             g.DrawEllipse(highlight, tr_center.X, tr_center.Y, 5, 5);
-            g.DrawEllipse(highlight, rect_center.X, rect_center.Y, 5, 5);      
-            
+            g.DrawEllipse(highlight, rect_center.X, rect_center.Y, 5, 5);
 
-            g.DrawPolygon(figures, rect.ToArray());
+            g.DrawPolygon(figures, res_tr);
+            g.DrawPolygon(figures, rect.ToArray()); // rect
 
             panel1.Update();
             //draw(points, panel1, rect, res_tr);
