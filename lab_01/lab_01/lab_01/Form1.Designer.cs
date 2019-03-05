@@ -49,9 +49,9 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2});
-            this.dataGridView1.Location = new System.Drawing.Point(493, 70);
+            this.dataGridView1.Location = new System.Drawing.Point(572, 74);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(183, 212);
+            this.dataGridView1.Size = new System.Drawing.Size(183, 291);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridView_RowPrePaint);
             // 
@@ -70,7 +70,7 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.panel1.Location = new System.Drawing.Point(40, 54);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(399, 411);
+            this.panel1.Size = new System.Drawing.Size(500, 500);
             this.panel1.TabIndex = 1;
             // 
             // label1
@@ -78,7 +78,7 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.SeaShell;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.label1.Location = new System.Drawing.Point(490, 50);
+            this.label1.Location = new System.Drawing.Point(569, 54);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(57, 17);
             this.label1.TabIndex = 2;
@@ -87,7 +87,7 @@
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.PapayaWhip;
-            this.button1.Location = new System.Drawing.Point(490, 430);
+            this.button1.Location = new System.Drawing.Point(572, 519);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(186, 35);
             this.button1.TabIndex = 3;
@@ -105,7 +105,7 @@
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2});
-            this.dataGridView2.Location = new System.Drawing.Point(493, 309);
+            this.dataGridView2.Location = new System.Drawing.Point(572, 404);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.Size = new System.Drawing.Size(183, 86);
             this.dataGridView2.TabIndex = 4;
@@ -125,7 +125,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SeaShell;
-            this.ClientSize = new System.Drawing.Size(732, 524);
+            this.ClientSize = new System.Drawing.Size(784, 584);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
