@@ -69,6 +69,38 @@ namespace lab_01
             draw(points, panel1, rect);
         }
 
+        private double findAngleOY(PointF b, PointF e)
+        {
+            double vectX = b.X - e.X;
+            double vectY = b.Y - e.Y;
+
+            double axisX = 0;
+            double axisY = 1;
+
+            double numerator = vectX * axisX + vectY * axisY;
+            double denominator = Math.Sqrt(vectX * vectX + vectY * vectY); // * Math.Sqrt(axisX*axisX + axisY*axisY); 
+
+            return Math.Abs(Math.Acos(numerator / denominator) - Math.PI/2);
+        }
+        
+        private void findTriangle(List<PointF> points, List<PointF> rect)
+        {
+            double min_angle = Math.PI;
+
+            for (int i = 0; i < points.Count - 2; i++)
+            {
+                for (int j = i + 1; i < points.Count - 1; j++)
+                {
+                    for (int k = j + 1; k < points.Count; k++)
+                    {
+                        ; // find dots of triangle with minimal angle
+                    }
+                }
+            }
+
+
+        }
+
         private void draw(List<PointF> points, Panel panel, List<PointF> rect)
         {
             g.Clear(panel.BackColor);
@@ -81,6 +113,5 @@ namespace lab_01
 
             panel.Update();
         }
-
     }
 }
