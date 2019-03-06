@@ -18,19 +18,20 @@ using System.Windows.Forms;
 // TODO
 // Corectness of input
 // Scaling
+// Change negative angle
 
 namespace lab_01
 {
     public partial class Form1 : Form
     {
         Graphics g;
-        Pen figures = new Pen(Color.Black, 3);
-        Pen highlight = new Pen(Color.Red, 4);
+        Pen figures = new Pen(Color.Red, 3);
+        Pen highlight = new Pen(Color.Black, 4);
 
         Pen myPen = new Pen(Color.Red, 3);
         Font drawFont = new Font("Arial", 10);
         SolidBrush drawBrush = new SolidBrush(Color.Black);
-        const int ds = 4; // dot size
+        const int ds = 2; // dot size
         const int ds2 = ds * 2;
         //List<PointF> drawlist;
 
@@ -52,30 +53,17 @@ namespace lab_01
                 this.dataGridView1.Rows[index].HeaderCell.Value = indexStr;
         }
 
-        // Get list of points from table
-        private List<PointF> GetPointsList(DataGridView data, int flag = 1)
-        {
-            float x, y;
-            int n_rows = data.RowCount;
-            List<PointF> points = new List<PointF>();
-
-            for (int i = 0; i < n_rows - flag; i++)
-            {
-                x = (float)Convert.ToDouble(data.Rows[i].Cells[0].Value);
-                y = (float)Convert.ToDouble(data.Rows[i].Cells[1].Value);
-                points.Add(new PointF(x, y));
-            }
-
-            return points;
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            // Gather data
-            List<PointF> points = GetPointsList(dataGridView1);
-            List<PointF> rect = GetPointsList(dataGridView2, 0);
+            // Gather and check data
+            List<PointF> points = ParseTable(dataGridView1);
+            List<PointF> rect = ParseTable(dataGridView2, 0);
+
+            if (rect.Count == 0 || points.Count == 0)
+                return;
+
             PointF[] new_rect = new PointF[4];
-            PointF[] new_tr = new PointF[4];
+            PointF[] new_tr = new PointF[3];
 
             rect.Insert(1, new PointF(rect[0].X, rect[1].Y));
             rect.Add(new PointF(rect[2].X, rect[0].Y));
@@ -86,9 +74,6 @@ namespace lab_01
             // Point conversion
             Converter conv = SetMinMax(rect, res_tr);
 
-            // Draw
-            g.Clear(panel1.BackColor);
-            
             for (int i = 0; i < 3; i++)
                 new_tr[i] = conv.GetPointF(res_tr[i]);
             for (int i = 0; i < 4; i++)
@@ -97,27 +82,63 @@ namespace lab_01
             PointF tr_center = GetWeightCenter(new_tr[0], new_tr[1], new_tr[2]);
             PointF rect_center = GetLineCenter(new_rect[0], new_rect[2]);
 
+            // Draw
+            g.Clear(panel1.BackColor);
 
-            g.DrawPolygon(figures, new_tr);
-            g.DrawPolygon(figures, new_rect);
-
-            for (int i = 0; i < 3; i++)
-                g.DrawEllipse(highlight, res_tr[i].X-ds, res_tr[i].Y-ds, ds2, ds2);
-
+            DrawFigure(conv, new_rect, rect.ToArray(), 4);
+            DrawFigure(conv, new_tr, res_tr, 3);
             g.DrawLine(figures, rect_center, tr_center);
-            g.DrawEllipse(highlight, tr_center.X-ds, tr_center.Y-ds, ds2, ds2);
-            g.DrawEllipse(highlight, rect_center.X-ds, rect_center.Y-ds, ds2, ds2);
-            
-
-            // Draw lables
-            for (int i = 0; i < 3; i++)
-            {
-                g.DrawString("(" + ((int)res_tr[i].X).ToString() + "," + ((int)res_tr[i].Y).ToString() + ")", drawFont, drawBrush, conv.GetPointWithMargin(res_tr[i]));
-            }
 
             panel1.Update();
-            //draw(points, panel1, rect, res_tr);
         }
+
+        private void DrawFigure(Converter conv, PointF[] dots, PointF[] old, int n)
+        {
+            g.DrawPolygon(figures, dots);
+            for (int i = 0; i < n; i++)
+                g.DrawEllipse(highlight, dots[i].X - ds, dots[i].Y - ds, ds2, ds2);
+            for (int i = 0; i < n; i++)
+                g.DrawString("(" + ((int)old[i].X).ToString() + "," + ((int)old[i].Y).ToString() + ")", drawFont, drawBrush, conv.GetPointWithMargin(old[i]));
+        }
+
+        private List<PointF> ParseTable(DataGridView data, int flag = 1)
+        {
+            bool go = true; // all data correct
+            bool check_x, check_y;
+            float x, y;
+            List<PointF> points = new List<PointF>();
+
+            for (int i = 0; i < data.RowCount - flag; i++)
+            {
+                if (data.Rows[i].Cells[0].Value == null || data.Rows[i].Cells[1].Value == null)
+                {
+                    go = false;
+                    data.Rows[i].ErrorText = "Empty cell!";
+                }
+                else
+                {
+                    check_x = float.TryParse(data.Rows[i].Cells[0].Value.ToString(), out x);
+                    check_y = float.TryParse(data.Rows[i].Cells[1].Value.ToString(), out y);
+                    if (check_x & check_y)
+                    {
+                        if (go)
+                            points.Add(new PointF(x, y));
+                        data.Rows[i].ErrorText = null;
+                    }
+                    else
+                    {
+                        go = false;
+                        data.Rows[i].ErrorText = "Wrong Value!";
+                    }
+                }
+            }
+            if (!go)
+                points.Clear();
+
+            return points;
+        }
+
+        /* --- MATH --- */
 
         private Converter SetMinMax(List<PointF> rect, PointF[] res_tr)
         {
@@ -143,7 +164,7 @@ namespace lab_01
                 max_y = Math.Max(max_y, res_tr[i].Y);
             }
 
-            return new Converter(new PointF(min_x, min_y), new PointF(max_x, max_y), panel1.Size, ds2);
+            return new Converter(new PointF(min_x, min_y), new PointF(max_x, max_y), panel1.Size, 5);
         }
 
         private PointF GetWeightCenter(PointF a, PointF b, PointF c)
@@ -178,7 +199,6 @@ namespace lab_01
             int[] i_min_points = new int[3];
             PointF[] min_points = new PointF[3];
             PointF rect_center = GetLineCenter(rect[0], rect[1]);
-            PointF triangle_center = new PointF();
 
             for (int i = 0; i < points.Count - 2; i++)
             {
@@ -186,8 +206,6 @@ namespace lab_01
                 {
                     for (int k = j + 1; k < points.Count; k++)
                     {
-                        //GetWeightCenter(points[i], points[j], points[k], triangle_center);
-                        //current_angle = FindAngleOY(triangle_center, rect_center);
                         current_angle = FindAngleOY(GetWeightCenter(points[i], points[j], points[k]), rect_center);
                         if (current_angle < min_angle)
                         {
@@ -204,6 +222,5 @@ namespace lab_01
             min_points[2] = points[i_min_points[2]];
             return min_points;
         }
-
     }
 }
