@@ -17,10 +17,9 @@ namespace lab_01
         {
             this.min = min;
             this.max = max;
-            panel_s = panel_size;
             this.margin = margin;
+            panel_s = panel_size;
             scale = (panel_s.Width - margin*2) / Math.Max(max.X - min.X, max.Y - min.Y);
-
         }
 
         public float GetX(float x)
@@ -40,7 +39,7 @@ namespace lab_01
 
         public PointF GetPointWithMargin(PointF point)
         {
-            return new PointF((int)GetX(point.X) + 5, (int)GetY(point.Y) + 5);
+            return new PointF((int)GetX(point.X) + 4, (int)GetY(point.Y) + 4);
         }
     }
 }

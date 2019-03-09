@@ -16,15 +16,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 // TODO
-// Scaling
 // вырожденность
+// Вывод результата
 
 namespace lab_01
 {
     public partial class Form1 : Form
     {
         Graphics g;
-        Pen figures = new Pen(Color.Red, 3);
+        Pen pen_triangle = new Pen(Color.Orange, 3);
+        Pen pen_rectangle = new Pen(Color.Red, 3);
+        Pen pen_dots = new Pen(Color.Black, 4);
+        Pen figures = new Pen(Color.Black, 3);
         Pen highlight = new Pen(Color.Black, 4);
 
         Pen myPen = new Pen(Color.Red, 3);
@@ -32,11 +35,11 @@ namespace lab_01
         SolidBrush drawBrush = new SolidBrush(Color.Black);
         const int ds = 2; // dot size
         const int ds2 = ds * 2;
-        //List<PointF> drawlist;
 
         public Form1()
         {
             InitializeComponent();
+            this.Text = "Obergan's Triangles";
             dataGridView2.Rows.Add();
             dataGridView2.Rows.Add();
             g = panel1.CreateGraphics();
@@ -55,12 +58,17 @@ namespace lab_01
         private void button1_Click(object sender, EventArgs e)
         {
             // Gather and check data
+            if (dataGridView1.RowCount < 4)
+            {
+                MessageBox.Show("Некорректный ввод.\nНеобходимо ввести хотя бы 3 точки в верхнем поле.", "Ошибка");
+                return;
+            }
             List<PointF> points = ParseTable(dataGridView1);
             List<PointF> rect = ParseTable(dataGridView2, 0);
 
             if (rect.Count == 0 || points.Count == 0)
             {
-                MessageBox.Show("Input error.");
+                MessageBox.Show("Некорректный ввод.\nПожалуйста, обратите внимание на поля с ошибкой.", "Ошибка");
                 return;
             }
             
@@ -69,6 +77,12 @@ namespace lab_01
 
             rect.Insert(1, new PointF(rect[0].X, rect[1].Y));
             rect.Add(new PointF(rect[2].X, rect[0].Y));
+
+            if (!CheckFigureExistanse(rect[0], rect[1], rect[2], rect[3]))
+            {
+                MessageBox.Show("Прямоугольник вырожденный!", "Ошибка");
+                return;
+            }
 
             // Find dots for task
             PointF[] res_tr = FindTriangle(points, rect);
@@ -87,20 +101,34 @@ namespace lab_01
             // Draw
             g.Clear(panel1.BackColor);
 
-            DrawFigure(conv, new_rect, rect.ToArray(), 4);
-            DrawFigure(conv, new_tr, res_tr, 3);
+            DrawFigure(conv, new_rect, rect.ToArray(), 4, pen_rectangle);
+            DrawFigure(conv, new_tr, res_tr, 3, pen_triangle);
             g.DrawLine(figures, rect_center, tr_center);
 
             panel1.Update();
         }
 
-        private void DrawFigure(Converter conv, PointF[] dots, PointF[] old, int n)
+        //Печать ответа
+        private string GetCoordString(PointF a)
         {
-            g.DrawPolygon(figures, dots);
+            return "(" + a.X.ToString() + ";" + a.Y.ToString() + ")";
+        }
+        private void PrintAnswer(PointF[] points, double angle, PointF rect_center)
+        {
+            string answer = "Линия, проведенная через центр тяжести треугольника образованный точками с координатами " + GetCoordString(points[0]) + ", " +
+                GetCoordString(points[1]) + ", " + GetCoordString(points[2]) + " и центр прямоугольника" + GetCoordString(rect_center) + 
+                ", имеет наименьший угол наклона к оси OY равный " + ((angle*180)/Math.PI).ToString() + " градусов.";
+
+            textBox1.Text = answer;
+        }
+
+        private void DrawFigure(Converter conv, PointF[] dots, PointF[] old, int n, Pen pen)
+        {
+            g.DrawPolygon(pen, dots);
             for (int i = 0; i < n; i++)
-                g.DrawEllipse(highlight, dots[i].X - ds, dots[i].Y - ds, ds2, ds2);
+                g.DrawEllipse(pen_dots, dots[i].X - ds, dots[i].Y - ds, ds2, ds2);
             for (int i = 0; i < n; i++)
-                g.DrawString("(" + ((int)old[i].X).ToString() + "," + ((int)old[i].Y).ToString() + ")", drawFont, drawBrush, conv.GetPointWithMargin(old[i]));
+                g.DrawString("(" + (old[i].X).ToString() + ";" + (old[i].Y).ToString() + ")", drawFont, drawBrush, conv.GetPointWithMargin(old[i]));
         }
 
         private List<PointF> ParseTable(DataGridView data, int flag = 1)
@@ -140,6 +168,7 @@ namespace lab_01
             return points;
         }
 
+
         /* --- MATH --- */
 
         private Converter SetMinMax(List<PointF> rect, PointF[] res_tr)
@@ -166,7 +195,7 @@ namespace lab_01
                 max_y = Math.Max(max_y, res_tr[i].Y);
             }
 
-            return new Converter(new PointF(min_x, min_y), new PointF(max_x, max_y), panel1.Size, 5);
+            return new Converter(new PointF(min_x, min_y), new PointF(max_x, max_y), panel1.Size, 50);
         }
 
         private PointF GetWeightCenter(PointF a, PointF b, PointF c)
@@ -177,6 +206,34 @@ namespace lab_01
         private PointF GetLineCenter(PointF a, PointF b)
         {
             return new PointF((a.X + b.X) / 2, (a.Y + b.Y) / 2);
+        }
+
+        private double FindLineLen(PointF a, PointF b)
+        {
+            return Math.Sqrt((a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y));
+        }
+        
+        private bool CheckFigureExistanse(PointF A, PointF B, PointF C)
+        {
+            double a, b, c;
+            a = FindLineLen(A, B);
+            b = FindLineLen(B, C);
+            c = FindLineLen(C, A);
+
+            if (a <= 0 || b <= 0 || c <= 0 || a >= b + c || b >= a + c || c > a + b)
+                return false;
+            return true;
+        }
+
+        private bool CheckFigureExistanse(PointF A, PointF B, PointF C, PointF D)
+        {
+            double a, b;
+            a = FindLineLen(A, B);
+            b = FindLineLen(B, C);
+
+            if (a <= 0 || b <= 0)
+                return false;
+            return true;
         }
 
         private double FindAngleOY(PointF b, PointF e)
