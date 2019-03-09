@@ -57,6 +57,8 @@ namespace lab_01
 
         private void button1_Click(object sender, EventArgs e)
         {
+            g.Clear(panel1.BackColor);
+            panel1.Update();
             // Gather and check data
             if (dataGridView1.RowCount < 4)
             {
@@ -86,6 +88,11 @@ namespace lab_01
 
             // Find dots for task
             PointF[] res_tr = FindTriangle(points, rect);
+            if (res_tr[0].X == res_tr[1].X && res_tr[0].Y == res_tr[1].Y)
+            {
+                MessageBox.Show("Все возможные треугольники вырожденные.", "Ошибка");
+                return;
+            }
 
             // Point conversion
             Converter conv = SetMinMax(rect, res_tr);
@@ -99,13 +106,12 @@ namespace lab_01
             PointF rect_center = GetLineCenter(new_rect[0], new_rect[2]);
 
             // Draw
-            g.Clear(panel1.BackColor);
-
             DrawFigure(conv, new_rect, rect.ToArray(), 4, pen_rectangle);
             DrawFigure(conv, new_tr, res_tr, 3, pen_triangle);
             g.DrawLine(figures, rect_center, tr_center);
 
             panel1.Update();
+            PrintAnswer(res_tr, FindAngleOY(rect_center, tr_center), GetLineCenter(rect[0], rect[2]));
         }
 
         //Печать ответа
@@ -216,11 +222,12 @@ namespace lab_01
         private bool CheckFigureExistanse(PointF A, PointF B, PointF C)
         {
             double a, b, c;
+            double eps = 0.000001;
             a = FindLineLen(A, B);
             b = FindLineLen(B, C);
             c = FindLineLen(C, A);
 
-            if (a <= 0 || b <= 0 || c <= 0 || a >= b + c || b >= a + c || c > a + b)
+            if (a <= 0 || b <= 0 || c <= 0 || a >= b + c - eps  || b >= a + c - eps || c > a + b - eps)
                 return false;
             return true;
         }
@@ -255,7 +262,7 @@ namespace lab_01
         {
             double min_angle = Math.PI / 2;
             double current_angle = -1;
-            int[] i_min_points = new int[3];
+            int[] i_min_points = new int[3] {0,0,0};
             PointF[] min_points = new PointF[3];
             PointF rect_center = GetLineCenter(rect[0], rect[2]);
 
@@ -265,13 +272,16 @@ namespace lab_01
                 {
                     for (int k = j + 1; k < points.Count; k++)
                     {
-                        current_angle = FindAngleOY(GetWeightCenter(points[i], points[j], points[k]), rect_center);
-                        if (current_angle < min_angle)
+                        if (CheckFigureExistanse(points[i], points[j], points[k]))
                         {
-                            min_angle = current_angle;
-                            i_min_points[0] = i;
-                            i_min_points[1] = j;
-                            i_min_points[2] = k;
+                            current_angle = FindAngleOY(GetWeightCenter(points[i], points[j], points[k]), rect_center);
+                            if (current_angle < min_angle)
+                            {
+                                min_angle = current_angle;
+                                i_min_points[0] = i;
+                                i_min_points[1] = j;
+                                i_min_points[2] = k;
+                            }
                         }
                     }
                 }
