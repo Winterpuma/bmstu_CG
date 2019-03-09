@@ -31,7 +31,7 @@ namespace lab_01
         Pen highlight = new Pen(Color.Black, 4);
 
         Pen myPen = new Pen(Color.Red, 3);
-        Font drawFont = new Font("Arial", 10);
+        Font drawFont = new Font("Arial", 11);
         SolidBrush drawBrush = new SolidBrush(Color.Black);
         const int ds = 2; // dot size
         const int ds2 = ds * 2;
