@@ -16,9 +16,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 // TODO
-// Corectness of input
 // Scaling
-// Change negative angle
+// вырожденность
 
 namespace lab_01
 {
@@ -60,8 +59,11 @@ namespace lab_01
             List<PointF> rect = ParseTable(dataGridView2, 0);
 
             if (rect.Count == 0 || points.Count == 0)
+            {
+                MessageBox.Show("Input error.");
                 return;
-
+            }
+            
             PointF[] new_rect = new PointF[4];
             PointF[] new_tr = new PointF[3];
 
@@ -189,16 +191,16 @@ namespace lab_01
             double denominator = Math.Sqrt(vectX * vectX + vectY * vectY); // * Math.Sqrt(axisX*axisX + axisY*axisY); 
 
             double res = Math.Acos(numerator / denominator);
-            return (res > Math.PI / 2) ? res - Math.PI / 2 : res;
+            return (res > (Math.PI / 2)) ? Math.PI - res : res;
         }
         
         private PointF[] FindTriangle(List<PointF> points, List<PointF> rect)
         {
-            double min_angle = Math.PI;
+            double min_angle = Math.PI / 2;
             double current_angle = -1;
             int[] i_min_points = new int[3];
             PointF[] min_points = new PointF[3];
-            PointF rect_center = GetLineCenter(rect[0], rect[1]);
+            PointF rect_center = GetLineCenter(rect[0], rect[2]);
 
             for (int i = 0; i < points.Count - 2; i++)
             {
