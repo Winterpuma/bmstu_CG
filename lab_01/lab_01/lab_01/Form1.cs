@@ -16,8 +16,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 // TODO
-// вырожденность
-// Вывод результата
+// add rotation of rectangle
 
 namespace lab_01
 {
@@ -33,6 +32,7 @@ namespace lab_01
         Pen myPen = new Pen(Color.Red, 3);
         Font drawFont = new Font("Arial", 11);
         SolidBrush drawBrush = new SolidBrush(Color.Black);
+        SolidBrush drawCenter = new SolidBrush(Color.Blue);
         const int ds = 2; // dot size
         const int ds2 = ds * 2;
 
@@ -96,6 +96,8 @@ namespace lab_01
 
             // Point conversion
             Converter conv = SetMinMax(rect, res_tr);
+            PointF old_tr_center = GetWeightCenter(res_tr[0], res_tr[1], res_tr[2]);
+            PointF old_rect_center = GetLineCenter(rect[0], rect[2]);
 
             for (int i = 0; i < 3; i++)
                 new_tr[i] = conv.GetPointF(res_tr[i]);
@@ -109,6 +111,8 @@ namespace lab_01
             DrawFigure(conv, new_rect, rect.ToArray(), 4, pen_rectangle);
             DrawFigure(conv, new_tr, res_tr, 3, pen_triangle);
             g.DrawLine(figures, rect_center, tr_center);
+            g.DrawString(GetCoordString(old_rect_center), drawFont, drawCenter, conv.GetPointWithMargin(old_rect_center));
+            g.DrawString(GetCoordString(old_tr_center), drawFont, drawCenter, conv.GetPointWithMargin(old_tr_center));
 
             panel1.Update();
             PrintAnswer(res_tr, FindAngleOY(rect_center, tr_center), GetLineCenter(rect[0], rect[2]));
@@ -134,7 +138,7 @@ namespace lab_01
             for (int i = 0; i < n; i++)
                 g.DrawEllipse(pen_dots, dots[i].X - ds, dots[i].Y - ds, ds2, ds2);
             for (int i = 0; i < n; i++)
-                g.DrawString("(" + (old[i].X).ToString() + ";" + (old[i].Y).ToString() + ")", drawFont, drawBrush, conv.GetPointWithMargin(old[i]));
+                g.DrawString(GetCoordString(old[i]), drawFont, drawBrush, conv.GetPointWithMargin(old[i]));
         }
 
         private List<PointF> ParseTable(DataGridView data, int flag = 1)
