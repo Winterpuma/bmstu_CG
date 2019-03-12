@@ -15,9 +15,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-// TODO
-// if centers are same
-
 namespace lab_01
 {
     public partial class Form1 : Form
@@ -97,7 +94,7 @@ namespace lab_01
             PointF[] res_tr = FindTriangle(points, rect);
             if (res_tr[0].X == res_tr[1].X && res_tr[0].Y == res_tr[1].Y)
             {
-                MessageBox.Show("Все возможные треугольники вырожденные.", "Ошибка");
+                MessageBox.Show("Все возможные решения вырождены.", "Ошибка");
                 return;
             }
 

@@ -179,9 +179,9 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.label4.Location = new System.Drawing.Point(569, 555);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 18);
+            this.label4.Size = new System.Drawing.Size(73, 18);
             this.label4.TabIndex = 9;
-            this.label4.Text = "Наклон:";
+            this.label4.Text = "Поворот:";
             // 
             // label5
             // 
