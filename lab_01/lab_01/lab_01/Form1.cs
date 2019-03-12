@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 // TODO
-// add rotation of rectangle
+// if centers are same
 
 namespace lab_01
 {
@@ -40,6 +40,7 @@ namespace lab_01
         {
             InitializeComponent();
             this.Text = "Obergan's Triangles";
+            textBox2.Text = Convert.ToString(0);
             dataGridView2.Rows.Add();
             dataGridView2.Rows.Add();
             g = panel1.CreateGraphics();
@@ -86,6 +87,12 @@ namespace lab_01
                 return;
             }
 
+            // Rotate rectangle
+            PointF old_rect_center = GetLineCenter(rect[0], rect[2]);
+            double angle = (Convert.ToDouble(textBox2.Text) / 180) * Math.PI;
+            for (int i = 0; i < 4; i++)
+                rect[i] = Turn(rect[i], angle, old_rect_center);
+
             // Find dots for task
             PointF[] res_tr = FindTriangle(points, rect);
             if (res_tr[0].X == res_tr[1].X && res_tr[0].Y == res_tr[1].Y)
@@ -97,7 +104,6 @@ namespace lab_01
             // Point conversion
             Converter conv = SetMinMax(rect, res_tr);
             PointF old_tr_center = GetWeightCenter(res_tr[0], res_tr[1], res_tr[2]);
-            PointF old_rect_center = GetLineCenter(rect[0], rect[2]);
 
             for (int i = 0; i < 3; i++)
                 new_tr[i] = conv.GetPointF(res_tr[i]);
@@ -180,6 +186,12 @@ namespace lab_01
 
 
         /* --- MATH --- */
+        private PointF Turn(PointF p_old, double angle, PointF centre)
+        {
+            double x = centre.X + (p_old.X - centre.X) * Math.Cos(angle) + (p_old.Y - centre.Y) * Math.Sin(angle);
+            double y = centre.Y - (p_old.X - centre.X) * Math.Sin(angle) + (p_old.Y - centre.Y) * Math.Cos(angle);
+            return new PointF((float)x, (float)y);
+        }
 
         private Converter SetMinMax(List<PointF> rect, PointF[] res_tr)
         {
