@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KG_LABA2.Properties {
+namespace lab_02.Properties {
     using System;
     
     

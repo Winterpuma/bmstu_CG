@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace KG_LABA2
+namespace lab_02
 {
     class DataPack
     {
@@ -97,7 +97,6 @@ namespace KG_LABA2
             return ctrls;
         }
         
-
         public DataPack turning(double angle,PointF center)
         {
             DataPack new_point_List = new DataPack();
@@ -166,6 +165,5 @@ namespace KG_LABA2
             double y = zoomk.Y * p_old.Y + center.Y * (1 - zoomk.Y);
             return new PointF((float)x, (float)y);
         }
-        
     }
 }

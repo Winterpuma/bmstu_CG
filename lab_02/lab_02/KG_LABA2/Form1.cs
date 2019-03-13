@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace KG_LABA2
+namespace lab_02
 {
     public partial class Form1 : Form
     {
@@ -17,25 +17,26 @@ namespace KG_LABA2
 
         public delegate void EventHandler(Object sender, EventArgs e);
 
-        Pen myPen = new Pen(Color.Red, 2);
+        Pen myPen = new Pen(Color.Blue, 2);
         int scale = 20;
         
         Graphics g;
         SolidBrush drawBrush = new SolidBrush(Color.Black);
-        Brush filling = Brushes.White;
+        Brush filling;
 
         public Form1()
         {
             InitializeComponent();
-            
+            this.Text = "Obergan's lab02";
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            textBox1.Text = Convert.ToString(3);
-            textBox2.Text = Convert.ToString(2);
-            textBox3.Text = Convert.ToString(400);
-            textBox11.Text = Convert.ToString(300);
+            textBox1.Text = Convert.ToString(3); //b
+            textBox2.Text = Convert.ToString(2); //a
+            textBox3.Text = Convert.ToString(400); //h
+            textBox11.Text = Convert.ToString(300); //w
+            textBox12.Text = Convert.ToString(40); //step
 
             textBox6.Text = textBox9.Text = Convert.ToString((int)panel6.Size.Width / 2);
             textBox5.Text = textBox8.Text = Convert.ToString((int)panel6.Size.Height / 2);
@@ -45,18 +46,15 @@ namespace KG_LABA2
             textBox7.Text = Convert.ToString(1);
             textBox13.Text = Convert.ToString(0);
             textBox14.Text = Convert.ToString(0);
+            
+            label15.Text = null;
 
             memory = new Stack<DataPack>();
-
-            //button5.Visible = false;
-            button6.Visible = false;
+            
+            filling = new SolidBrush(panel6.BackColor);
             g = panel6.CreateGraphics();
-            firststep();
-
         }
-
-       
-
+        
         private void panel1_Resize(object sender, EventArgs e)
         {
             g = panel6.CreateGraphics();
@@ -71,15 +69,6 @@ namespace KG_LABA2
         {
             textBox6.Text = textBox9.Text = e.Location.X.ToString();
             textBox5.Text = textBox8.Text = e.Location.Y.ToString();
-            /*textBox1.Text = Convert.ToString(e.Location.X);
-            textBox2.Text = Convert.ToString(e.Location.Y);
-            textBox3.Text = Convert.ToString(50);
-            textBox11.Text = Convert.ToString(100);
-            SolidBrush drawBrush = new SolidBrush(Color.Black);
-            g.FillRectangle(new SolidBrush(Color.White), 0, 0, panel6.Width, panel6.Height);
-
-            circle(e.Location.X,  e.Location.Y, 50);
-             */
 
             if (e.Button == MouseButtons.Right)
             {
@@ -90,14 +79,7 @@ namespace KG_LABA2
 
         private void button1_Click(object sender, EventArgs e)
         {
-            firststep();
-        }
-
-        private void firststep()
-        {
-
-            g.FillRectangle(new SolidBrush(Color.White), 0, 0, panel6.Width, panel6.Height);
-            int a, b, w, h;
+            int a, b, w, h, step;
             float center_x = panel6.Width / 2;
             float center_y = panel6.Height / 2;
             
@@ -107,37 +89,45 @@ namespace KG_LABA2
                 b = Convert.ToInt32(textBox1.Text);
                 w = Convert.ToInt32(textBox3.Text);
                 h = Convert.ToInt32(textBox11.Text);
+                step = Convert.ToInt32(textBox12.Text);
             }
             catch
             {
-                MessageBox.Show("Некорректные данные");
+                MessageBox.Show("Некорректные данные.\nНачальные параметры должны быть целыми положительными числами.", "Ошибка");
                 return;
             }
-            /*if (Math.Abs(c) < r)
-            {
-                MessageBox.Show("Значение С по модулю должно первышать R");
+            if (IsDataWrong(a, b, w, h, step))
                 return;
-            }*/
-
+            
             datalist = new DataPack();
             
             GenerateCardioid(datalist, center_x, center_y, scale, a, b);
             GenerateRect(datalist, center_x, center_y, w, h);
-            GenerateHatching(datalist, datalist.GetRectMin(), datalist.GetRectMax());
+            GenerateHatching(datalist, datalist.GetRectMin(), datalist.GetRectMax(), step);
 
+            g.FillRectangle(filling, 0, 0, panel6.Width, panel6.Height);
             datalist.Draw(g, myPen, filling);
             datalist.PanelAddInfo(panel1);
             memory.Push(datalist);
-
+        }
+        private bool IsDataWrong(int a, int b, int w, int h, int step)
+        {
+            if (a <= 0 || b <= 0 || w <= 0 || h <= 0 || step <= 0)
+            {
+                MessageBox.Show("Некорректные данные.\nНачальные параметры должны быть целыми числами больше нуля.", "Ошибка");
+                return true;
+            }
+            return false;
         }
 
+// ****Generate coords****
         private void GenerateCardioid(DataPack datalist, float centerX, float centerY, float radius, int a, int b)
         {
             int sum = a + b;
             double x, y;
             double pi4 = Math.PI * 4;
 
-            for (double t = 0; t < pi4; t += 0.25)
+            for (double t = 0; t < pi4; t += 0.10)
             {
                 x = centerX + radius * (sum * Math.Cos(t) - a * Math.Cos(sum * (t / a)));
                 y = centerY - radius * (sum * Math.Sin(t) - a * Math.Sin(sum * (t / a)));
@@ -155,13 +145,12 @@ namespace KG_LABA2
             datalist.RectangleAddPoint(centerX - w, centerY + h);
         }
         
-        //Генерация точек для штириховки
-        private void GenerateHatching(DataPack datalist, PointF min, PointF max)
+        private void GenerateHatching(DataPack datalist, PointF min, PointF max, int step)
         {
             float x1, y1;
             float x2, y2;
             float delta;
-            for (int i = 0; i < Math.Max((max.X - min.X), (max.Y - min.Y))*2; i += 40)
+            for (int i = 0; i < Math.Max((max.X - min.X), (max.Y - min.Y))*2; i += step)
             {
                 delta = min.Y + i - max.Y;
                 if (delta > 0)
@@ -191,6 +180,7 @@ namespace KG_LABA2
             }
         }      
 
+//****Transform****
         //поворот
         private void button2_Click(object sender, EventArgs e)
         {
@@ -214,10 +204,8 @@ namespace KG_LABA2
             datalist.PanelAddInfo(panel1);
             memory.Push(datalist);
             datalist = datalist.turning(angle*Math.PI/180, centre);
-            g.FillRectangle(new SolidBrush(Color.White), 0, 0, panel6.Width, panel6.Height);
+            g.FillRectangle(filling, 0, 0, panel6.Width, panel6.Height);
             datalist.Draw(g, myPen, filling);
-
-
         }
 
         //перенос
@@ -232,7 +220,7 @@ namespace KG_LABA2
             datalist.PanelAddInfo(panel1);
             memory.Push(datalist);
             datalist = datalist.transfering(delta);
-            g.FillRectangle(new SolidBrush(Color.White), 0, 0, panel6.Width, panel6.Height);
+            g.FillRectangle(filling, 0, 0, panel6.Width, panel6.Height);
             datalist.Draw(g, myPen, filling);
         }
 
@@ -252,12 +240,11 @@ namespace KG_LABA2
             datalist.PanelAddInfo(panel1);
             memory.Push(datalist);
             datalist = datalist.zooming(centre,zoomK);
-            g.FillRectangle(new SolidBrush(Color.White), 0, 0, panel6.Width, panel6.Height);
+            g.FillRectangle(filling, 0, 0, panel6.Width, panel6.Height);
             datalist.Draw(g, myPen, filling);
-
         }
 
-        //Проверка ввода
+//****Input check****
         private float getFloat(TextBox tb,ref float rez)
         {
             double val = 0;
@@ -289,21 +276,5 @@ namespace KG_LABA2
             g.FillRectangle(new SolidBrush(Color.White), 0, 0, panel6.Width, panel6.Height);
             datalist.Draw(g, myPen, filling);
         }
-
-        private void Form1_VisibleChanged(object sender, EventArgs e)
-        {
-            firststep();
-        }
-
-        private void panel6_Resize(object sender, EventArgs e)
-        {
-            g = panel6.CreateGraphics();
-
-            //g.FillRectangle(new SolidBrush(Color.White), 0, 0, panel6.Width, panel6.Height);
-            datalist.Draw(g, myPen, filling);
-        }
-
-
-
     }
 }
