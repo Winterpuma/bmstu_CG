@@ -18,12 +18,12 @@ namespace KG_LABA2
         public delegate void EventHandler(Object sender, EventArgs e);
 
         Pen myPen = new Pen(Color.Red, 2);
+        int scale = 20;
+        
         Graphics g;
         SolidBrush drawBrush = new SolidBrush(Color.Black);
-        //Задаем коэффиценты a,b,c
-        //поворот=> угол+ центр
-        //смешение=> на сколько
-       
+        Brush filling = Brushes.White;
+
         public Form1()
         {
             InitializeComponent();
@@ -32,14 +32,14 @@ namespace KG_LABA2
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            textBox1.Text = Convert.ToString((int)panel6.Size.Width / 2);
-            textBox2.Text = Convert.ToString((int)panel6.Size.Height / 2);
+            textBox1.Text = Convert.ToString(3);
+            textBox2.Text = Convert.ToString(2);
+            textBox3.Text = Convert.ToString(400);
+            textBox11.Text = Convert.ToString(300);
 
             textBox6.Text = textBox9.Text = Convert.ToString((int)panel6.Size.Width / 2);
             textBox5.Text = textBox8.Text = Convert.ToString((int)panel6.Size.Height / 2);
 
-            textBox3.Text = Convert.ToString(50);
-            textBox11.Text = Convert.ToString(100);
             textBox4.Text = Convert.ToString(0);
             textBox10.Text = Convert.ToString(1);
             textBox7.Text = Convert.ToString(1);
@@ -79,13 +79,10 @@ namespace KG_LABA2
             g.FillRectangle(new SolidBrush(Color.White), 0, 0, panel6.Width, panel6.Height);
 
             circle(e.Location.X,  e.Location.Y, 50);
-             * */
+             */
 
             if (e.Button == MouseButtons.Right)
             {
-                textBox1.Text = Convert.ToString((int)panel6.Size.Width / 2);
-                textBox2.Text = Convert.ToString((int)panel6.Size.Height / 2);
-
                 textBox6.Text = textBox9.Text = Convert.ToString((int)panel6.Size.Width / 2);
                 textBox5.Text = textBox8.Text = Convert.ToString((int)panel6.Size.Height / 2);
             }
@@ -93,91 +90,106 @@ namespace KG_LABA2
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             firststep();
-           
         }
 
         private void firststep()
         {
 
             g.FillRectangle(new SolidBrush(Color.White), 0, 0, panel6.Width, panel6.Height);
-            int a, b, c, r;
+            int a, b, w, h;
+            float center_x = panel6.Width / 2;
+            float center_y = panel6.Height / 2;
+            
             try
             {
-                a = Convert.ToInt32(textBox1.Text);
-                b = Convert.ToInt32(textBox2.Text);
-                r = Convert.ToInt32(textBox3.Text);
-                c = Convert.ToInt32(textBox11.Text);
+                a = Convert.ToInt32(textBox2.Text);
+                b = Convert.ToInt32(textBox1.Text);
+                w = Convert.ToInt32(textBox3.Text);
+                h = Convert.ToInt32(textBox11.Text);
             }
             catch
             {
                 MessageBox.Show("Некорректные данные");
                 return;
             }
-            if (Math.Abs(c) < r)
+            /*if (Math.Abs(c) < r)
             {
                 MessageBox.Show("Значение С по модулю должно первышать R");
                 return;
-            }
+            }*/
 
             datalist = new DataPack();
+            
+            GenerateCardioid(datalist, center_x, center_y, scale, a, b);
+            GenerateRect(datalist, center_x, center_y, w, h);
+            GenerateHatching(datalist, datalist.GetRectMin(), datalist.GetRectMax());
 
-            GenerateCircle(datalist, a, b, r);
-            GenerateHiperbola(datalist, a, b, r, c);
-            GenerateHatching(datalist, a, b, r, c);
-
-            datalist.Draw(g, myPen);
+            datalist.Draw(g, myPen, filling);
             datalist.PanelAddInfo(panel1);
             memory.Push(datalist);
 
         }
 
-        //Генерация точек окружности
-        private void GenerateCircle(DataPack datalist, float centerX, float centerY, float radius)
+        private void GenerateCardioid(DataPack datalist, float centerX, float centerY, float radius, int a, int b)
         {
-            float angle1 = (float)((0 / 180) * Math.PI);                 //
-            float angle2 = (float)((360/ 180) * Math.PI);                 // переход из градусов в радианы
+            int sum = a + b;
+            double x, y;
+            double pi4 = Math.PI * 4;
 
-            float koef = (float)(Math.PI * 2 / Math.Abs(angle2 - angle1));       //определение  
-            float iterations = (float)Math.Round((2 * radius + 5) / koef);       //оптимального количества 
-            float delta = (angle2 - angle1) / iterations;                        //итераций
+            for (double t = 0; t < pi4; t += 0.25)
+            {
+                x = centerX + radius * (sum * Math.Cos(t) - a * Math.Cos(sum * (t / a)));
+                y = centerY - radius * (sum * Math.Sin(t) - a * Math.Sin(sum * (t / a)));
+                datalist.CardioidAddPoint((float)x, (float)y);
+            }
+        }
+
+        private void GenerateRect(DataPack datalist, float centerX, float centerY, float width, float height)
+        {
+            float w = width / 2;
+            float h = height / 2;
+            datalist.RectangleAddPoint(centerX - w, centerY - h);
+            datalist.RectangleAddPoint(centerX + w, centerY - h);
+            datalist.RectangleAddPoint(centerX + w, centerY + h);
+            datalist.RectangleAddPoint(centerX - w, centerY + h);
+        }
         
-            for (int i = 0; i <=iterations; i++)
-            {
-                float x = centerX + radius * (float)Math.Cos(angle1);
-                float y = centerY - radius * (float)Math.Sin(angle1);
-                datalist.CircleAddPoint(x, y);
-                angle1 += delta;
-            }
-            float x1 = centerX + radius * (float)Math.Cos(angle1);
-            float y1 = centerY - radius * (float)Math.Sin(angle1);
-            datalist.CircleAddPoint(x1, y1);
-        }
-
-        //Генерация точек гиперболы
-        private void GenerateHiperbola(DataPack datalist, float centerX, float centerY, float radius, float c)
-        {
-            float x1 = 1, y1 = -c / x1;
-            datalist.HiperbolaAddPoint(x1+centerX,y1+centerY);
-            for (float x2 = 2; x2 < radius * 2; x2+=0.5f)
-            {
-                float y2 = -c / x2;
-                datalist.HiperbolaAddPoint(x2+centerX,y2+centerY);
-            }
-        }
-
         //Генерация точек для штириховки
-        private void GenerateHatching(DataPack datalist, float centerX, float centerY, float radius, float c)
+        private void GenerateHatching(DataPack datalist, PointF min, PointF max)
         {
-            for (float x2 = 5; x2 < radius; x2 += radius/10)
+            float x1, y1;
+            float x2, y2;
+            float delta;
+            for (int i = 0; i < Math.Max((max.X - min.X), (max.Y - min.Y))*2; i += 40)
             {
-                float y2 = -c / x2;
-                float y3 = (float)(centerY - Math.Sqrt(radius * radius - x2 * x2));
-                if (Math.Abs( y2) < radius)
-                    datalist.HatchingAddPoint(x2 + centerX, y2 + centerY,x2 + centerX,y3);
+                delta = min.Y + i - max.Y;
+                if (delta > 0)
+                {
+                    x1 = min.X + delta;
+                    y1 = max.Y;
+                }
+                else
+                {
+                    x1 = min.X;
+                    y1 = min.Y + i;
+                }
+
+                delta = min.X + i - max.X;
+                if (delta > 0)
+                {
+                    x2 = max.X;
+                    y2 = min.Y + delta;
+                }
+                else
+                {
+                    x2 = min.X + i;
+                    y2 = min.Y;
+                }
+                if (x1 < max.X)
+                    datalist.HatchingAddPoint(x1, y1, x2, y2);
             }
-        }
+        }      
 
         //поворот
         private void button2_Click(object sender, EventArgs e)
@@ -203,7 +215,7 @@ namespace KG_LABA2
             memory.Push(datalist);
             datalist = datalist.turning(angle*Math.PI/180, centre);
             g.FillRectangle(new SolidBrush(Color.White), 0, 0, panel6.Width, panel6.Height);
-            datalist.Draw(g, myPen);
+            datalist.Draw(g, myPen, filling);
 
 
         }
@@ -221,7 +233,7 @@ namespace KG_LABA2
             memory.Push(datalist);
             datalist = datalist.transfering(delta);
             g.FillRectangle(new SolidBrush(Color.White), 0, 0, panel6.Width, panel6.Height);
-            datalist.Draw(g, myPen);
+            datalist.Draw(g, myPen, filling);
         }
 
         //масштабирование
@@ -241,7 +253,7 @@ namespace KG_LABA2
             memory.Push(datalist);
             datalist = datalist.zooming(centre,zoomK);
             g.FillRectangle(new SolidBrush(Color.White), 0, 0, panel6.Width, panel6.Height);
-            datalist.Draw(g, myPen);
+            datalist.Draw(g, myPen, filling);
 
         }
 
@@ -275,7 +287,7 @@ namespace KG_LABA2
             //panel1.Controls.Clear();
             //panel1.Controls.AddRange(datalist.PanelRecovery());
             g.FillRectangle(new SolidBrush(Color.White), 0, 0, panel6.Width, panel6.Height);
-            datalist.Draw(g, myPen);
+            datalist.Draw(g, myPen, filling);
         }
 
         private void Form1_VisibleChanged(object sender, EventArgs e)
@@ -288,7 +300,7 @@ namespace KG_LABA2
             g = panel6.CreateGraphics();
 
             //g.FillRectangle(new SolidBrush(Color.White), 0, 0, panel6.Width, panel6.Height);
-            datalist.Draw(g, myPen);
+            datalist.Draw(g, myPen, filling);
         }
 
 
