@@ -17,7 +17,8 @@ namespace lab_02
 
         public delegate void EventHandler(Object sender, EventArgs e);
 
-        Pen myPen = new Pen(Color.Blue, 2);
+        //Pen myPen = new Pen(Color.PaleVioletRed, 2); 
+        Pen myPen = new Pen(Color.FromArgb(115, 113, 142), 2);
         int scale = 20;
         
         Graphics g;
@@ -181,7 +182,7 @@ namespace lab_02
         }      
 
 //****Transform****
-        //поворот
+        //turn
         private void button2_Click(object sender, EventArgs e)
         {
             float x, y;
@@ -208,7 +209,7 @@ namespace lab_02
             datalist.Draw(g, myPen, filling);
         }
 
-        //перенос
+        //transfer
         private void button4_Click(object sender, EventArgs e)
         {
             float x, y;
@@ -224,7 +225,7 @@ namespace lab_02
             datalist.Draw(g, myPen, filling);
         }
 
-        //масштабирование
+        //scale
         private void button3_Click(object sender, EventArgs e)
         {
             float x,y;
@@ -263,6 +264,7 @@ namespace lab_02
 
         }
 
+//****Step back****
         private void button5_Click(object sender, EventArgs e)
         {
             if (memory.Count == 0)
@@ -273,7 +275,7 @@ namespace lab_02
             datalist = memory.Pop();
             //panel1.Controls.Clear();
             //panel1.Controls.AddRange(datalist.PanelRecovery());
-            g.FillRectangle(new SolidBrush(Color.White), 0, 0, panel6.Width, panel6.Height);
+            g.FillRectangle(filling, 0, 0, panel6.Width, panel6.Height);
             datalist.Draw(g, myPen, filling);
         }
     }
