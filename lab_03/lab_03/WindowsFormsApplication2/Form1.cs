@@ -32,9 +32,8 @@ namespace WindowsFormsApplication2
         {
             colorDialog1.ShowDialog();
             colorDialog1.AllowFullOpen = true;
-            button6.BackColor = colorDialog1.Color;
             button3.BackColor = colorDialog1.Color;
-            ClearBitmap(button6.BackColor);  
+            ClearBitmap(button3.BackColor);  
         }
         
         //Цвет линий
@@ -43,24 +42,6 @@ namespace WindowsFormsApplication2
             colorDialog1.ShowDialog();
             colorDialog1.AllowFullOpen = true;
             button4.BackColor = colorDialog1.Color;
-        }
-        
-        //Фон солнца
-        private void button6_Click(object sender, EventArgs e)
-        {
-            colorDialog1.ShowDialog();
-            colorDialog1.AllowFullOpen = true;
-            button6.BackColor = colorDialog1.Color;
-            button3.BackColor = colorDialog1.Color;
-            ClearBitmap(button6.BackColor);            
-        }
-       
-        //Цвет солнца
-        private void button5_Click(object sender, EventArgs e)
-        {
-            colorDialog1.ShowDialog();
-            colorDialog1.AllowFullOpen = true;
-            button5.BackColor = colorDialog1.Color;
         }
 
         private void ClearBitmap(Color color)
@@ -183,8 +164,8 @@ namespace WindowsFormsApplication2
             }
             if (tab_id == 1)
             {
-                backColor = button6.BackColor;
-                line = button5.BackColor;
+                backColor = button3.BackColor;
+                line = button4.BackColor;
                 return; 
             }
             line = Color.Black;
@@ -309,9 +290,7 @@ namespace WindowsFormsApplication2
         {
             bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             button3.BackColor = Color.White;
-            button6.BackColor = Color.White;
             button4.BackColor = Color.Black;
-            button5.BackColor = Color.Black;
 
             textBox1.Text = "10";
             textBox2.Text = "10";
@@ -319,8 +298,8 @@ namespace WindowsFormsApplication2
             textBox4.Text = "100";
             textBox5.Text = "2";
             textBox6.Text = "50";
-            textBox7.Text = "100";
-            textBox8.Text = "100";
+            textBox7.Text = (pictureBox1.Size.Height/2).ToString(); // Y
+            textBox8.Text = (pictureBox1.Size.Width / 2).ToString(); // X
 
 
             textBox12.Text = "200";
@@ -334,11 +313,6 @@ namespace WindowsFormsApplication2
            
 
             ClearBitmap(Color.White);
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            button5.BackColor = button6.BackColor;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -384,20 +358,9 @@ namespace WindowsFormsApplication2
         }
 
         //ZOOM
-        /*private void textBox13_TextChanged(object sender, EventArgs e)
-        {
-            zoom();
-        }*/
-
         private void zoom()
         {
-            float zoomFactor = 1f;/*
-            if (textBox13.Text == "")
-                zoomFactor = 1f;
-            else
-            {
-                zoomFactor = 1f * Convert.ToInt32(textBox13.Text);
-            }*/
+            float zoomFactor = 1f;
             try
             {
                 if (zoomFactor == 1f)
@@ -429,7 +392,6 @@ namespace WindowsFormsApplication2
 
         private void button9_Click(object sender, EventArgs e)
         {
-
             prev.Location = new Point(prev.Location.X + 100, prev.Location.Y);
             zoom();
            
@@ -463,6 +425,88 @@ namespace WindowsFormsApplication2
         private void label17_Click(object sender, EventArgs e)
         {
 
+        }
+
+        // Установка цветов фона
+        private void set_color_fill(Color color)
+        {
+            button3.BackColor = color;
+            ClearBitmap(color);
+        }
+        private void button26_Click(object sender, EventArgs e)
+        {
+            set_color_fill(Color.White);
+        }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            set_color_fill(Color.Red);
+        }
+
+        private void button27_Click(object sender, EventArgs e)
+        {
+            set_color_fill(Color.Orange);
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            set_color_fill(Color.Black);
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            set_color_fill(Color.Green);
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            set_color_fill(Color.Blue);
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            set_color_fill(Color.Purple);
+        }
+
+        // Установка цветов линий
+        private void set_color_line(Color color)
+        {
+            button4.BackColor = color;
+        }
+
+        private void button33_Click(object sender, EventArgs e)
+        {
+            set_color_line(Color.White);
+        }
+
+        private void button35_Click(object sender, EventArgs e)
+        {
+            set_color_line(Color.Red);
+        }
+
+        private void button34_Click(object sender, EventArgs e)
+        {
+            set_color_line(Color.Orange);
+        }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            set_color_line(Color.Black);
+        }
+
+        private void button32_Click(object sender, EventArgs e)
+        {
+            set_color_line(Color.Green);
+        }
+
+        private void button30_Click(object sender, EventArgs e)
+        {
+            set_color_line(Color.Blue);
+        }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+            set_color_line(Color.Purple);
         }
     }
 }
