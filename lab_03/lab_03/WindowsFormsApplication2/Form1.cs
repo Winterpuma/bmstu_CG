@@ -232,10 +232,10 @@ namespace WindowsFormsApplication2
             N = 0;
             try
             {
-                X1 = (int)(Convert.ToDouble(textBox12.Text));
-                Y1 = (int)(Convert.ToDouble(textBox11.Text));
-                r = Convert.ToDouble(textBox10.Text);
-                a = Convert.ToDouble(textBox9.Text);
+                X1 = (int)(Convert.ToDouble(textBox8.Text));
+                Y1 = (int)(Convert.ToDouble(textBox7.Text));
+                r = Convert.ToDouble(textBox6.Text);
+                a = Convert.ToDouble(textBox5.Text);
                 n = Convert.ToInt32(textBox14.Text);
             }
             catch
@@ -291,22 +291,20 @@ namespace WindowsFormsApplication2
             bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             button3.BackColor = Color.White;
             button4.BackColor = Color.Black;
+            
+            // Line coeff
+            textBox1.Text = (pictureBox1.Size.Width / 2 - 100).ToString(); // st x line
+            textBox2.Text = (pictureBox1.Size.Height / 2 - 100).ToString(); // st y line
+            textBox3.Text = (pictureBox1.Size.Width / 2 + 100).ToString(); // end x line
+            textBox4.Text = (pictureBox1.Size.Height / 2 + 100).ToString(); // end y line
 
-            textBox1.Text = "10";
-            textBox2.Text = "10";
-            textBox3.Text = "100";
-            textBox4.Text = "100";
-            textBox5.Text = "2";
-            textBox6.Text = "50";
-            textBox7.Text = (pictureBox1.Size.Height/2).ToString(); // Y
-            textBox8.Text = (pictureBox1.Size.Width / 2).ToString(); // X
-
-
-            textBox12.Text = "200";
-            textBox11.Text = "200";
-            textBox10.Text = "100";
-            textBox9.Text = "5";
-            textBox14.Text = "50";
+            // Sun coeff
+            textBox5.Text = "2"; // step sun
+            textBox6.Text = "200"; // R sun
+            textBox7.Text = (pictureBox1.Size.Height / 2).ToString(); // Y sun
+            textBox8.Text = (pictureBox1.Size.Width / 2).ToString(); // X sun
+        
+            textBox14.Text = "50"; // N (amount of iterations)
 
             prev.Size = pictureBox1.Size;
             prev.Location = new Point(0, 0);

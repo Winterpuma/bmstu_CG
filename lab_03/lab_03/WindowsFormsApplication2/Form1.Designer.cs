@@ -30,20 +30,6 @@
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.textBox12 = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.textBox14 = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel6 = new System.Windows.Forms.Panel();
             this.radioButton12 = new System.Windows.Forms.RadioButton();
@@ -107,9 +93,9 @@
             this.button3 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.label27 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tabPage3.SuspendLayout();
-            this.panel7.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -130,132 +116,6 @@
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.panel7);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(252, 410);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Сравнение эффективности";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // panel7
-            // 
-            this.panel7.Controls.Add(this.textBox14);
-            this.panel7.Controls.Add(this.label27);
-            this.panel7.Controls.Add(this.textBox9);
-            this.panel7.Controls.Add(this.label19);
-            this.panel7.Controls.Add(this.textBox10);
-            this.panel7.Controls.Add(this.label20);
-            this.panel7.Controls.Add(this.textBox11);
-            this.panel7.Controls.Add(this.label21);
-            this.panel7.Controls.Add(this.textBox12);
-            this.panel7.Controls.Add(this.label22);
-            this.panel7.Controls.Add(this.label23);
-            this.panel7.Controls.Add(this.label24);
-            this.panel7.Location = new System.Drawing.Point(10, 7);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(234, 148);
-            this.panel7.TabIndex = 14;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(6, 17);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(38, 13);
-            this.label24.TabIndex = 4;
-            this.label24.Text = "Центр";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(119, 17);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(0, 13);
-            this.label23.TabIndex = 5;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(6, 40);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(17, 13);
-            this.label22.TabIndex = 6;
-            this.label22.Text = "X:";
-            // 
-            // textBox12
-            // 
-            this.textBox12.Location = new System.Drawing.Point(24, 33);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(43, 20);
-            this.textBox12.TabIndex = 7;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(6, 66);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(17, 13);
-            this.label21.TabIndex = 8;
-            this.label21.Text = "Y:";
-            // 
-            // textBox11
-            // 
-            this.textBox11.Location = new System.Drawing.Point(24, 59);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(43, 20);
-            this.textBox11.TabIndex = 9;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(123, 40);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(18, 13);
-            this.label20.TabIndex = 10;
-            this.label20.Text = "R:";
-            // 
-            // textBox10
-            // 
-            this.textBox10.Location = new System.Drawing.Point(141, 33);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(43, 20);
-            this.textBox10.TabIndex = 11;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(123, 63);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(35, 13);
-            this.label19.TabIndex = 12;
-            this.label19.Text = "Угол:";
-            // 
-            // textBox9
-            // 
-            this.textBox9.Location = new System.Drawing.Point(164, 59);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(43, 20);
-            this.textBox9.TabIndex = 13;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(6, 104);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(18, 13);
-            this.label27.TabIndex = 14;
-            this.label27.Text = "N:";
-            // 
-            // textBox14
-            // 
-            this.textBox14.Location = new System.Drawing.Point(24, 101);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(43, 20);
-            this.textBox14.TabIndex = 15;
             // 
             // tabPage2
             // 
@@ -368,6 +228,8 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.label27);
+            this.panel4.Controls.Add(this.textBox14);
             this.panel4.Controls.Add(this.textBox5);
             this.panel4.Controls.Add(this.label10);
             this.panel4.Controls.Add(this.textBox6);
@@ -451,7 +313,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(123, 63);
+            this.label10.Location = new System.Drawing.Point(106, 66);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(35, 13);
             this.label10.TabIndex = 12;
@@ -459,7 +321,7 @@
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(164, 59);
+            this.textBox5.Location = new System.Drawing.Point(142, 59);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(43, 20);
             this.textBox5.TabIndex = 13;
@@ -472,6 +334,7 @@
             this.button12.TabIndex = 16;
             this.button12.Text = "Cравнить";
             this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // tabPage1
             // 
@@ -689,7 +552,6 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(935, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -895,6 +757,22 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Цвет фона:";
             // 
+            // textBox14
+            // 
+            this.textBox14.Location = new System.Drawing.Point(141, 10);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.Size = new System.Drawing.Size(43, 20);
+            this.textBox14.TabIndex = 16;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(123, 17);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(18, 13);
+            this.label27.TabIndex = 17;
+            this.label27.Text = "N:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -909,9 +787,6 @@
             this.Text = "Form1";
             this.Shown += new System.EventHandler(this.Form1_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.tabPage3.ResumeLayout(false);
-            this.panel7.ResumeLayout(false);
-            this.panel7.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
@@ -932,20 +807,6 @@
         #endregion
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.TextBox textBox14;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TextBox textBox12;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Panel panel4;
@@ -1009,6 +870,8 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox textBox14;
     }
 }
 
