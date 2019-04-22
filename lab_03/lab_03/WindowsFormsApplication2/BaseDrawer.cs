@@ -26,47 +26,35 @@ namespace WindowsFormsApplication2
             return false;
         }
 
-
-
-
+       
         protected int AddPoint(ref Bitmap bitmap, float X, float Y, Color color)
         {
-           
-                if ((X >= 0) && (X < bitmap.Width) && (Y >= 0) && (Y < bitmap.Height))
-                {
-                    bitmap.SetPixel((int)(X), (int)(Y), color);
-                }
-
-                       
+            if ((X >= 0) && (X < bitmap.Width) && (Y >= 0) && (Y < bitmap.Height))
+            {
+                bitmap.SetPixel((int)(X), (int)(Y), color);
+            }    
             return 0;
         }
 
         protected int AddPoint(ref Bitmap bitmap, int X, int Y, Color color)
         {
-            
-                if ((X >= 0) && (X < bitmap.Width) && (Y >= 0) && (Y < bitmap.Height))
-                {
-                    bitmap.SetPixel(X, Y, color);
-                }
-
-            
+            if ((X >= 0) && (X < bitmap.Width) && (Y >= 0) && (Y < bitmap.Height))
+            {
+                bitmap.SetPixel(X, Y, color);
+            }
             return 0;
         }
 
         protected int AddPoint(ref Bitmap bitmap, ref PointF p, Color color)
         {
-            
-                if ((p.X >= 0) && (p.X < bitmap.Width) && (p.Y >= 0) && (p.Y < bitmap.Height))
-                {
-                    bitmap.SetPixel((int)(p.X), (int)(p.Y), color);
-                }
-
-            
+            if ((p.X >= 0) && (p.X < bitmap.Width) && (p.Y >= 0) && (p.Y < bitmap.Height))
+            {
+                bitmap.SetPixel((int)(p.X), (int)(p.Y), color);
+            }
             return 0;
         }
 
       
-
         public Color SetColor
         {
             set { drawcolor = value; }
@@ -121,7 +109,6 @@ namespace WindowsFormsApplication2
             int N = (int)(2 * Math.PI / angle);
             for (float i = 0; i <= 2 * Math.PI - angle; i += angle)
             {
-       
                 Draw(ref bitmap, centre, new PointF((float)(centre.X + Math.Cos(i) * R), (float)(centre.Y + Math.Sin(i) * R)));
             }
         }
@@ -148,6 +135,5 @@ namespace WindowsFormsApplication2
             sw.Stop();
             return Convert.ToInt32(sw.ElapsedMilliseconds);
         }
-
     }
 }

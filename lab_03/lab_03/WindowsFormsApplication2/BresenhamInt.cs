@@ -9,8 +9,6 @@ namespace WindowsFormsApplication2
 {
     class BresenhamInt:BaseDrawer
     {
-       
-
         protected override void draw(ref Bitmap bitmap,  PointF pointfrom, PointF pointto)
         {
             if (IsDegenerate(pointfrom, pointto))

@@ -43,7 +43,6 @@ namespace WindowsFormsApplication2
             {
                 AddPoint(ref bitmap,  ref calculated, drawcolor);
                 
-
                 if (f >= 0)
                 {
                     if (flag == 1)
@@ -58,7 +57,6 @@ namespace WindowsFormsApplication2
                         calculated.Y += stepy;
                     else
                         calculated.X += stepx;
-
                 }                
                 f += m;
             }
@@ -71,8 +69,6 @@ namespace WindowsFormsApplication2
         {
             if (IsDegenerate(pointfrom, pointto))
             {
-                
-
                 return;
             }
 

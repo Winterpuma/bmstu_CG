@@ -460,5 +460,9 @@ namespace WindowsFormsApplication2
             pictureBox1.Image = test.Start(pictureBox1.Width, pictureBox1.Height);
         }
 
+        private void label17_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
