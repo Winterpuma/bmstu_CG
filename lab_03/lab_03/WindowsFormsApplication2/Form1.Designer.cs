@@ -113,9 +113,9 @@
             this.pictureBox1.Size = new System.Drawing.Size(900, 550);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
-            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
-            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
+            //this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            //this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+            //this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             // 
             // tabPage2
             // 
@@ -128,7 +128,7 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(252, 347);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Солнышко";
+            this.tabPage2.Text = "     Солнышко     ";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // panel6
@@ -346,7 +346,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(252, 347);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Отрисовка линии";
+            this.tabPage1.Text = "     Линия     ";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // panel1

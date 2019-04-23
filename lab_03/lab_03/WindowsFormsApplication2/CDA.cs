@@ -32,24 +32,24 @@ namespace WindowsFormsApplication2
             dx /= l;
             dy /= l;
 
+            float x = pointfrom.X;
+            float y = pointfrom.Y;
             PointF calculated = new PointF(pointfrom.X, pointfrom.Y);
             for(int i = 1; i < l + 1; i++) {
-
-                AddPoint(ref bitmap,  ref calculated, drawcolor);                         
-                calculated.X += dx;
-                calculated.Y += dy;
+                //AddPoint(ref bitmap,  ref calculated, drawcolor);  
+                AddPoint(ref bitmap, Convert.ToInt32(x), Convert.ToInt32(y), drawcolor);
+                x += dx;
+                y += dy;
             }
-            AddPoint(ref bitmap, ref calculated, drawcolor);
-            Answer(calculated, pointto);
+            AddPoint(ref bitmap, Convert.ToInt32(x), Convert.ToInt32(y), drawcolor);
+            //Answer(calculated, pointto);
             return;
         }
 
         protected override void draw2(ref Bitmap bitmap, PointF pointfrom, PointF pointto)
-        {
+        {   
             if (IsDegenerate(pointfrom, pointto))
             {
-                
-
                 return;
             }
 
@@ -70,8 +70,6 @@ namespace WindowsFormsApplication2
             PointF calculated = new PointF(pointfrom.X, pointfrom.Y);
             for (int i = 1; i < l + 1; i++)
             {
-
-                
                 calculated.X += dx;
                 calculated.Y += dy;
             }

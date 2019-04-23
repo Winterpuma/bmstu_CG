@@ -313,15 +313,8 @@ namespace WindowsFormsApplication2
             ClearBitmap(Color.White);
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            button4.BackColor = button3.BackColor;
-        }
-
-
-        private Point zoomcentre;
+        /*private Point zoomcentre;
         private float zoomscale;
-
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
@@ -353,7 +346,7 @@ namespace WindowsFormsApplication2
         {
             
 
-        }
+        }*/
 
         //ZOOM
         private void zoom()
