@@ -12,7 +12,7 @@ from Wu import vu_test
 
 from calculations import sign, get_rgb_intensity
 
-canvW, canvH = 750, 400
+canvW, canvH = 800, 650
 
 def draw_line_brez_smoth(canvas, ps, pf, fill):
     I = 100
@@ -295,13 +295,13 @@ def smoth_analyze(methods, length):
 # Оси координат
 def draw_axes():
     color = 'gray'
-    canvas.create_line(0, 2, 750, 2, fill="darkred", arrow=LAST)
-    canvas.create_line(2, 0, 2, 400, fill="darkred", arrow=LAST)
-    for i in range(50, 750, 50):
+    canvas.create_line(0, 2, canvW, 2, fill="darkred", arrow=LAST)
+    canvas.create_line(2, 0, 2, canvH, fill="darkred", arrow=LAST)
+    for i in range(50, canvW, 50):
         canvas.create_text(i, 10, text=str(abs(i)), fill=color)
         canvas.create_line(i, 0, i, 5, fill=color)
 
-    for i in range(25, 400, 25):
+    for i in range(50, canvH, 50):
         canvas.create_text(15, i, text=str(abs(i)), fill=color)
         canvas.create_line(0, i, 5, i, fill=color)
 
@@ -366,34 +366,44 @@ def close_all():
         root.destroy()
 
 root = Tk()
-root.geometry('750x600')
+root.geometry('1120x660')
 root.resizable(0, 0)
 root.title('Лабораторная работа №3')
-color_menu = "#DB7093"
+color_menu = "#7586c5"
 
-coords_frame = Frame(root, bg=color_menu, height=200, width=150)
-coords_frame.place(x=0, y=0)
+x_menu = 810
+w_menu = 300
 
-comparison_frame = Frame(root, bg=color_menu, height=200, width=150)
-comparison_frame.place(x=150, y=0)
+# коэффициенты для линии
+coords_frame = Frame(root, bg=color_menu, height=200, width=w_menu)
+coords_frame.place(x=x_menu, y=110)
 
-angle_frame = Frame(root, bg=color_menu, height=200, width=150)
-angle_frame.place(x=300, y=0)
+# угол
+angle_frame = Frame(root, bg=color_menu, height=200, width=w_menu)
+angle_frame.place(x=x_menu, y=210)
 
-menu_frame = Frame(root, bg=color_menu, height=200, width=150)
-menu_frame.place(x=450, y=0)
 
-color_frame = Frame(root, bg=color_menu, height=200, width=150)
-color_frame.place(x=600, y=0)
+# выбор цвета
+color_frame = Frame(root, bg=color_menu, height=150, width=w_menu)
+color_frame.place(x=x_menu, y=300)
+
+# сравнение
+comparison_frame = Frame(root, bg=color_menu, height=200, width=w_menu)
+comparison_frame.place(x=x_menu, y=450)
+
+# очистить, справка
+menu_frame = Frame(root, bg=color_menu, height=50, width=w_menu)
+menu_frame.place(x=x_menu, y=600)
 
 canv = Canvas(root, width=canvW, height=canvH, bg='white')
 canvas = canv
 canvas_test = canv
-canv.place(x=0, y=200)
+canv.place(x=0, y=000)
 center = (375, 200)
+
 # Список Алгоритмов
-method_list = Listbox(coords_frame, selectmode=EXTENDED)
-method_list.place(x=10, y=10, width=130, height=70)
+method_list = Listbox(root, selectmode=EXTENDED)
+method_list.place(x=810, y=10, width=w_menu, height=100)
 fill_list(method_list)
 funcs = (draw_line_cda, draw_line_brez_float, draw_line_brez_int,
          draw_line_brez_smoth, draw_line_vu, canvas.create_line)
@@ -401,33 +411,33 @@ test_funcs = (cda_test, float_test, int_test, smoth_test, vu_test)
 
 lb1 = Label(coords_frame, bg=color_menu, text='Начало линии:')
 lb2 = Label(coords_frame, bg=color_menu, text='Конец линии:')
-lb1.place(x=3, y=85)
-lb2.place(x=3, y=125)
+lb1.place(x=0, y=5)
+lb2.place(x=0, y=50)
 
 lbx1 = Label(coords_frame, bg=color_menu, text='X:')
 lby1 = Label(coords_frame, bg=color_menu, text='Y:')
 lbx2 = Label(coords_frame, bg=color_menu, text='X:')
 lby2 = Label(coords_frame, bg=color_menu, text='Y:')
-lbx1.place(x=90, y=85)
-lby1.place(x=90, y=105)
-lbx2.place(x=90, y=125)
-lby2.place(x=90, y=145)
+lbx1.place(x=5, y=25)
+lby1.place(x=90, y=25)
+lbx2.place(x=5, y=75)
+lby2.place(x=90, y=75)
 
 fxs = Entry(coords_frame, bg="white")
 fys = Entry(coords_frame, bg="white")
 fxf = Entry(coords_frame, bg="white")
 fyf = Entry(coords_frame, bg="white")
+fxs.place(x=30, y=25, width=35)
+fys.place(x=115, y=25, width=35)
+fxf.place(x=30, y=75, width=35)
+fyf.place(x=115, y=75, width=35)
 fxs.insert(0, str(canvW/2))
 fys.insert(0, str(canvH/2))
 fxf.insert(0, str(canvW/2 + 100))
 fyf.insert(0, str(canvH/2 + 100))
-fxs.place(x=105, y=85, width=35)
-fys.place(x=105, y=105, width=35)
-fxf.place(x=105, y=125, width=35)
-fyf.place(x=105, y=145, width=35)
 
 btn_draw = Button(coords_frame, text=u"Построить", command=lambda: draw(0), width=140, height=25)
-btn_draw.place(x=40, y=175, width=70, height=20)
+btn_draw.place(x=200, y=35, width=80, height=30)
 
 lb_angle = Label(angle_frame, bg=color_menu, text="Угол поворота\n(в градусах):")
 lb_angle.place(x=2, y=2)
@@ -435,8 +445,8 @@ lb_angle.place(x=2, y=2)
 fangle = Entry(angle_frame, bg="white")
 fangle.place(x=30, y=40, width=25)
 
-btn_viz = Button(angle_frame, text=u"Визуальный анализ", command=lambda: draw(1))
-btn_viz.place(x=25, y=65, width=120, height=25)
+btn_viz = Button(angle_frame, text=u"Солнышко", command=lambda: draw(1))
+btn_viz.place(x=120, y=30, width=120, height=25)
 
 lb_len = Label(comparison_frame, bg=color_menu, text="Длина линии\n(по умолчанию 100):")
 lb_len.place(x=2, y=2)
@@ -445,14 +455,14 @@ len_line.place(x=40, y=40, width=40)
 btn_time = Button(comparison_frame, text=u"Сравнение времени\nпостроения", command=lambda: analyze(0))
 btn_time.place(x=3, y=70, width=140, height=40)
 btn_smoth = Button(comparison_frame, text=u"Сравнение\nступенчатости", command=lambda: analyze(1))
-btn_smoth.place(x=3, y=130, width=140, height=40)
+btn_smoth.place(x=150, y=70, width=140, height=40)
 
 btn_clean = Button(menu_frame, text=u"Очистить экран", command=clean)
-btn_clean.place(x=30, y=20, width=95)
+btn_clean.place(x=25, y=0, width=95)
 btn_help = Button(menu_frame, text=u"Справка", command=show_info)
-btn_help.place(x=30, y=70, width=95)
-btn_exit = Button(menu_frame, text=u"Выход", command=close_all)
-btn_exit.place(x=30, y=120, width=95)
+btn_help.place(x=170, y=0, width=95)
+#btn_exit = Button(menu_frame, text=u"Выход", command=close_all)
+#btn_exit.place(x=60, y=0, width=95)
 
 
 ### --------------- выбор цветов ---------------
