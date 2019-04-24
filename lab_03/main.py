@@ -13,6 +13,7 @@ from Wu import vu_test
 from calculations import sign, get_rgb_intensity
 
 canvW, canvH = 800, 650
+line_r = 150
 
 def draw_line_brez_smoth(canvas, ps, pf, fill):
     I = 100
@@ -221,7 +222,8 @@ def test(flag, ind, method, angle, pb, pe):
     for i in range(steps):
         cur1 = time.time()
         if flag == 0:
-            method(pb, pe)
+            #method(pb, pe)
+            method(canvas, pb, pe, fill=bg_color)#line_color)
         else:
             method(canvas, pb, pe, fill=line_color)
         cur2 = time.time()
@@ -239,7 +241,8 @@ def time_bar(length):
     pb = [center[0], center[1]]
     pe = [center[0] + 100, center[1]]
     for i in range(5):
-        times.append(test(0, i, test_funcs[i], angle, pb, pe))
+#        times.append(test(0, i, test_funcs[i], angle, pb, pe))
+        times.append(test(0, i, funcs[i], angle, pb, pe))
     clean()
     Y = range(len(times))
     L = ('Digital\ndifferential\nanalyzer', 'Bresenham\n(real coeffs)',
@@ -294,6 +297,7 @@ def smoth_analyze(methods, length):
 
 # Оси координат
 def draw_axes():
+    return
     color = 'gray'
     canvas.create_line(0, 2, canvW, 2, fill="darkred", arrow=LAST)
     canvas.create_line(2, 0, 2, canvH, fill="darkred", arrow=LAST)
@@ -336,8 +340,8 @@ def show_info():
 # Список методов прорисовки отрезка
 def fill_list(lst):
     lst.insert(END, "Цифровой дифференциальный анализатор")
-    lst.insert(END, "Брезенхем (действительный)")
-    lst.insert(END, "Брезенхем (целый)")
+    lst.insert(END, "Брезенхем (float)")
+    lst.insert(END, "Брезенхем (int)")
     lst.insert(END, "Брезенхем с устранением ступенчатости")
     lst.insert(END, "Ву")
     lst.insert(END, "Стандартный")
@@ -433,8 +437,8 @@ fxf.place(x=30, y=75, width=35)
 fyf.place(x=115, y=75, width=35)
 fxs.insert(0, str(canvW/2))
 fys.insert(0, str(canvH/2))
-fxf.insert(0, str(canvW/2 + 100))
-fyf.insert(0, str(canvH/2 + 100))
+fxf.insert(0, str(canvW/2 + line_r))
+fyf.insert(0, str(canvH/2 + line_r))
 
 btn_draw = Button(coords_frame, text=u"Построить", command=lambda: draw(0), width=140, height=25)
 btn_draw.place(x=200, y=35, width=80, height=30)
@@ -444,6 +448,7 @@ lb_angle.place(x=2, y=2)
 
 fangle = Entry(angle_frame, bg="white")
 fangle.place(x=30, y=40, width=25)
+fangle.insert(0, "15")
 
 btn_viz = Button(angle_frame, text=u"Солнышко", command=lambda: draw(1))
 btn_viz.place(x=120, y=30, width=120, height=25)

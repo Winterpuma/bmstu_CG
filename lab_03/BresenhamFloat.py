@@ -40,11 +40,13 @@ def draw_line_brez_float(canvas, ps, pf, fill):
     sy = sign(dy)
     dy = abs(dy)
     dx = abs(dx)
+    
     if dy >= dx:
         dx, dy = dy, dx
-        steep = 1
+        steep = 1 # шагаем по y
     else:
         steep = 0
+        
     tg = dy / dx # tангенс угла наклона
     e = tg - 1 / 2 # начальное значение ошибки
     x = ps[0] # начальный икс
