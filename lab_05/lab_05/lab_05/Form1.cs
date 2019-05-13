@@ -115,6 +115,7 @@ namespace lab_05
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
+                UpdateYgroup(true);
                 Polygons.Add(new List<Point>());
                 LastPolygon = Polygons[Polygons.Count - 1];
             }
@@ -123,21 +124,28 @@ namespace lab_05
         }
 
         // Внести последнее ребро в соответствующую y-группу
-        private void UpdateYgroup()
+        private void UpdateYgroup(bool last = false)
         {
             int size = LastPolygon.Count;
             if (size >= 2 && (ModifierKeys != Keys.Control))
             {
-                int dy = LastPolygon[size - 1].Y - LastPolygon[size - 2].Y;
-                float dx = (LastPolygon[size - 1].X - LastPolygon[size - 2].X) / (float)dy;
+                Point a = LastPolygon[size - 1];
+                Point b;
+                if (!last)
+                    b = LastPolygon[size - 2];
+                else
+                    b = LastPolygon[0];
+                
+                int dy = a.Y - b.Y;
+                float dx = (a.X - b.X) / (float)dy;
 
-                if (dy > 0) // последняя точка ниже
+                if (dy < 0) // точка "a" выше
                 {
-                    y_group[LastPolygon[size - 2].Y].Add(new Edge(dy, LastPolygon[size - 2].X, dx));
+                    y_group[a.Y].Add(new Edge(dy * -1, a.X, dx));
                 }
-                else if (dy < 0)
+                else if (dy > 0) 
                 {
-                    y_group[LastPolygon[size - 1].Y].Add(new Edge(dy*-1, LastPolygon[size - 1].X, dx));
+                    y_group[b.Y].Add(new Edge(dy, b.X, dx));
                 }
             }
         }
