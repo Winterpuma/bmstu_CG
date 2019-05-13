@@ -9,14 +9,23 @@ namespace lab_05
 {
     class ListOfActiveEdges
     {
-        List<Edge> ActiveEdges = new List<Edge>();
-        int y = 0; // текущая сканирующая строка
-        int RightBorder = 1000; 
+        List<Edge> ActiveEdges;
+        private int RightBorder; 
+
+        public ListOfActiveEdges(int Width)
+        {
+            ActiveEdges = new List<Edge>();
+            RightBorder = Width;
+        }
+
+        public void Clear()
+        {
+            ActiveEdges.Clear();
+        }
 
         public void AddYgroup(List<Edge> Ygroup)
         {
             ActiveEdges.AddRange(Ygroup);
-            y++;
         }
 
         public void Update()
@@ -44,7 +53,7 @@ namespace lab_05
             return x;
         }
 
-        public void Draw(Graphics DrawingArea, Pen pen)
+        public void Draw(Graphics DrawingArea, Pen pen, int y)
         {
             List<int> x = GetXvalues();
 
