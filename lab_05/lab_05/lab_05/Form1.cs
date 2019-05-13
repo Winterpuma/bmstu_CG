@@ -17,18 +17,30 @@ namespace lab_05
         List<Edge>[] y_group;
         ListOfActiveEdges ActiveEdges;
 
+        // Координаты прямоугольной оболочки
+        Point min_coord;
+        Point max_coord;
+
         Graphics g;
         Pen pen;
 
         public Form1()
         {
             InitializeComponent();
+
             y_group = new List<Edge>[pictureBox1.Height];
+            for (int i = 0; i < y_group.Length; i++)
+                y_group[i] = new List<Edge>();
+
             ActiveEdges = new ListOfActiveEdges(pictureBox1.Width);
             
             Polygons = new List<List<Point>>();
             Polygons.Add(new List<Point>());
             LastPolygon = Polygons[Polygons.Count - 1];
+
+            min_coord = new Point(pictureBox1.Width, pictureBox1.Height);
+            max_coord = new Point(0, 0);
+
             g = pictureBox1.CreateGraphics();
             pen = new Pen(Color.Black, 1);
         }
@@ -70,6 +82,7 @@ namespace lab_05
         // Перемещение мыши внутри холста
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
+            labelLocation.Text = pictureBox1.PointToClient(MousePosition).ToString();
             // отчистка экрана
             pictureBox1.Refresh();
             DrawAllLines();    
@@ -79,16 +92,25 @@ namespace lab_05
         // Нажатие на холст
         private void pictureBox1_Click(object sender, EventArgs e)
         {
+            Point mousePos = pictureBox1.PointToClient(MousePosition);
+
             if (((MouseEventArgs)e).Button == MouseButtons.Left)
             {
                 if (ModifierKeys == Keys.Control)
                 {
-                    LastPolygon.Add(new Point(pictureBox1.PointToClient(MousePosition).X, LastPolygon[LastPolygon.Count - 1].Y));
+                    LastPolygon.Add(new Point(mousePos.X, LastPolygon[LastPolygon.Count - 1].Y));
                 }
                 else
                 {
-                    LastPolygon.Add(pictureBox1.PointToClient(MousePosition));
+                    LastPolygon.Add(mousePos);
                 }
+
+                UpdateYgroup();
+
+                if (mousePos.Y > max_coord.Y)
+                    max_coord = mousePos;
+                if (mousePos.Y < min_coord.Y)
+                    min_coord = mousePos;
             }
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
@@ -98,6 +120,37 @@ namespace lab_05
             }
 
             DrawAllLines();
+        }
+
+        // Внести последнее ребро в соответствующую y-группу
+        private void UpdateYgroup()
+        {
+            int size = LastPolygon.Count;
+            if (size >= 2 && (ModifierKeys != Keys.Control))
+            {
+                int dy = LastPolygon[size - 1].Y - LastPolygon[size - 2].Y;
+                float dx = (LastPolygon[size - 1].X - LastPolygon[size - 2].X) / (float)dy;
+
+                if (dy > 0) // последняя точка ниже
+                {
+                    y_group[LastPolygon[size - 2].Y].Add(new Edge(dy, LastPolygon[size - 2].X, dx));
+                }
+                else if (dy < 0)
+                {
+                    y_group[LastPolygon[size - 1].Y].Add(new Edge(dy*-1, LastPolygon[size - 1].X, dx));
+                }
+            }
+        }
+
+        // Закраска
+        private void buttonFill_Click(object sender, EventArgs e)
+        {
+            for (int i = min_coord.Y; i < max_coord.Y; i++)
+            {
+                ActiveEdges.AddYgroup(y_group[i]);
+                ActiveEdges.Draw(g, pen, i);
+                ActiveEdges.Update();
+            }
         }
     }
 }
