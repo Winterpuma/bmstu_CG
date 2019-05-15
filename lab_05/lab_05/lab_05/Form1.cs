@@ -26,6 +26,7 @@ namespace lab_05
         Graphics g;
         Graphics g_move;
         Pen pen;
+        Pen pen_fill;
 
         public Form1()
         {
@@ -46,28 +47,22 @@ namespace lab_05
             g_move = canvasBase.CreateGraphics();
             canvasBase.Image = saved_picture;
             pen = new Pen(Color.Black, 1);
-
+            pen_fill = new Pen(Color.Black, 1);
+            pictureBoxColor.BackColor = Color.Black;
         }
 
-        /* // Рисует все сохраненные точки
-        private void DrawAllLines()
+        // Рисует все сохраненные точки
+        private void DrawAll()
         {
             int i;
             for (i = 0; i < Polygons.Count() - 1; i++)
             {
                 if (Polygons[i].Count > 1)
-                {
-                    g.DrawLines(pen, Polygons[i].ToArray());
-                    g.DrawLine(pen, Polygons[i][0], Polygons[i][Polygons[i].Count - 1]);
-                }
+                    g.DrawPolygon(pen, Polygons[i].ToArray());
             }
-            // последний многоугольник
-            if (Polygons[i].Count > 1)
-            {
-                g.DrawLines(pen, Polygons[i].ToArray());
-            }
-        }*/
+        }
 
+        // Рисует ребро многоугольника
         private void DrawEdgeStatic(bool last_edge = false)
         {
             if (LastPolygon.Count >= 2)
@@ -178,14 +173,20 @@ namespace lab_05
         // Закраска
         private void buttonFill_Click(object sender, EventArgs e)
         {
+            g.Clear(Color.White);
+            canvasBase.Refresh();
+
             ActiveEdges.Clear();
             for (int i = min_coord.Y; i < max_coord.Y; i++)
             {
                 if (y_group.ContainsKey(i))
                     ActiveEdges.AddYgroup(y_group[i]);
-                ActiveEdges.Draw(g, pen, i);
+                ActiveEdges.Draw(g, pen_fill, i);
                 ActiveEdges.Update();
             }
+
+            if (checkBox_drawBorder.Checked)
+                DrawAll();
             canvasBase.Refresh();
         }
 
@@ -199,8 +200,15 @@ namespace lab_05
             LastPolygon.Clear();
             g.Clear(Color.White);
             canvasBase.Refresh();
-            // table clear
         }
 
+        private void buttonColorFill_Click(object sender, EventArgs e)
+        {
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                pictureBoxColor.BackColor = colorDialog.Color;
+                pen_fill.Color = colorDialog.Color;
+            }
+        }
     }
 }

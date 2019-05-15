@@ -28,26 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.buttonFill = new System.Windows.Forms.Button();
             this.labelLocation = new System.Windows.Forms.Label();
             this.buttonClar = new System.Windows.Forms.Button();
             this.canvasBase = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.buttonColorFill = new System.Windows.Forms.Button();
+            this.pictureBoxColor = new System.Windows.Forms.PictureBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox_drawBorder = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.canvasBase)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColor)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(1035, 26);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(215, 321);
-            this.dataGridView1.TabIndex = 1;
             // 
             // buttonFill
             // 
-            this.buttonFill.Location = new System.Drawing.Point(1025, 394);
+            this.buttonFill.Location = new System.Drawing.Point(0, 31);
             this.buttonFill.Name = "buttonFill";
             this.buttonFill.Size = new System.Drawing.Size(215, 23);
             this.buttonFill.TabIndex = 2;
@@ -57,8 +54,10 @@
             // 
             // labelLocation
             // 
+            this.labelLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelLocation.AutoSize = true;
-            this.labelLocation.Location = new System.Drawing.Point(1022, 486);
+            this.labelLocation.BackColor = System.Drawing.Color.Transparent;
+            this.labelLocation.Location = new System.Drawing.Point(6, 112);
             this.labelLocation.Name = "labelLocation";
             this.labelLocation.Size = new System.Drawing.Size(35, 13);
             this.labelLocation.TabIndex = 3;
@@ -66,7 +65,7 @@
             // 
             // buttonClar
             // 
-            this.buttonClar.Location = new System.Drawing.Point(1025, 441);
+            this.buttonClar.Location = new System.Drawing.Point(0, 69);
             this.buttonClar.Name = "buttonClar";
             this.buttonClar.Size = new System.Drawing.Size(215, 23);
             this.buttonClar.TabIndex = 4;
@@ -76,40 +75,95 @@
             // 
             // canvasBase
             // 
+            this.canvasBase.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.canvasBase.BackColor = System.Drawing.Color.White;
             this.canvasBase.Location = new System.Drawing.Point(12, 12);
             this.canvasBase.Name = "canvasBase";
-            this.canvasBase.Size = new System.Drawing.Size(900, 804);
+            this.canvasBase.Size = new System.Drawing.Size(1237, 737);
             this.canvasBase.TabIndex = 5;
             this.canvasBase.TabStop = false;
             this.canvasBase.Click += new System.EventHandler(this.canvasBase_Click);
             this.canvasBase.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvasBase_MouseMove);
             // 
+            // colorDialog
+            // 
+            this.colorDialog.AllowFullOpen = false;
+            this.colorDialog.AnyColor = true;
+            // 
+            // buttonColorFill
+            // 
+            this.buttonColorFill.Location = new System.Drawing.Point(0, 144);
+            this.buttonColorFill.Name = "buttonColorFill";
+            this.buttonColorFill.Size = new System.Drawing.Size(215, 23);
+            this.buttonColorFill.TabIndex = 6;
+            this.buttonColorFill.Text = "Цвет заливки";
+            this.buttonColorFill.UseVisualStyleBackColor = true;
+            this.buttonColorFill.Click += new System.EventHandler(this.buttonColorFill_Click);
+            // 
+            // pictureBoxColor
+            // 
+            this.pictureBoxColor.Location = new System.Drawing.Point(0, 186);
+            this.pictureBoxColor.Name = "pictureBoxColor";
+            this.pictureBoxColor.Size = new System.Drawing.Size(215, 25);
+            this.pictureBoxColor.TabIndex = 7;
+            this.pictureBoxColor.TabStop = false;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.labelLocation);
+            this.groupBox1.Controls.Add(this.checkBox_drawBorder);
+            this.groupBox1.Controls.Add(this.buttonFill);
+            this.groupBox1.Controls.Add(this.pictureBoxColor);
+            this.groupBox1.Controls.Add(this.buttonClar);
+            this.groupBox1.Controls.Add(this.buttonColorFill);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.groupBox1.Location = new System.Drawing.Point(1268, 0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(216, 761);
+            this.groupBox1.TabIndex = 8;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Панель управления";
+            // 
+            // checkBox_drawBorder
+            // 
+            this.checkBox_drawBorder.AutoSize = true;
+            this.checkBox_drawBorder.Location = new System.Drawing.Point(50, 262);
+            this.checkBox_drawBorder.Name = "checkBox_drawBorder";
+            this.checkBox_drawBorder.Size = new System.Drawing.Size(120, 17);
+            this.checkBox_drawBorder.TabIndex = 8;
+            this.checkBox_drawBorder.Text = "Рисовать границы";
+            this.checkBox_drawBorder.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1359, 828);
+            this.ClientSize = new System.Drawing.Size(1484, 761);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.canvasBase);
-            this.Controls.Add(this.buttonClar);
-            this.Controls.Add(this.labelLocation);
-            this.Controls.Add(this.buttonFill);
-            this.Controls.Add(this.dataGridView1);
+            this.MinimumSize = new System.Drawing.Size(600, 350);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.canvasBase)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColor)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button buttonFill;
         private System.Windows.Forms.Label labelLocation;
         private System.Windows.Forms.Button buttonClar;
         private System.Windows.Forms.PictureBox canvasBase;
+        private System.Windows.Forms.ColorDialog colorDialog;
+        private System.Windows.Forms.Button buttonColorFill;
+        private System.Windows.Forms.PictureBox pictureBoxColor;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox checkBox_drawBorder;
     }
 }
 
