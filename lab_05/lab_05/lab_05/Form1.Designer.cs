@@ -31,7 +31,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.buttonFill = new System.Windows.Forms.Button();
             this.labelLocation = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonClar = new System.Windows.Forms.Button();
             this.canvasBase = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.canvasBase)).BeginInit();
@@ -58,21 +58,21 @@
             // labelLocation
             // 
             this.labelLocation.AutoSize = true;
-            this.labelLocation.Location = new System.Drawing.Point(1025, 467);
+            this.labelLocation.Location = new System.Drawing.Point(1022, 486);
             this.labelLocation.Name = "labelLocation";
             this.labelLocation.Size = new System.Drawing.Size(35, 13);
             this.labelLocation.TabIndex = 3;
             this.labelLocation.Text = "label1";
             // 
-            // button1
+            // buttonClar
             // 
-            this.button1.Location = new System.Drawing.Point(994, 564);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonClar.Location = new System.Drawing.Point(1025, 441);
+            this.buttonClar.Name = "buttonClar";
+            this.buttonClar.Size = new System.Drawing.Size(215, 23);
+            this.buttonClar.TabIndex = 4;
+            this.buttonClar.Text = "Очистить";
+            this.buttonClar.UseVisualStyleBackColor = true;
+            this.buttonClar.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // canvasBase
             // 
@@ -91,7 +91,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1359, 828);
             this.Controls.Add(this.canvasBase);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonClar);
             this.Controls.Add(this.labelLocation);
             this.Controls.Add(this.buttonFill);
             this.Controls.Add(this.dataGridView1);
@@ -108,7 +108,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button buttonFill;
         private System.Windows.Forms.Label labelLocation;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonClar;
         private System.Windows.Forms.PictureBox canvasBase;
     }
 }

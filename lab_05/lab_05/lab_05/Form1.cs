@@ -15,7 +15,6 @@ namespace lab_05
     {
         List<List<Point>> Polygons;
         List<Point> LastPolygon;
-        //List<Edge>[] y_group;
         Dictionary<int, List<Edge>> y_group;
         ListOfActiveEdges ActiveEdges;
 
@@ -31,10 +30,6 @@ namespace lab_05
         public Form1()
         {
             InitializeComponent();
-
-            /*y_group = new List<Edge>[canvasBase.Height];
-            for (int i = 0; i < y_group.Length; i++)
-                y_group[i] = new List<Edge>();*/
             y_group = new Dictionary<int, List<Edge>>();
 
             ActiveEdges = new ListOfActiveEdges(canvasBase.Width);
@@ -164,13 +159,11 @@ namespace lab_05
 
                 if (dy < 0) // точка "a" выше
                 {
-                    AddEdgeToYgroup(a.Y, new Edge(dy * -1, a.X, dx));
-                    //y_group[a.Y].Add(new Edge(dy * -1, a.X, dx));
+                    AddEdgeToYgroup(a.Y, new Edge(dy * -1 - 1, a.X, dx));
                 }
                 else if (dy > 0) 
                 {
                     AddEdgeToYgroup(b.Y, new Edge(dy, b.X, dx));
-                    //y_group[b.Y].Add(new Edge(dy, b.X, dx));
                 }
             }
         }
@@ -185,6 +178,7 @@ namespace lab_05
         // Закраска
         private void buttonFill_Click(object sender, EventArgs e)
         {
+            ActiveEdges.Clear();
             for (int i = min_coord.Y; i < max_coord.Y; i++)
             {
                 if (y_group.ContainsKey(i))
@@ -195,14 +189,18 @@ namespace lab_05
             canvasBase.Refresh();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        // Очистка экрана
+        private void buttonClear_Click(object sender, EventArgs e)
         {
-            using (var bmp = new Bitmap(canvasBase.Width, canvasBase.Height))
-            {
-                canvasBase.DrawToBitmap(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height));
-                bmp.Save(@"c:\Temp\test.png");
-            }
+            min_coord = new Point(canvasBase.Width, canvasBase.Height);
+            max_coord = new Point(0, 0);
+            y_group.Clear();
+            Polygons.Clear();
+            LastPolygon.Clear();
+            g.Clear(Color.White);
+            canvasBase.Refresh();
+            // table clear
         }
-       
+
     }
 }
