@@ -25,7 +25,7 @@ namespace lab_05
         Bitmap saved_picture;
         Graphics g;
         Graphics g_move;
-        Pen pen;
+        Pen pen; // edges
         Pen pen_fill;
 
         public Form1()
@@ -55,7 +55,6 @@ namespace lab_05
         private void DrawAll()
         {
             int i;
-            for (i = 0; i < Polygons.Count() - 1; i++)
             {
                 if (Polygons[i].Count > 1)
                     g.DrawPolygon(pen, Polygons[i].ToArray());
@@ -154,7 +153,7 @@ namespace lab_05
 
                 if (dy < 0) // точка "a" выше
                 {
-                    AddEdgeToYgroup(a.Y, new Edge(dy * -1 - 1, a.X, dx));
+                    AddEdgeToYgroup(a.Y, new Edge(dy * -1, a.X, dx));
                 }
                 else if (dy > 0) 
                 {

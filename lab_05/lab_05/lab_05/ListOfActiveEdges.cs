@@ -47,9 +47,7 @@ namespace lab_05
             int size = ActiveEdges.Count;
             for (int i = 0; i < size; i++)
                 x.Add(Convert.ToInt32(ActiveEdges[i].x));
-
-            if (size % 2 == 1)
-                x.Add(RightBorder);
+            x.Sort();
 
             return x;
         }
