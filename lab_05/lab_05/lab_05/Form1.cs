@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,30 +22,36 @@ namespace lab_05
         Point min_coord;
         Point max_coord;
 
+        Bitmap saved_picture;
         Graphics g;
+        Graphics g_move;
         Pen pen;
 
         public Form1()
         {
             InitializeComponent();
-
-            y_group = new List<Edge>[pictureBox1.Height];
+            
+            y_group = new List<Edge>[canvasBase.Height];
             for (int i = 0; i < y_group.Length; i++)
                 y_group[i] = new List<Edge>();
 
-            ActiveEdges = new ListOfActiveEdges(pictureBox1.Width);
+            ActiveEdges = new ListOfActiveEdges(canvasBase.Width);
             
             Polygons = new List<List<Point>>();
             Polygons.Add(new List<Point>());
             LastPolygon = Polygons[Polygons.Count - 1];
 
-            min_coord = new Point(pictureBox1.Width, pictureBox1.Height);
+            min_coord = new Point(canvasBase.Width, canvasBase.Height);
             max_coord = new Point(0, 0);
 
-            g = pictureBox1.CreateGraphics();
+            saved_picture = new Bitmap(canvasBase.Width, canvasBase.Height);
+            g = Graphics.FromImage(saved_picture);
+            g_move = canvasBase.CreateGraphics();
+            canvasBase.Image = saved_picture;
             pen = new Pen(Color.Black, 1);
-        }
 
+        }
+        /*
         // Рисует все сохраненные точки
         private void DrawAllLines()
         {
@@ -62,6 +69,21 @@ namespace lab_05
             {
                 g.DrawLines(pen, Polygons[i].ToArray());
             }
+        }*/
+
+        private void DrawEdgeStatic(bool last_edge = false)
+        {
+            if (LastPolygon.Count >= 2)
+            {
+                Point a = LastPolygon[LastPolygon.Count - 1];
+                Point b;
+                if (!last_edge)
+                    b = LastPolygon[LastPolygon.Count - 2];
+                else
+                    b = LastPolygon[0];
+
+                g.DrawLine(pen, a, b);
+            }
         }
 
         // Рисует линии к мыши из последней точки    
@@ -70,29 +92,27 @@ namespace lab_05
             if (LastPolygon.Count > 0)
             {
                 Point a = LastPolygon[LastPolygon.Count - 1];
-                Point b = pictureBox1.PointToClient(MousePosition);
+                Point b = canvasBase.PointToClient(MousePosition);
 
                 if (ModifierKeys == Keys.Control)
                     b.Y = a.Y;
 
-                g.DrawLine(pen, a, b);
+                g_move.DrawLine(pen, a, b);
             }
         }
 
         // Перемещение мыши внутри холста
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        private void canvasBase_MouseMove(object sender, MouseEventArgs e)
         {
-            labelLocation.Text = pictureBox1.PointToClient(MousePosition).ToString();
-            // отчистка экрана
-            pictureBox1.Refresh();
-            DrawAllLines();    
+            labelLocation.Text = canvasBase.PointToClient(MousePosition).ToString();
+            canvasBase.Refresh(); // Убирает g_move с холста
             DrawCurrentEdge();
         }
 
         // Нажатие на холст
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void canvasBase_Click(object sender, EventArgs e)
         {
-            Point mousePos = pictureBox1.PointToClient(MousePosition);
+            Point mousePos = canvasBase.PointToClient(MousePosition);
 
             if (((MouseEventArgs)e).Button == MouseButtons.Left)
             {
@@ -111,16 +131,17 @@ namespace lab_05
                     max_coord = mousePos;
                 if (mousePos.Y < min_coord.Y)
                     min_coord = mousePos;
+
+                DrawEdgeStatic();
             }
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
                 UpdateYgroup(true);
+                DrawEdgeStatic(true);
                 Polygons.Add(new List<Point>());
                 LastPolygon = Polygons[Polygons.Count - 1];
             }
-
-            DrawAllLines();
         }
 
         // Внести последнее ребро в соответствующую y-группу
