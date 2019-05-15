@@ -25,6 +25,8 @@ namespace lab_05
 
         public void AddYgroup(List<Edge> Ygroup)
         {
+            foreach (Edge e in Ygroup)
+                e.ResetEdge();
             ActiveEdges.AddRange(Ygroup);
         }
 
@@ -34,9 +36,8 @@ namespace lab_05
             {
                 ActiveEdges[i].dy -= 1;
                 ActiveEdges[i].x += ActiveEdges[i].dx;
-                if (ActiveEdges[i].dy < 0)
-                    ActiveEdges.RemoveAt(i);
             }
+            ActiveEdges.RemoveAll(el => el.dy == 0);
         }
 
         private List<int> GetXvalues()
