@@ -52,12 +52,25 @@ namespace lab_05
             return x;
         }
 
-        public void Draw(Graphics DrawingArea, Pen pen, int y)
+        public void Draw(System.Windows.Forms.PictureBox pb, Graphics DrawingArea, Pen pen, int y, int delay = 0)
         {
             List<int> x = GetXvalues();
 
-            for (int i = 0; i < x.Count; i += 2)
-                DrawingArea.DrawLine(pen, x[i], y, x[i + 1], y);
+            if (delay != 0)
+            {
+                for (int i = 0; i < x.Count; i += 2)
+                {
+                    DrawingArea.DrawLine(pen, x[i], y, x[i + 1], y);
+                    pb.CancelAsync();
+                    pb.Refresh();
+                    System.Threading.Thread.Sleep(delay);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < x.Count; i += 2)
+                    DrawingArea.DrawLine(pen, x[i], y, x[i + 1], y);
+            }
         }
     }
 }

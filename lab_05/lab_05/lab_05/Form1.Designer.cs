@@ -36,6 +36,8 @@
             this.buttonColorFill = new System.Windows.Forms.Button();
             this.pictureBoxColor = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBoxDelay = new System.Windows.Forms.CheckBox();
+            this.textBoxDelay = new System.Windows.Forms.TextBox();
             this.checkBox_drawBorder = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.canvasBase)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColor)).BeginInit();
@@ -80,6 +82,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.canvasBase.BackColor = System.Drawing.Color.White;
             this.canvasBase.Location = new System.Drawing.Point(12, 12);
+            this.canvasBase.MaximumSize = new System.Drawing.Size(1237, 737);
             this.canvasBase.Name = "canvasBase";
             this.canvasBase.Size = new System.Drawing.Size(1237, 737);
             this.canvasBase.TabIndex = 5;
@@ -112,6 +115,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBoxDelay);
+            this.groupBox1.Controls.Add(this.textBoxDelay);
             this.groupBox1.Controls.Add(this.labelLocation);
             this.groupBox1.Controls.Add(this.checkBox_drawBorder);
             this.groupBox1.Controls.Add(this.buttonFill);
@@ -126,10 +131,29 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Панель управления";
             // 
+            // checkBoxDelay
+            // 
+            this.checkBoxDelay.AutoSize = true;
+            this.checkBoxDelay.Location = new System.Drawing.Point(127, 343);
+            this.checkBoxDelay.Name = "checkBoxDelay";
+            this.checkBoxDelay.Size = new System.Drawing.Size(77, 17);
+            this.checkBoxDelay.TabIndex = 10;
+            this.checkBoxDelay.Text = "Задержка";
+            this.checkBoxDelay.UseVisualStyleBackColor = true;
+            // 
+            // textBoxDelay
+            // 
+            this.textBoxDelay.Location = new System.Drawing.Point(0, 308);
+            this.textBoxDelay.Name = "textBoxDelay";
+            this.textBoxDelay.Size = new System.Drawing.Size(215, 20);
+            this.textBoxDelay.TabIndex = 9;
+            // 
             // checkBox_drawBorder
             // 
             this.checkBox_drawBorder.AutoSize = true;
-            this.checkBox_drawBorder.Location = new System.Drawing.Point(50, 262);
+            this.checkBox_drawBorder.Checked = true;
+            this.checkBox_drawBorder.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_drawBorder.Location = new System.Drawing.Point(84, 232);
             this.checkBox_drawBorder.Name = "checkBox_drawBorder";
             this.checkBox_drawBorder.Size = new System.Drawing.Size(120, 17);
             this.checkBox_drawBorder.TabIndex = 8;
@@ -145,7 +169,7 @@
             this.Controls.Add(this.canvasBase);
             this.MinimumSize = new System.Drawing.Size(600, 350);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Obergan lab_05 Упорядоченный список ребер";
             ((System.ComponentModel.ISupportInitialize)(this.canvasBase)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColor)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -164,6 +188,8 @@
         private System.Windows.Forms.PictureBox pictureBoxColor;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox checkBox_drawBorder;
+        private System.Windows.Forms.CheckBox checkBoxDelay;
+        private System.Windows.Forms.TextBox textBoxDelay;
     }
 }
 

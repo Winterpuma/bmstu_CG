@@ -9,6 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/* Лабораторная работа №5
+ * Растровая развертка сплошных областей
+ * Упорядоченный список ребер
+*/
+
 namespace lab_05
 {
     public partial class Form1 : Form
@@ -55,6 +60,7 @@ namespace lab_05
         private void DrawAll()
         {
             int i;
+            for (i = 0; i < Polygons.Count(); i++)
             {
                 if (Polygons[i].Count > 1)
                     g.DrawPolygon(pen, Polygons[i].ToArray());
@@ -173,6 +179,9 @@ namespace lab_05
         private void buttonFill_Click(object sender, EventArgs e)
         {
             g.Clear(Color.White);
+
+            if (checkBox_drawBorder.Checked)
+                DrawAll();
             canvasBase.Refresh();
 
             ActiveEdges.Clear();
@@ -180,7 +189,7 @@ namespace lab_05
             {
                 if (y_group.ContainsKey(i))
                     ActiveEdges.AddYgroup(y_group[i]);
-                ActiveEdges.Draw(g, pen_fill, i);
+                ActiveEdges.Draw(canvasBase, g, pen_fill, i, checkBoxDelay.Checked ? Convert.ToInt32(textBoxDelay.Text) : 0);
                 ActiveEdges.Update();
             }
 
@@ -196,11 +205,15 @@ namespace lab_05
             max_coord = new Point(0, 0);
             y_group.Clear();
             Polygons.Clear();
+            Polygons.Add(new List<Point>());
             LastPolygon.Clear();
+            LastPolygon = Polygons[0];
             g.Clear(Color.White);
             canvasBase.Refresh();
+            g.DrawLine(Pens.Black, 0, 0, 0, 0);
         }
 
+        // Смена цвет заливки
         private void buttonColorFill_Click(object sender, EventArgs e)
         {
             if (colorDialog.ShowDialog() == DialogResult.OK)
