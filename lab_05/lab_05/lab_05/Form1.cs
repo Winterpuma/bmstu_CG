@@ -15,7 +15,8 @@ namespace lab_05
     {
         List<List<Point>> Polygons;
         List<Point> LastPolygon;
-        List<Edge>[] y_group;
+        //List<Edge>[] y_group;
+        Dictionary<int, List<Edge>> y_group;
         ListOfActiveEdges ActiveEdges;
 
         // Координаты прямоугольной оболочки
@@ -30,10 +31,11 @@ namespace lab_05
         public Form1()
         {
             InitializeComponent();
-            
-            y_group = new List<Edge>[canvasBase.Height];
+
+            /*y_group = new List<Edge>[canvasBase.Height];
             for (int i = 0; i < y_group.Length; i++)
-                y_group[i] = new List<Edge>();
+                y_group[i] = new List<Edge>();*/
+            y_group = new Dictionary<int, List<Edge>>();
 
             ActiveEdges = new ListOfActiveEdges(canvasBase.Width);
             
@@ -51,8 +53,8 @@ namespace lab_05
             pen = new Pen(Color.Black, 1);
 
         }
-        /*
-        // Рисует все сохраненные точки
+
+        /* // Рисует все сохраненные точки
         private void DrawAllLines()
         {
             int i;
@@ -162,13 +164,22 @@ namespace lab_05
 
                 if (dy < 0) // точка "a" выше
                 {
-                    y_group[a.Y].Add(new Edge(dy * -1, a.X, dx));
+                    AddEdgeToYgroup(a.Y, new Edge(dy * -1, a.X, dx));
+                    //y_group[a.Y].Add(new Edge(dy * -1, a.X, dx));
                 }
                 else if (dy > 0) 
                 {
-                    y_group[b.Y].Add(new Edge(dy, b.X, dx));
+                    AddEdgeToYgroup(b.Y, new Edge(dy, b.X, dx));
+                    //y_group[b.Y].Add(new Edge(dy, b.X, dx));
                 }
             }
+        }
+
+        private void AddEdgeToYgroup(int key, Edge edge)
+        {
+            if (!y_group.ContainsKey(key))
+                y_group[key] = new List<Edge>();
+            y_group[key].Add(edge);
         }
 
         // Закраска
@@ -176,10 +187,22 @@ namespace lab_05
         {
             for (int i = min_coord.Y; i < max_coord.Y; i++)
             {
-                ActiveEdges.AddYgroup(y_group[i]);
+                if (y_group.ContainsKey(i))
+                    ActiveEdges.AddYgroup(y_group[i]);
                 ActiveEdges.Draw(g, pen, i);
                 ActiveEdges.Update();
             }
+            canvasBase.Refresh();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (var bmp = new Bitmap(canvasBase.Width, canvasBase.Height))
+            {
+                canvasBase.DrawToBitmap(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height));
+                bmp.Save(@"c:\Temp\test.png");
+            }
+        }
+       
     }
 }
