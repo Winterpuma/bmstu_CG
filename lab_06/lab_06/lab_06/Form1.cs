@@ -199,5 +199,73 @@ namespace lab_06
             }
         }
 
+        // Находим затравочные пиксели на строке от x_left до x_right
+        private void FindSeed(Stack<Point> stack, Bitmap b, int x_left, int x_right, int y, Color c_new_fill, Color c_border)
+        {
+            int x = x_left;
+            bool flag = false; // найден незакрашенный пиксель
+            while (x <= x_right)
+            {
+                // Проходим до конца незакрашенного интервала
+                while (!PixelIsFillOrBorder(b, x, y, c_new_fill, c_border) && x <= x_right)
+                {
+                    flag = true;
+                    x++;
+                }
+
+                // В стек помещаем крайний справа пиксель
+                if (flag)
+                    if (x == x_right && !(PixelIsFillOrBorder(b, x, y, c_new_fill, c_border) && x < x_right))
+                        stack.Push(new Point(x, y));
+                    else
+                        stack.Push(new Point(x - 1, y));
+
+                // Продолжим проверку, если интервал был прерван
+                do
+                {
+                    x++;
+                }
+                while (PixelIsFillOrBorder(b, x, y, c_new_fill, c_border) && x < x_right);
+            }
+        }
+
+        // Построчный алгоритм заполнения с затравкой
+        private void LineByLineSeedAlgorithm(Bitmap b, Point seed, Color c_fill, Color c_border)
+        {
+            Stack<Point> stack = new Stack<Point>();
+            Point pix;
+            int x, y;
+            int x_right, x_left;
+            stack.Push(seed);
+
+            while (stack.Count > 0)
+            {
+                pix = stack.Pop();
+                x = pix.X;
+                y = pix.Y;
+
+                if (PixelIsSameColor(b, x, y, c_fill))
+                    continue;
+
+                while (!PixelIsSameColor(b, x, y, c_border) && x < b.Width)
+                {
+                    b.SetPixel(x, y, c_fill);
+                    x++;
+                }
+                x_right = x - 1;
+
+                x = pix.X - 1;
+                while (!PixelIsSameColor(b, x, y, c_border) && x > 0)
+                {
+                    b.SetPixel(x, y, c_fill);
+                    x--;
+                }
+                x_left = x + 1;
+
+                FindSeed(stack, b, x_left, x_right, y + 1, c_fill, c_border);
+                FindSeed(stack, b, x_left, x_right, y - 1, c_fill, c_border);
+                canvasBase.Refresh();
+            }
+        }
     }
 }
