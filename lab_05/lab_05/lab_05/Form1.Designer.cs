@@ -167,9 +167,10 @@
             this.ClientSize = new System.Drawing.Size(1484, 761);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.canvasBase);
+            this.MaximumSize = new System.Drawing.Size(1500, 800);
             this.MinimumSize = new System.Drawing.Size(600, 350);
             this.Name = "Form1";
-            this.Text = "Obergan lab_05 Упорядоченный список ребер";
+            this.Text = "Winterpuma lab_05 Упорядоченный список ребер";
             ((System.ComponentModel.ISupportInitialize)(this.canvasBase)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColor)).EndInit();
             this.groupBox1.ResumeLayout(false);
