@@ -34,8 +34,8 @@ namespace lab_06
             g_move = canvasBase.CreateGraphics();
             canvasBase.Image = saved_picture;
             pen = new Pen(Color.Black, 1);
-            pen_fill = new Pen(Color.Beige, 1);
-            pictureBoxColor.BackColor = Color.Beige;
+            pen_fill = new Pen(Color.Red, 1);
+            pictureBoxColor.BackColor = Color.Red;
         }
 
         // Очистка экрана
@@ -57,6 +57,17 @@ namespace lab_06
             {
                 pictureBoxColor.BackColor = colorDialog.Color;
                 pen_fill.Color = colorDialog.Color;
+            }
+        }
+
+        // Рисует все сохраненные точки
+        private void DrawAll()
+        {
+            int i;
+            for (i = 0; i < Polygons.Count(); i++)
+            {
+                if (Polygons[i].Count > 1)
+                    g.DrawPolygon(pen, Polygons[i].ToArray());
             }
         }
 
@@ -125,5 +136,68 @@ namespace lab_06
             canvasBase.Refresh(); // Убирает g_move с холста
             DrawCurrentEdge();
         }
+
+        // Закраска
+        private void buttonFill_Click(object sender, EventArgs e)
+        {
+            g.Clear(Color.White);
+            DrawAll();
+            canvasBase.Refresh();
+
+            // алгоритмы
+            //SimpleSeedAlgorithm(saved_picture, new Point(500, 500), pen_fill.Color, pen.Color);
+            LineByLineSeedAlgorithm(saved_picture, new Point(500, 500), pen_fill.Color, pen.Color);
+
+            canvasBase.Refresh();
+        }
+
+        // Возвращает true, если пиксель уже закрашен или граничный
+        private bool PixelIsFillOrBorder(Bitmap b, int x, int y, Color c_new_fill, Color c_border)
+        {
+            if ((x >= 0) && (x < b.Width) && (y >= 0) && (y < b.Height))
+            {
+                Color c_curr = b.GetPixel(x, y);
+                if (c_curr.ToArgb() == c_new_fill.ToArgb() || 
+                    c_curr.ToArgb() == c_border.ToArgb())
+                    return true;
+            }
+            return false;
+        }
+
+        // Возвращает true, если цвет пикселя совпадает с color
+        private bool PixelIsSameColor(Bitmap b, int x, int y, Color color)
+        {
+            if ((x >= 0) && (x < b.Width) && (y >= 0) && (y < b.Height))
+                return b.GetPixel(x, y).ToArgb() == color.ToArgb();
+            
+            return false;
+        }
+
+        // Простой алгоритм заполнения
+        private void SimpleSeedAlgorithm(Bitmap b, Point seed, Color c_new_fill, Color c_border)
+        {
+            Stack<Point> stack = new Stack<Point>();
+            Point p_curr;
+            Color c_curr;
+
+            stack.Push(seed);
+            while (stack.Count > 0)
+            {
+                p_curr = stack.Pop();
+                c_curr = b.GetPixel(p_curr.X, p_curr.Y);
+                if (c_curr != c_new_fill && c_curr != c_border)
+                    b.SetPixel(p_curr.X, p_curr.Y, c_new_fill);
+
+                if (!PixelIsFillOrBorder(b, p_curr.X + 1, p_curr.Y, c_new_fill, c_border))
+                    stack.Push(new Point(p_curr.X + 1, p_curr.Y));
+                if (!PixelIsFillOrBorder(b, p_curr.X, p_curr.Y + 1, c_new_fill, c_border))
+                    stack.Push(new Point(p_curr.X, p_curr.Y + 1));
+                if (!PixelIsFillOrBorder(b, p_curr.X - 1, p_curr.Y, c_new_fill, c_border))
+                    stack.Push(new Point(p_curr.X - 1, p_curr.Y));
+                if (!PixelIsFillOrBorder(b, p_curr.X, p_curr.Y - 1, c_new_fill, c_border))
+                    stack.Push(new Point(p_curr.X, p_curr.Y - 1));
+            }
+        }
+
     }
 }

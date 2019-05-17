@@ -32,7 +32,6 @@
             this.checkBoxDelay = new System.Windows.Forms.CheckBox();
             this.textBoxDelay = new System.Windows.Forms.TextBox();
             this.labelLocation = new System.Windows.Forms.Label();
-            this.checkBox_drawBorder = new System.Windows.Forms.CheckBox();
             this.buttonFill = new System.Windows.Forms.Button();
             this.pictureBoxColor = new System.Windows.Forms.PictureBox();
             this.buttonClear = new System.Windows.Forms.Button();
@@ -49,7 +48,6 @@
             this.groupBox1.Controls.Add(this.checkBoxDelay);
             this.groupBox1.Controls.Add(this.textBoxDelay);
             this.groupBox1.Controls.Add(this.labelLocation);
-            this.groupBox1.Controls.Add(this.checkBox_drawBorder);
             this.groupBox1.Controls.Add(this.buttonFill);
             this.groupBox1.Controls.Add(this.pictureBoxColor);
             this.groupBox1.Controls.Add(this.buttonClear);
@@ -90,18 +88,6 @@
             this.labelLocation.TabIndex = 3;
             this.labelLocation.Text = "label1";
             // 
-            // checkBox_drawBorder
-            // 
-            this.checkBox_drawBorder.AutoSize = true;
-            this.checkBox_drawBorder.Checked = true;
-            this.checkBox_drawBorder.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_drawBorder.Location = new System.Drawing.Point(84, 232);
-            this.checkBox_drawBorder.Name = "checkBox_drawBorder";
-            this.checkBox_drawBorder.Size = new System.Drawing.Size(120, 17);
-            this.checkBox_drawBorder.TabIndex = 8;
-            this.checkBox_drawBorder.Text = "Рисовать границы";
-            this.checkBox_drawBorder.UseVisualStyleBackColor = true;
-            // 
             // buttonFill
             // 
             this.buttonFill.Location = new System.Drawing.Point(0, 31);
@@ -110,6 +96,7 @@
             this.buttonFill.TabIndex = 2;
             this.buttonFill.Text = "Залить";
             this.buttonFill.UseVisualStyleBackColor = true;
+            this.buttonFill.Click += new System.EventHandler(this.buttonFill_Click);
             // 
             // pictureBoxColor
             // 
@@ -179,7 +166,6 @@
         private System.Windows.Forms.CheckBox checkBoxDelay;
         private System.Windows.Forms.TextBox textBoxDelay;
         private System.Windows.Forms.Label labelLocation;
-        private System.Windows.Forms.CheckBox checkBox_drawBorder;
         private System.Windows.Forms.Button buttonFill;
         private System.Windows.Forms.PictureBox pictureBoxColor;
         private System.Windows.Forms.Button buttonClear;
