@@ -36,6 +36,8 @@ namespace lab_06
             pen = new Pen(Color.Black, 1);
             pen_fill = new Pen(Color.Red, 1);
             pictureBoxColor.BackColor = Color.Red;
+
+            radioButtonDelayNone.Checked = true;
         }
 
         // Очистка экрана
@@ -113,6 +115,10 @@ namespace lab_06
                 {
                     LastPolygon.Add(new Point(mousePos.X, LastPolygon[LastPolygon.Count - 1].Y));
                 }
+                else if (ModifierKeys == Keys.Alt)
+                {
+                    LineByLineSeedAlgorithm(saved_picture, mousePos, pen_fill.Color, pen.Color, radioButtonDeleyPix.Checked, radioButtonDelayLine.Checked);
+                }
                 else
                 {
                     LastPolygon.Add(mousePos);
@@ -146,7 +152,7 @@ namespace lab_06
 
             // алгоритмы
             //SimpleSeedAlgorithm(saved_picture, new Point(500, 500), pen_fill.Color, pen.Color);
-            LineByLineSeedAlgorithm(saved_picture, new Point(500, 500), pen_fill.Color, pen.Color);
+            LineByLineSeedAlgorithm(saved_picture, new Point(500, 500), pen_fill.Color, pen.Color, radioButtonDeleyPix.Checked, radioButtonDelayLine.Checked);
 
             canvasBase.Refresh();
         }
@@ -174,7 +180,7 @@ namespace lab_06
         }
 
         // Простой алгоритм заполнения
-        private void SimpleSeedAlgorithm(Bitmap b, Point seed, Color c_new_fill, Color c_border)
+        private void SimpleSeedAlgorithm(Bitmap b, Point seed, Color c_new_fill, Color c_border, bool wait_pix = false)
         {
             Stack<Point> stack = new Stack<Point>();
             Point p_curr;
@@ -196,6 +202,7 @@ namespace lab_06
                     stack.Push(new Point(p_curr.X - 1, p_curr.Y));
                 if (!PixelIsFillOrBorder(b, p_curr.X, p_curr.Y - 1, c_new_fill, c_border))
                     stack.Push(new Point(p_curr.X, p_curr.Y - 1));
+                canvasBase.Refresh();
             }
         }
 
@@ -230,7 +237,7 @@ namespace lab_06
         }
 
         // Построчный алгоритм заполнения с затравкой
-        private void LineByLineSeedAlgorithm(Bitmap b, Point seed, Color c_fill, Color c_border)
+        private void LineByLineSeedAlgorithm(Bitmap b, Point seed, Color c_fill, Color c_border, bool wait_pix = false, bool wait_line = false)
         {
             Stack<Point> stack = new Stack<Point>();
             Point pix;
@@ -250,6 +257,8 @@ namespace lab_06
                 while (!PixelIsSameColor(b, x, y, c_border) && x < b.Width)
                 {
                     b.SetPixel(x, y, c_fill);
+                    if (wait_pix)
+                        canvasBase.Refresh();
                     x++;
                 }
                 x_right = x - 1;
@@ -258,14 +267,20 @@ namespace lab_06
                 while (!PixelIsSameColor(b, x, y, c_border) && x > 0)
                 {
                     b.SetPixel(x, y, c_fill);
+                    if (wait_pix)
+                        canvasBase.Refresh();
                     x--;
                 }
                 x_left = x + 1;
 
-                FindSeed(stack, b, x_left, x_right, y + 1, c_fill, c_border);
-                FindSeed(stack, b, x_left, x_right, y - 1, c_fill, c_border);
-                canvasBase.Refresh();
+                if (y > 0)
+                    FindSeed(stack, b, x_left, x_right, y - 1, c_fill, c_border);
+                if (y < canvasBase.Height - 1)
+                    FindSeed(stack, b, x_left, x_right, y + 1, c_fill, c_border);
+                if (wait_line)
+                    canvasBase.Refresh();
             }
+            canvasBase.Refresh();
         }
     }
 }

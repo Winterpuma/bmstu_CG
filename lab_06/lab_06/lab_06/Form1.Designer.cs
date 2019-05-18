@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBoxDelay = new System.Windows.Forms.CheckBox();
-            this.textBoxDelay = new System.Windows.Forms.TextBox();
             this.labelLocation = new System.Windows.Forms.Label();
             this.buttonFill = new System.Windows.Forms.Button();
             this.pictureBoxColor = new System.Windows.Forms.PictureBox();
@@ -38,6 +36,10 @@
             this.buttonColorFill = new System.Windows.Forms.Button();
             this.canvasBase = new System.Windows.Forms.PictureBox();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.radioButtonDeleyPix = new System.Windows.Forms.RadioButton();
+            this.radioButtonDelayLine = new System.Windows.Forms.RadioButton();
+            this.radioButtonDelayNone = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.canvasBase)).BeginInit();
@@ -45,8 +47,10 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.checkBoxDelay);
-            this.groupBox1.Controls.Add(this.textBoxDelay);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.radioButtonDelayNone);
+            this.groupBox1.Controls.Add(this.radioButtonDelayLine);
+            this.groupBox1.Controls.Add(this.radioButtonDeleyPix);
             this.groupBox1.Controls.Add(this.labelLocation);
             this.groupBox1.Controls.Add(this.buttonFill);
             this.groupBox1.Controls.Add(this.pictureBoxColor);
@@ -59,23 +63,6 @@
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Панель управления";
-            // 
-            // checkBoxDelay
-            // 
-            this.checkBoxDelay.AutoSize = true;
-            this.checkBoxDelay.Location = new System.Drawing.Point(127, 343);
-            this.checkBoxDelay.Name = "checkBoxDelay";
-            this.checkBoxDelay.Size = new System.Drawing.Size(77, 17);
-            this.checkBoxDelay.TabIndex = 10;
-            this.checkBoxDelay.Text = "Задержка";
-            this.checkBoxDelay.UseVisualStyleBackColor = true;
-            // 
-            // textBoxDelay
-            // 
-            this.textBoxDelay.Location = new System.Drawing.Point(0, 308);
-            this.textBoxDelay.Name = "textBoxDelay";
-            this.textBoxDelay.Size = new System.Drawing.Size(215, 20);
-            this.textBoxDelay.TabIndex = 9;
             // 
             // labelLocation
             // 
@@ -141,6 +128,48 @@
             this.canvasBase.Click += new System.EventHandler(this.canvasBase_Click);
             this.canvasBase.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvasBase_MouseMove);
             // 
+            // radioButtonDeleyPix
+            // 
+            this.radioButtonDeleyPix.AutoSize = true;
+            this.radioButtonDeleyPix.Location = new System.Drawing.Point(6, 280);
+            this.radioButtonDeleyPix.Name = "radioButtonDeleyPix";
+            this.radioButtonDeleyPix.Size = new System.Drawing.Size(174, 17);
+            this.radioButtonDeleyPix.TabIndex = 12;
+            this.radioButtonDeleyPix.TabStop = true;
+            this.radioButtonDeleyPix.Text = "Изменения каждого пикселя";
+            this.radioButtonDeleyPix.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDelayLine
+            // 
+            this.radioButtonDelayLine.AutoSize = true;
+            this.radioButtonDelayLine.Location = new System.Drawing.Point(6, 303);
+            this.radioButtonDelayLine.Name = "radioButtonDelayLine";
+            this.radioButtonDelayLine.Size = new System.Drawing.Size(162, 17);
+            this.radioButtonDelayLine.TabIndex = 13;
+            this.radioButtonDelayLine.TabStop = true;
+            this.radioButtonDelayLine.Text = "Изменения каждой строки";
+            this.radioButtonDelayLine.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDelayNone
+            // 
+            this.radioButtonDelayNone.AutoSize = true;
+            this.radioButtonDelayNone.Location = new System.Drawing.Point(6, 326);
+            this.radioButtonDelayNone.Name = "radioButtonDelayNone";
+            this.radioButtonDelayNone.Size = new System.Drawing.Size(97, 17);
+            this.radioButtonDelayNone.TabIndex = 14;
+            this.radioButtonDelayNone.TabStop = true;
+            this.radioButtonDelayNone.Text = "Без задержки";
+            this.radioButtonDelayNone.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 255);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(61, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "Задержка:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -163,8 +192,6 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox checkBoxDelay;
-        private System.Windows.Forms.TextBox textBoxDelay;
         private System.Windows.Forms.Label labelLocation;
         private System.Windows.Forms.Button buttonFill;
         private System.Windows.Forms.PictureBox pictureBoxColor;
@@ -172,6 +199,10 @@
         private System.Windows.Forms.Button buttonColorFill;
         private System.Windows.Forms.PictureBox canvasBase;
         private System.Windows.Forms.ColorDialog colorDialog;
+        private System.Windows.Forms.RadioButton radioButtonDelayNone;
+        private System.Windows.Forms.RadioButton radioButtonDelayLine;
+        private System.Windows.Forms.RadioButton radioButtonDeleyPix;
+        private System.Windows.Forms.Label label1;
     }
 }
 
