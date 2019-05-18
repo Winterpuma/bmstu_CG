@@ -149,10 +149,11 @@ namespace lab_06
             g.Clear(Color.White);
             DrawAll();
             canvasBase.Refresh();
+            Point seed = new Point(Convert.ToInt32(textBoxX.Text), Convert.ToInt32(textBoxY.Text));
 
             // алгоритмы
-            //SimpleSeedAlgorithm(saved_picture, new Point(500, 500), pen_fill.Color, pen.Color);
-            LineByLineSeedAlgorithm(saved_picture, new Point(500, 500), pen_fill.Color, pen.Color, radioButtonDeleyPix.Checked, radioButtonDelayLine.Checked);
+            //SimpleSeedAlgorithm(saved_picture, seed, pen_fill.Color, pen.Color);
+            LineByLineSeedAlgorithm(saved_picture, seed, pen_fill.Color, pen.Color, radioButtonDeleyPix.Checked, radioButtonDelayLine.Checked);
 
             canvasBase.Refresh();
         }
@@ -280,6 +281,15 @@ namespace lab_06
                 if (wait_line)
                     canvasBase.Refresh();
             }
+            canvasBase.Refresh();
+        }
+
+        // Добавить очередную вершину многоугольника
+        private void buttonEnterDot_Click(object sender, EventArgs e)
+        {
+            Point new_point = new Point(Convert.ToInt32(textBoxX.Text), Convert.ToInt32(textBoxY.Text));
+            LastPolygon.Add(new_point);
+            DrawEdgeStatic();
             canvasBase.Refresh();
         }
     }

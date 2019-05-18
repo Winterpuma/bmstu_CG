@@ -40,6 +40,11 @@
             this.radioButtonDelayLine = new System.Windows.Forms.RadioButton();
             this.radioButtonDelayNone = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
+            this.textBoxX = new System.Windows.Forms.TextBox();
+            this.textBoxY = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.buttonEnterDot = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.canvasBase)).BeginInit();
@@ -47,6 +52,11 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.buttonEnterDot);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.textBoxY);
+            this.groupBox1.Controls.Add(this.textBoxX);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.radioButtonDelayNone);
             this.groupBox1.Controls.Add(this.radioButtonDelayLine);
@@ -69,7 +79,7 @@
             this.labelLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelLocation.AutoSize = true;
             this.labelLocation.BackColor = System.Drawing.Color.Transparent;
-            this.labelLocation.Location = new System.Drawing.Point(6, 112);
+            this.labelLocation.Location = new System.Drawing.Point(3, 105);
             this.labelLocation.Name = "labelLocation";
             this.labelLocation.Size = new System.Drawing.Size(35, 13);
             this.labelLocation.TabIndex = 3;
@@ -77,11 +87,11 @@
             // 
             // buttonFill
             // 
-            this.buttonFill.Location = new System.Drawing.Point(0, 31);
+            this.buttonFill.Location = new System.Drawing.Point(0, 529);
             this.buttonFill.Name = "buttonFill";
             this.buttonFill.Size = new System.Drawing.Size(215, 23);
             this.buttonFill.TabIndex = 2;
-            this.buttonFill.Text = "Залить";
+            this.buttonFill.Text = "Затравка";
             this.buttonFill.UseVisualStyleBackColor = true;
             this.buttonFill.Click += new System.EventHandler(this.buttonFill_Click);
             // 
@@ -95,7 +105,7 @@
             // 
             // buttonClear
             // 
-            this.buttonClear.Location = new System.Drawing.Point(0, 69);
+            this.buttonClear.Location = new System.Drawing.Point(0, 54);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(215, 23);
             this.buttonClear.TabIndex = 4;
@@ -170,6 +180,48 @@
             this.label1.TabIndex = 15;
             this.label1.Text = "Задержка:";
             // 
+            // textBoxX
+            // 
+            this.textBoxX.Location = new System.Drawing.Point(31, 444);
+            this.textBoxX.Name = "textBoxX";
+            this.textBoxX.Size = new System.Drawing.Size(72, 20);
+            this.textBoxX.TabIndex = 16;
+            // 
+            // textBoxY
+            // 
+            this.textBoxY.Location = new System.Drawing.Point(109, 444);
+            this.textBoxY.Name = "textBoxY";
+            this.textBoxY.Size = new System.Drawing.Size(72, 20);
+            this.textBoxY.TabIndex = 17;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(28, 428);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(15, 13);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "x:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(106, 428);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(15, 13);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "y:";
+            // 
+            // buttonEnterDot
+            // 
+            this.buttonEnterDot.Location = new System.Drawing.Point(0, 488);
+            this.buttonEnterDot.Name = "buttonEnterDot";
+            this.buttonEnterDot.Size = new System.Drawing.Size(215, 23);
+            this.buttonEnterDot.TabIndex = 21;
+            this.buttonEnterDot.Text = "Добавить вершину многоугольника";
+            this.buttonEnterDot.UseVisualStyleBackColor = true;
+            this.buttonEnterDot.Click += new System.EventHandler(this.buttonEnterDot_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -203,6 +255,11 @@
         private System.Windows.Forms.RadioButton radioButtonDelayLine;
         private System.Windows.Forms.RadioButton radioButtonDeleyPix;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonEnterDot;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBoxY;
+        private System.Windows.Forms.TextBox textBoxX;
     }
 }
 
