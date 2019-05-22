@@ -258,7 +258,7 @@ namespace lab_06
                 while (!PixelIsSameColor(b, x, y, c_border) && x < b.Width)
                 {
                     b.SetPixel(x, y, c_fill);
-                    if (wait_pix)
+                    if (wait_pix) // Эти проверки на задержку замедляют алгоритм без задержки 
                         canvasBase.Refresh();
                     x++;
                 }
