@@ -12,8 +12,8 @@ namespace lab_07
 {
     public partial class Form1 : Form
     {
-        List<Point[]> lines;
-        int[] window;
+        List<PointF[]> lines;
+        int[] cutter;
 
         Bitmap saved_picture;
         Graphics g;
@@ -25,9 +25,9 @@ namespace lab_07
         {
             InitializeComponent();
 
-            lines = new List<Point[]>();
-            lines.Add(new Point[2]);
-            window = new int[4];
+            lines = new List<PointF[]>();
+            lines.Add(new PointF[2]);
+            cutter = new int[4];
 
             saved_picture = new Bitmap(canvasBase.Width, canvasBase.Height);
             g = Graphics.FromImage(saved_picture);
@@ -38,26 +38,33 @@ namespace lab_07
             pictureBoxColor.BackColor = Color.Red;
         }
 
+        static void Swap<T>(ref T a, ref T b)
+        {
+            T temp = a;
+            a = b;
+            b = temp;
+        }
+
         // Возвращает десятичное значение кода нахождения точки
         // относительно окна
-        int GetPositioning(Point p)
+        int GetPositioning(PointF p)
         {
             int sum = 0;
 
-            if (p.X < window[0])
+            if (p.X < cutter[0])
                 sum += 8;
-            if (p.X > window[1])
+            if (p.X > cutter[1])
                 sum += 4;
-            if (p.Y < window[2])
+            if (p.Y < cutter[2])
                 sum += 2;
-            if (p.Y > window[3])
+            if (p.Y > cutter[3])
                 sum += 1;
-
+                
             return sum;
         }
 
         // Проверяет видимость точки относительно окна
-        int IsVisible(Point a, Point b)
+        int IsVisible(PointF a, PointF b)
         {
             int SumA = GetPositioning(a);
             int SumB = GetPositioning(b);
@@ -76,10 +83,10 @@ namespace lab_07
         }
 
         // Алгоритм Коэна — Сазерленда для отрезка
-        void CohenSutherland(Point a, Point b)
+        void CohenSutherland(PointF a, PointF b)
         {
             int orientation_flag = 1;
-            float slope;
+            float slope = 3000;
 
             if (b.X - a.X == 0)
                 orientation_flag = -1; // вертикальный
@@ -92,6 +99,9 @@ namespace lab_07
 
             for (int i = 1; i <= 4; i++)
             {
+                int SumA = GetPositioning(a);
+                int SumB = GetPositioning(b);
+
                 int visible = IsVisible(a, b);
                 if (visible == 1)
                     g.DrawLine(pen_choosen, a, b);
@@ -99,7 +109,30 @@ namespace lab_07
                     return;
 
                 // проверка пересечения отезка и стороны окна                    
+                //???зачем
+                // проверка нахождения a вне окна
+                if (SumA == 0)
+                {
+                    Swap(ref a, ref b);
+                    Swap(ref SumA, ref SumB);
+                }
 
+                // поиск пересечений отрезка со сторонами окна
+                if ((orientation_flag != -1) && (i <= 2))
+                {
+                    a.Y = slope * (cutter[i - 1] - a.X) + a.X;
+                    a.X = cutter[i - 1];
+                }
+                else
+                {
+                    if (orientation_flag != 0)
+                    {
+                        if (orientation_flag != -1)
+                            a.X = (1 / slope) * (cutter[i - 1] - a.Y) + a.X;
+                        a.Y = cutter[i - 1];
+                    }
+                }
+                g.DrawLine(pen_choosen, a, b);
             }
 
 
