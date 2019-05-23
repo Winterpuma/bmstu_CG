@@ -12,7 +12,8 @@ namespace lab_07
 {
     public partial class Form1 : Form
     {
-        List<PointF[]> lines;
+        List<List<PointF>> lines;
+        List<PointF> last_line;
         int[] cutter;
 
         Bitmap saved_picture;
@@ -25,8 +26,9 @@ namespace lab_07
         {
             InitializeComponent();
 
-            lines = new List<PointF[]>();
-            lines.Add(new PointF[2]);
+            lines = new List<List<PointF>>();
+            lines.Add(new List<PointF>());
+            last_line = lines[0];
             cutter = new int[4];
 
             saved_picture = new Bitmap(canvasBase.Width, canvasBase.Height);
@@ -51,13 +53,13 @@ namespace lab_07
         {
             int sum = 0;
 
-            if (p.X < cutter[0])
+            if (p.X < cutter[0]) // левее
                 sum += 8;
-            if (p.X > cutter[1])
+            if (p.X > cutter[1]) // правее
                 sum += 4;
-            if (p.Y < cutter[2])
+            if (p.Y > cutter[2]) // ниже
                 sum += 2;
-            if (p.Y > cutter[3])
+            if (p.Y < cutter[3]) // выше
                 sum += 1;
                 
             return sum;
@@ -104,7 +106,11 @@ namespace lab_07
 
                 int visible = IsVisible(a, b);
                 if (visible == 1)
+                {
                     g.DrawLine(pen_choosen, a, b);
+                    canvasBase.Refresh();
+                    return;
+                }
                 else if (visible == 0)
                     return;
 
@@ -134,9 +140,114 @@ namespace lab_07
                 }
                 g.DrawLine(pen_choosen, a, b);
             }
-
-
         }
 
+
+
+        // Рисует линии к мыши из последней точки    
+        private void DrawCurrentLine()
+        {
+            if (last_line.Count() == 1)
+            {
+                PointF a = last_line[0];
+                PointF b = canvasBase.PointToClient(MousePosition);
+
+                if (ModifierKeys == Keys.Control)
+                    b.Y = a.Y;
+                else if (ModifierKeys == Keys.Alt)
+                    b.X = a.X;
+
+                g_move.DrawLine(pen, a, b);
+            }
+        }
+
+        // Получить значения и отобразить отсекатель
+        private void buttonGetCutter_Click(object sender, EventArgs e)
+        {
+            lines.Clear();
+            g.Clear(Color.White);
+            canvasBase.Refresh();
+
+            cutter[0] = Convert.ToInt32(textBoxLeft.Text);
+            cutter[1] = Convert.ToInt32(textBoxRight.Text);
+            cutter[2] = Convert.ToInt32(textBoxDown.Text);
+            cutter[3] = Convert.ToInt32(textBoxUp.Text);
+
+            g.DrawRectangle(pen, cutter[0], cutter[3], cutter[1] - cutter[0], cutter[2] - cutter[3]);
+            canvasBase.Refresh();
+        }
+
+        // Перемещение мыши внутри холста
+        private void canvasBase_MouseMove(object sender, MouseEventArgs e)
+        {
+            labelLocation.Text = canvasBase.PointToClient(MousePosition).ToString();
+            canvasBase.Refresh(); // Убирает g_move с холста
+            DrawCurrentLine();
+        }
+
+        // Нажатие на холст
+        private void canvasBase_Click(object sender, EventArgs e)
+        {
+            Point mousePos = canvasBase.PointToClient(MousePosition);
+
+            if (((MouseEventArgs)e).Button == MouseButtons.Left)
+            {
+                if (last_line.Count() == 0)
+                {
+                    last_line.Add(mousePos);
+                }
+                else
+                {
+                    if (ModifierKeys == Keys.Control) // горизонтальная линия
+                    {
+                        last_line.Add(new PointF(mousePos.X, last_line[0].Y));
+                    }
+                    else if (ModifierKeys == Keys.Alt) // вертикальная линия
+                    {
+                        last_line.Add(new PointF(last_line[0].X, mousePos.X));
+                    }
+                    else
+                    {
+                        last_line.Add(mousePos);
+                    }
+
+                    g.DrawLine(pen, last_line[0], last_line[1]);
+                    canvasBase.Refresh();
+                    lines.Add(new List<PointF>());
+                    last_line = lines[lines.Count() - 1];
+                }
+            }
+        }
+
+        // Смена цвет выделения
+        private void buttonColorFill_Click(object sender, EventArgs e)
+        {
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                pictureBoxColor.BackColor = colorDialog.Color;
+                pen_choosen.Color = colorDialog.Color;
+            }
+        }
+
+        // Очистка холста
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            lines.Clear();
+            lines.Add(new List<PointF>());
+            last_line = lines[0];
+
+            g.Clear(Color.White);
+            canvasBase.Refresh();
+        }
+
+        // Отсечение
+        private void buttonCut_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < lines.Count() -1; i++)
+            {
+                CohenSutherland(lines[i][0], lines[i][1]);
+            }
+            canvasBase.Refresh();
+        }
     }
 }

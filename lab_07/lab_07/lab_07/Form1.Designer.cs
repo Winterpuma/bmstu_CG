@@ -29,22 +29,23 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.buttonGetCutter = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxDown = new System.Windows.Forms.TextBox();
+            this.textBoxUp = new System.Windows.Forms.TextBox();
+            this.textBoxRight = new System.Windows.Forms.TextBox();
             this.textBoxLeft = new System.Windows.Forms.TextBox();
             this.labelLocation = new System.Windows.Forms.Label();
-            this.buttonFill = new System.Windows.Forms.Button();
+            this.buttonCut = new System.Windows.Forms.Button();
             this.pictureBoxColor = new System.Windows.Forms.PictureBox();
             this.buttonClear = new System.Windows.Forms.Button();
             this.buttonColorFill = new System.Windows.Forms.Button();
             this.canvasBase = new System.Windows.Forms.PictureBox();
-            this.textBoxRight = new System.Windows.Forms.TextBox();
-            this.textBoxUp = new System.Windows.Forms.TextBox();
-            this.textBoxDown = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.buttonGetWindow = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
+            this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.canvasBase)).BeginInit();
@@ -53,7 +54,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.buttonGetWindow);
+            this.groupBox1.Controls.Add(this.buttonGetCutter);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
@@ -63,7 +64,7 @@
             this.groupBox1.Controls.Add(this.textBoxRight);
             this.groupBox1.Controls.Add(this.textBoxLeft);
             this.groupBox1.Controls.Add(this.labelLocation);
-            this.groupBox1.Controls.Add(this.buttonFill);
+            this.groupBox1.Controls.Add(this.buttonCut);
             this.groupBox1.Controls.Add(this.pictureBoxColor);
             this.groupBox1.Controls.Add(this.buttonClear);
             this.groupBox1.Controls.Add(this.buttonColorFill);
@@ -74,6 +75,88 @@
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Панель управления";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label5.Location = new System.Drawing.Point(0, 259);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(150, 17);
+            this.label5.TabIndex = 18;
+            this.label5.Text = "Границы отсекателя:";
+            // 
+            // buttonGetCutter
+            // 
+            this.buttonGetCutter.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.buttonGetCutter.Location = new System.Drawing.Point(0, 404);
+            this.buttonGetCutter.Name = "buttonGetCutter";
+            this.buttonGetCutter.Size = new System.Drawing.Size(215, 23);
+            this.buttonGetCutter.TabIndex = 17;
+            this.buttonGetCutter.Text = "Задать отсекатель";
+            this.buttonGetCutter.UseVisualStyleBackColor = true;
+            this.buttonGetCutter.Click += new System.EventHandler(this.buttonGetCutter_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label4.Location = new System.Drawing.Point(113, 340);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(59, 17);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Нижняя";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label3.Location = new System.Drawing.Point(0, 340);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(63, 17);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Верхняя";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label2.Location = new System.Drawing.Point(113, 289);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(57, 17);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Правая";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label1.Location = new System.Drawing.Point(0, 289);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(49, 17);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Левая";
+            // 
+            // textBoxDown
+            // 
+            this.textBoxDown.Location = new System.Drawing.Point(115, 360);
+            this.textBoxDown.Name = "textBoxDown";
+            this.textBoxDown.Size = new System.Drawing.Size(100, 20);
+            this.textBoxDown.TabIndex = 12;
+            // 
+            // textBoxUp
+            // 
+            this.textBoxUp.Location = new System.Drawing.Point(0, 360);
+            this.textBoxUp.Name = "textBoxUp";
+            this.textBoxUp.Size = new System.Drawing.Size(100, 20);
+            this.textBoxUp.TabIndex = 11;
+            // 
+            // textBoxRight
+            // 
+            this.textBoxRight.Location = new System.Drawing.Point(116, 308);
+            this.textBoxRight.Name = "textBoxRight";
+            this.textBoxRight.Size = new System.Drawing.Size(100, 20);
+            this.textBoxRight.TabIndex = 10;
             // 
             // textBoxLeft
             // 
@@ -94,15 +177,16 @@
             this.labelLocation.TabIndex = 3;
             this.labelLocation.Text = "label1";
             // 
-            // buttonFill
+            // buttonCut
             // 
-            this.buttonFill.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.buttonFill.Location = new System.Drawing.Point(0, 31);
-            this.buttonFill.Name = "buttonFill";
-            this.buttonFill.Size = new System.Drawing.Size(215, 23);
-            this.buttonFill.TabIndex = 2;
-            this.buttonFill.Text = "Отсечь";
-            this.buttonFill.UseVisualStyleBackColor = true;
+            this.buttonCut.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.buttonCut.Location = new System.Drawing.Point(0, 31);
+            this.buttonCut.Name = "buttonCut";
+            this.buttonCut.Size = new System.Drawing.Size(215, 23);
+            this.buttonCut.TabIndex = 2;
+            this.buttonCut.Text = "Отсечь";
+            this.buttonCut.UseVisualStyleBackColor = true;
+            this.buttonCut.Click += new System.EventHandler(this.buttonCut_Click);
             // 
             // pictureBoxColor
             // 
@@ -121,6 +205,7 @@
             this.buttonClear.TabIndex = 4;
             this.buttonClear.Text = "Очистить";
             this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // buttonColorFill
             // 
@@ -131,6 +216,7 @@
             this.buttonColorFill.TabIndex = 6;
             this.buttonColorFill.Text = "Цвет выделения";
             this.buttonColorFill.UseVisualStyleBackColor = true;
+            this.buttonColorFill.Click += new System.EventHandler(this.buttonColorFill_Click);
             // 
             // canvasBase
             // 
@@ -144,87 +230,8 @@
             this.canvasBase.Size = new System.Drawing.Size(1237, 737);
             this.canvasBase.TabIndex = 11;
             this.canvasBase.TabStop = false;
-            // 
-            // textBoxRight
-            // 
-            this.textBoxRight.Location = new System.Drawing.Point(116, 308);
-            this.textBoxRight.Name = "textBoxRight";
-            this.textBoxRight.Size = new System.Drawing.Size(100, 20);
-            this.textBoxRight.TabIndex = 10;
-            // 
-            // textBoxUp
-            // 
-            this.textBoxUp.Location = new System.Drawing.Point(0, 360);
-            this.textBoxUp.Name = "textBoxUp";
-            this.textBoxUp.Size = new System.Drawing.Size(100, 20);
-            this.textBoxUp.TabIndex = 11;
-            // 
-            // textBoxDown
-            // 
-            this.textBoxDown.Location = new System.Drawing.Point(115, 360);
-            this.textBoxDown.Name = "textBoxDown";
-            this.textBoxDown.Size = new System.Drawing.Size(100, 20);
-            this.textBoxDown.TabIndex = 12;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label1.Location = new System.Drawing.Point(0, 289);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 17);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Левая";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label2.Location = new System.Drawing.Point(113, 289);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 17);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "Правая";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label3.Location = new System.Drawing.Point(0, 340);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(63, 17);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "Верхняя";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label4.Location = new System.Drawing.Point(113, 340);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(59, 17);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "Нижняя";
-            // 
-            // buttonGetWindow
-            // 
-            this.buttonGetWindow.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.buttonGetWindow.Location = new System.Drawing.Point(0, 404);
-            this.buttonGetWindow.Name = "buttonGetWindow";
-            this.buttonGetWindow.Size = new System.Drawing.Size(215, 23);
-            this.buttonGetWindow.TabIndex = 17;
-            this.buttonGetWindow.Text = "Задать отсекатель";
-            this.buttonGetWindow.UseVisualStyleBackColor = true;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label5.Location = new System.Drawing.Point(0, 259);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(150, 17);
-            this.label5.TabIndex = 18;
-            this.label5.Text = "Границы отсекателя:";
+            this.canvasBase.Click += new System.EventHandler(this.canvasBase_Click);
+            this.canvasBase.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvasBase_MouseMove);
             // 
             // Form1
             // 
@@ -253,17 +260,18 @@
         private System.Windows.Forms.TextBox textBoxRight;
         private System.Windows.Forms.TextBox textBoxLeft;
         private System.Windows.Forms.Label labelLocation;
-        private System.Windows.Forms.Button buttonFill;
+        private System.Windows.Forms.Button buttonCut;
         private System.Windows.Forms.PictureBox pictureBoxColor;
         private System.Windows.Forms.Button buttonClear;
         private System.Windows.Forms.Button buttonColorFill;
         private System.Windows.Forms.PictureBox canvasBase;
-        private System.Windows.Forms.Button buttonGetWindow;
+        private System.Windows.Forms.Button buttonGetCutter;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ColorDialog colorDialog;
     }
 }
 
