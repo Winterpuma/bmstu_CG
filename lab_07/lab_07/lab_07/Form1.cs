@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace lab_07
 {
     public partial class Form1 : Form
@@ -19,7 +20,9 @@ namespace lab_07
         Bitmap saved_picture;
         Graphics g;
         Graphics g_move;
-        Pen pen; // lines
+
+        Pen pen_cutter;//!!!
+        Pen pen_lines; // lines
         Pen pen_choosen;
 
         public Form1()
@@ -35,9 +38,12 @@ namespace lab_07
             g = Graphics.FromImage(saved_picture);
             g_move = canvasBase.CreateGraphics();
             canvasBase.Image = saved_picture;
-            pen = new Pen(Color.Black, 1);
+
+            pen_cutter = new Pen(Color.Black, 1);
+            pen_lines = new Pen(Color.Blue, 1);
             pen_choosen = new Pen(Color.Red, 1);
-            pictureBoxColor.BackColor = Color.Red;
+
+            pictureBoxColor.BackColor = Color.Blue;
         }
 
         static void Swap<T>(ref T a, ref T b)
@@ -47,12 +53,22 @@ namespace lab_07
             b = temp;
         }
 
+        // Проверяет, используюя коды двух точек, пересечение бесконечной стороны и линии
+        bool Intersect(int T1, int T2, int side)
+        {
+            int coord = (int)Math.Pow(2, 3 - side);
+
+            if ((T1 & coord) != (T2 & coord))
+                return true;
+            else
+                return false;
+        }
 
         // Алгоритм Коэна — Сазерленда для отрезка
         void CohenSutherland(PointF a, PointF b)
         {
-            int orientation_flag = 1;
-            float slope = 3000;
+            int orientation_flag = 0; // общего
+            float slope = 1; // наклон
 
             if (b.X - a.X == 0)
                 orientation_flag = -1; // вертикальный
@@ -60,54 +76,56 @@ namespace lab_07
             {
                 slope = (b.Y - a.Y) / (b.X - a.X);
                 if (slope == 0)
-                    orientation_flag = 0; // горизонтальный
+                    orientation_flag = 1; // горизонтальный
             }
 
-            for (int i = 1; i <= 4; i++)
+            for (int i = 0; i < 4; i++)
             {
-                int SumA = GetPositioning(a);
-                int SumB = GetPositioning(b);
-
-                int visible = IsVisible(a, b);
-                if (visible == 1)
+                int visible = cutter.IsVisible(a, b);
+                if (visible == 1) // Тривиальная видимость
                 {
                     g.DrawLine(pen_choosen, a, b);
-                    canvasBase.Refresh();
                     return;
                 }
-                else if (visible == 0)
+                else if (visible == 0) // Тривиальная невидимость
                     return;
 
-                // проверка пересечения отезка и стороны окна                    
-                //???зачем
-                // проверка нахождения a вне окна
-                if (SumA == 0)
+                // Проверяем пересечение отрезка и стороны окна
+                int SumA = cutter.GetPositioning(a);
+                int SumB = cutter.GetPositioning(b);
+
+                Console.WriteLine("Sum:" + SumA.ToString() + SumB.ToString());
+                if (!Intersect(SumA, SumB, i))
                 {
+                    Console.WriteLine("not intersecting" + i.ToString());
+                    continue;
+                }
+
+                // Если точка а внутри стороны
+                if ((SumA & (int)Math.Pow(2, 3 - i)) == 0)
+                {
+                    Console.WriteLine("A inside");
+
                     Swap(ref a, ref b);
-                    Swap(ref SumA, ref SumB);
                 }
 
-                // поиск пересечений отрезка со сторонами окна
-                if ((orientation_flag != -1) && (i <= 2))
+                // Поиск пересечений отрезка со стороной
+                if (orientation_flag != -1) // не вертикальный
                 {
-                    a.Y = slope * (cutter[i - 1] - a.X) + a.X;
-                    a.X = cutter[i - 1];
-                }
-                else
-                {
-                    if (orientation_flag != 0)
+                    if (i < 2)
                     {
-                        if (orientation_flag != -1)
-                            a.X = (1 / slope) * (cutter[i - 1] - a.Y) + a.X;
-                        a.Y = cutter[i - 1];
+                        a.Y = slope * (cutter[i] - a.X) + a.Y;
+                        a.X = cutter[i];
+                        continue;
                     }
+                    else
+                        a.X = (1 / slope) * (cutter[i] - a.Y) + a.X;
                 }
-                g.DrawLine(pen_choosen, a, b);
+                a.Y = cutter[i];
             }
+            g.DrawLine(pen_choosen, a, b);
         }
-
-
-
+        
         // Рисует линии к мыши из последней точки    
         private void DrawCurrentLine()
         {
@@ -121,7 +139,7 @@ namespace lab_07
                 else if (ModifierKeys == Keys.Alt)
                     b.X = a.X;
 
-                g_move.DrawLine(pen, a, b);
+                g_move.DrawLine(pen_lines, a, b);
             }
         }
 
@@ -129,15 +147,18 @@ namespace lab_07
         private void buttonGetCutter_Click(object sender, EventArgs e)
         {
             lines.Clear();
+            lines.Add(new List<PointF>());
+            last_line = lines[0];
+
             g.Clear(Color.White);
             canvasBase.Refresh();
 
-            cutter[0] = Convert.ToInt32(textBoxLeft.Text);
-            cutter[1] = Convert.ToInt32(textBoxRight.Text);
-            cutter[2] = Convert.ToInt32(textBoxDown.Text);
-            cutter[3] = Convert.ToInt32(textBoxUp.Text);
+            cutter.left = Convert.ToInt32(textBoxLeft.Text);
+            cutter.right = Convert.ToInt32(textBoxRight.Text);
+            cutter.down = Convert.ToInt32(textBoxDown.Text);
+            cutter.up = Convert.ToInt32(textBoxUp.Text);
 
-            g.DrawRectangle(pen, cutter[0], cutter[3], cutter[1] - cutter[0], cutter[2] - cutter[3]);
+            g.DrawRectangle(pen_cutter, cutter.left, cutter.up, cutter.right - cutter.left, cutter.down - cutter.up);
             canvasBase.Refresh();
         }
 
@@ -152,7 +173,7 @@ namespace lab_07
         // Нажатие на холст
         private void canvasBase_Click(object sender, EventArgs e)
         {
-            Point mousePos = canvasBase.PointToClient(MousePosition);
+            PointF mousePos = new PointF(((MouseEventArgs)e).X, ((MouseEventArgs)e).Y);//canvasBase.PointToClient(MousePosition);
 
             if (((MouseEventArgs)e).Button == MouseButtons.Left)
             {
@@ -168,14 +189,14 @@ namespace lab_07
                     }
                     else if (ModifierKeys == Keys.Alt) // вертикальная линия
                     {
-                        last_line.Add(new PointF(last_line[0].X, mousePos.X));
+                        last_line.Add(new PointF(last_line[0].X, mousePos.Y));
                     }
                     else
                     {
                         last_line.Add(mousePos);
                     }
 
-                    g.DrawLine(pen, last_line[0], last_line[1]);
+                    g.DrawLine(pen_lines, last_line[0], last_line[1]);
                     canvasBase.Refresh();
                     lines.Add(new List<PointF>());
                     last_line = lines[lines.Count() - 1];
@@ -210,6 +231,7 @@ namespace lab_07
             for (int i = 0; i < lines.Count() -1; i++)
             {
                 CohenSutherland(lines[i][0], lines[i][1]);
+                canvasBase.Refresh();
             }
             canvasBase.Refresh();
         }

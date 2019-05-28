@@ -9,10 +9,10 @@ namespace lab_07
 {
     class Cutter
     {
-        int left = 0;
-        int right = 0;
-        int up = 0;
-        int down = 0;
+        public int left = 0;
+        public int right = 0;
+        public int up = 0;
+        public int down = 0;
 
         // Получение кода точки относительно отсекателя
         public int GetPositioning(PointF p)
@@ -48,6 +48,27 @@ namespace lab_07
                     visibility = 0;
             }
             return visibility;
+        }
+
+        // Индексатор
+        public int this[int index]
+        {
+            get
+            {
+                switch(index)
+                {
+                    case 0:
+                        return left;
+                    case 1:
+                        return right;
+                    case 2:
+                        return down;
+                    case 3:
+                        return up;
+                    default:
+                        return -1;
+                }
+            }
         }
     }
 }
