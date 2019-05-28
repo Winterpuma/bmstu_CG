@@ -14,7 +14,7 @@ namespace lab_07
     {
         List<List<PointF>> lines;
         List<PointF> last_line;
-        int[] cutter;
+        Cutter cutter;
 
         Bitmap saved_picture;
         Graphics g;
@@ -29,7 +29,7 @@ namespace lab_07
             lines = new List<List<PointF>>();
             lines.Add(new List<PointF>());
             last_line = lines[0];
-            cutter = new int[4];
+            cutter = new Cutter();
 
             saved_picture = new Bitmap(canvasBase.Width, canvasBase.Height);
             g = Graphics.FromImage(saved_picture);
@@ -47,42 +47,6 @@ namespace lab_07
             b = temp;
         }
 
-        // Возвращает десятичное значение кода нахождения точки
-        // относительно окна
-        int GetPositioning(PointF p)
-        {
-            int sum = 0;
-
-            if (p.X < cutter[0]) // левее
-                sum += 8;
-            if (p.X > cutter[1]) // правее
-                sum += 4;
-            if (p.Y > cutter[2]) // ниже
-                sum += 2;
-            if (p.Y < cutter[3]) // выше
-                sum += 1;
-                
-            return sum;
-        }
-
-        // Проверяет видимость точки относительно окна
-        int IsVisible(PointF a, PointF b)
-        {
-            int SumA = GetPositioning(a);
-            int SumB = GetPositioning(b);
-
-            int visibility = -1;
-
-            if (SumA == 0 && SumB == 0)
-                visibility = 1;
-            else
-            {
-                // проверка тривиальной невидимости отрезка
-                if ((SumA & SumB) != 0)
-                    visibility = 0;
-            }
-            return visibility;
-        }
 
         // Алгоритм Коэна — Сазерленда для отрезка
         void CohenSutherland(PointF a, PointF b)
