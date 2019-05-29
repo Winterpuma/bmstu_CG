@@ -40,8 +40,8 @@ namespace lab_07
             canvasBase.Image = saved_picture;
 
             pen_cutter = new Pen(Color.Black, 1);
-            pen_lines = new Pen(Color.Blue, 1);
-            pen_choosen = new Pen(Color.Red, 1);
+            pen_lines = new Pen(Color.Red, 1);
+            pen_choosen = new Pen(Color.Blue, 1);
 
             pictureBoxColor.BackColor = Color.Blue;
         }
@@ -81,6 +81,10 @@ namespace lab_07
 
             for (int i = 0; i < 4; i++)
             {
+                // Находим коды
+                int SumA = cutter.GetPositioning(a);
+                int SumB = cutter.GetPositioning(b);
+                
                 int visible = cutter.IsVisible(a, b);
                 if (visible == 1) // Тривиальная видимость
                 {
@@ -91,28 +95,24 @@ namespace lab_07
                     return;
 
                 // Проверяем пересечение отрезка и стороны окна
-                int SumA = cutter.GetPositioning(a);
-                int SumB = cutter.GetPositioning(b);
-
-                Console.WriteLine("Sum:" + SumA.ToString() + SumB.ToString());
+                //Console.WriteLine("Sum:" + SumA.ToString() + SumB.ToString());
                 if (!Intersect(SumA, SumB, i))
                 {
-                    Console.WriteLine("not intersecting" + i.ToString());
+                    //Console.WriteLine("not intersecting" + i.ToString());
                     continue;
                 }
 
                 // Если точка а внутри стороны
                 if ((SumA & (int)Math.Pow(2, 3 - i)) == 0)
                 {
-                    Console.WriteLine("A inside");
-
+                    //Console.WriteLine("A inside");
                     Swap(ref a, ref b);
                 }
 
                 // Поиск пересечений отрезка со стороной
                 if (orientation_flag != -1) // не вертикальный
                 {
-                    if (i < 2)
+                    if (i < 2) // если рассматриваем левую или правую сторону отсекателя
                     {
                         a.Y = slope * (cutter[i] - a.X) + a.Y;
                         a.X = cutter[i];
