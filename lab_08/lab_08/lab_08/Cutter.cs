@@ -20,7 +20,7 @@ namespace lab_08
         {
             vertex.Add(dot);
         }
-        public void AddVertex(int x, int y)
+        public void AddVertex(float x, float y)
         {
             vertex.Add(new PointF(x, y));
         }
@@ -28,6 +28,20 @@ namespace lab_08
         public void Clear()
         {
             vertex.Clear();
+        }
+
+        public bool IsEmpty()
+        {
+            return true ? (vertex.Count == 0) : false;
+        }
+
+        // Получение вершины по индексу
+        public PointF GetVertex(int index)
+        {
+            if (index < 0)
+                return vertex[vertex.Count + index]; // Вершина с конца
+            else
+                return vertex[index];
         }
       
         // Проверка выпуклости

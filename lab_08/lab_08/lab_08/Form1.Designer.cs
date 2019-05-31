@@ -36,6 +36,8 @@
             this.buttonColorCut = new System.Windows.Forms.Button();
             this.canvasBase = new System.Windows.Forms.PictureBox();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.radioButtonCutter = new System.Windows.Forms.RadioButton();
+            this.radioButtonLines = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.canvasBase)).BeginInit();
@@ -43,6 +45,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.radioButtonLines);
+            this.groupBox1.Controls.Add(this.radioButtonCutter);
             this.groupBox1.Controls.Add(this.labelLocation);
             this.groupBox1.Controls.Add(this.buttonCut);
             this.groupBox1.Controls.Add(this.pictureBoxColor);
@@ -71,7 +75,7 @@
             // buttonCut
             // 
             this.buttonCut.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.buttonCut.Location = new System.Drawing.Point(1, 356);
+            this.buttonCut.Location = new System.Drawing.Point(1, 248);
             this.buttonCut.Name = "buttonCut";
             this.buttonCut.Size = new System.Drawing.Size(215, 23);
             this.buttonCut.TabIndex = 2;
@@ -90,7 +94,7 @@
             // buttonClear
             // 
             this.buttonClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.buttonClear.Location = new System.Drawing.Point(1, 397);
+            this.buttonClear.Location = new System.Drawing.Point(1, 289);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(215, 23);
             this.buttonClear.TabIndex = 4;
@@ -124,6 +128,28 @@
             this.canvasBase.Click += new System.EventHandler(this.canvasBase_Click);
             this.canvasBase.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvasBase_MouseMove);
             // 
+            // radioButtonCutter
+            // 
+            this.radioButtonCutter.AutoSize = true;
+            this.radioButtonCutter.Location = new System.Drawing.Point(9, 174);
+            this.radioButtonCutter.Name = "radioButtonCutter";
+            this.radioButtonCutter.Size = new System.Drawing.Size(111, 17);
+            this.radioButtonCutter.TabIndex = 8;
+            this.radioButtonCutter.TabStop = true;
+            this.radioButtonCutter.Text = "Ввод отсекателя";
+            this.radioButtonCutter.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonLines
+            // 
+            this.radioButtonLines.AutoSize = true;
+            this.radioButtonLines.Location = new System.Drawing.Point(9, 197);
+            this.radioButtonLines.Name = "radioButtonLines";
+            this.radioButtonLines.Size = new System.Drawing.Size(83, 17);
+            this.radioButtonLines.TabIndex = 9;
+            this.radioButtonLines.TabStop = true;
+            this.radioButtonLines.Text = "Ввод линий";
+            this.radioButtonLines.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -151,6 +177,8 @@
         private System.Windows.Forms.Button buttonColorCut;
         private System.Windows.Forms.PictureBox canvasBase;
         private System.Windows.Forms.ColorDialog colorDialog;
+        private System.Windows.Forms.RadioButton radioButtonLines;
+        private System.Windows.Forms.RadioButton radioButtonCutter;
     }
 }
 

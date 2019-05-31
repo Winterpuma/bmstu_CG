@@ -52,24 +52,40 @@ namespace lab_08
             pen_cutter = new Pen(Color.Black, 1);
             pen_lines = new Pen(Color.Red, 1);
             pen_highlight = new Pen(Color.Blue, 1);
-
             pictureBoxColor.BackColor = Color.Blue;
+
+            radioButtonCutter.Checked = true;
         }
 
         // Рисует линии к мыши из последней точки    
         private void DrawCurrentLine()
         {
-            if (last_line.Count() == 1)
-            {
-                PointF a = last_line[0];
-                PointF b = canvasBase.PointToClient(MousePosition);
+            bool flag_draw = false;
 
+            PointF a = new PointF();
+            PointF b = canvasBase.PointToClient(MousePosition);
+            Pen pen = pen_lines;
+
+            if (radioButtonLines.Checked && (last_line.Count() == 1))
+            {
+                a = last_line[0];
+                flag_draw = true;
+            }
+            else if (radioButtonCutter.Checked && (!cutter.IsEmpty()))
+            {
+                pen = pen_cutter;
+                a = cutter.GetVertex(-1);
+                flag_draw = true;
+            }
+
+            if (flag_draw)
+            {
                 if (ModifierKeys == Keys.Control)
                     b.Y = a.Y;
                 else if (ModifierKeys == Keys.Alt)
                     b.X = a.X;
 
-                g_move.DrawLine(pen_lines, a, b);
+                g_move.DrawLine(pen, a, b);
             }
         }
 
@@ -81,6 +97,63 @@ namespace lab_08
             DrawCurrentLine();
         }
 
+        // Нажатие на холст при вводе линии
+        private void Line_Click(PointF mousePos)
+        {
+            if (last_line.Count() == 0)
+            {
+                last_line.Add(mousePos);
+            }
+            else
+            {
+                if (ModifierKeys == Keys.Control) // горизонтальная линия
+                {
+                    last_line.Add(new PointF(mousePos.X, last_line[0].Y));
+                }
+                else if (ModifierKeys == Keys.Alt) // вертикальная линия
+                {
+                    last_line.Add(new PointF(last_line[0].X, mousePos.Y));
+                }
+                else
+                {
+                    last_line.Add(mousePos);
+                }
+
+                g.DrawLine(pen_lines, last_line[0], last_line[1]);
+                canvasBase.Refresh();
+                lines.Add(new Line(last_line[0], last_line[1]));
+                last_line.Clear();
+            }
+        }
+
+        // Нажатие на холст при вводе линии
+        private void Cutter_Click(PointF mousePos)
+        {
+            if (cutter.IsEmpty())
+            {
+                cutter.AddVertex(mousePos);
+            }
+            else
+            {
+                if (ModifierKeys == Keys.Control) // горизонтальная линия
+                {
+                    cutter.AddVertex(mousePos.X, cutter.GetVertex(-1).Y);
+                }
+                else if (ModifierKeys == Keys.Alt) // вертикальная линия
+                {
+                    cutter.AddVertex(cutter.GetVertex(-1).X, mousePos.Y);
+                }
+                else
+                {
+                    cutter.AddVertex(mousePos);
+                }
+
+                g.DrawLine(pen_cutter, cutter.GetVertex(-1), cutter.GetVertex(-2));
+                canvasBase.Refresh();
+            }
+        }
+
+
         // Нажатие на холст
         private void canvasBase_Click(object sender, EventArgs e)
         {
@@ -88,30 +161,10 @@ namespace lab_08
 
             if (((MouseEventArgs)e).Button == MouseButtons.Left)
             {
-                if (last_line.Count() == 0)
-                {
-                    last_line.Add(mousePos);
-                }
-                else
-                {
-                    if (ModifierKeys == Keys.Control) // горизонтальная линия
-                    {
-                        last_line.Add(new PointF(mousePos.X, last_line[0].Y));
-                    }
-                    else if (ModifierKeys == Keys.Alt) // вертикальная линия
-                    {
-                        last_line.Add(new PointF(last_line[0].X, mousePos.Y));
-                    }
-                    else
-                    {
-                        last_line.Add(mousePos);
-                    }
-
-                    g.DrawLine(pen_lines, last_line[0], last_line[1]);
-                    canvasBase.Refresh();
-                    lines.Add(new Line(last_line[0], last_line[1]));
-                    last_line.Clear();
-                }
+                if (radioButtonLines.Checked)
+                    Line_Click(mousePos);
+                else if (radioButtonCutter.Checked)
+                    Cutter_Click(mousePos);
             }
         }
 
