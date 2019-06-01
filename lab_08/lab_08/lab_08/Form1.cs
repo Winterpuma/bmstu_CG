@@ -22,6 +22,7 @@ namespace lab_08
         }
     };
 
+
     public partial class Form1 : Form
     {
         Cutter cutter;
@@ -71,7 +72,7 @@ namespace lab_08
                 a = last_line[0];
                 flag_draw = true;
             }
-            else if (radioButtonCutter.Checked && (!cutter.IsEmpty()))
+            else if (radioButtonCutter.Checked && (!cutter.IsEmpty()) && (!cutter.finished_input))
             {
                 pen = pen_cutter;
                 a = cutter.GetVertex(-1);
@@ -126,9 +127,12 @@ namespace lab_08
             }
         }
 
-        // Нажатие на холст при вводе линии
+        // Нажатие на холст при вводе отсекателя
         private void Cutter_Click(PointF mousePos)
         {
+            if (cutter.finished_input)
+                return;
+
             if (cutter.IsEmpty())
             {
                 cutter.AddVertex(mousePos);
@@ -161,10 +165,15 @@ namespace lab_08
 
             if (((MouseEventArgs)e).Button == MouseButtons.Left)
             {
-                if (radioButtonLines.Checked)
+                if (radioButtonLines.Checked)   
                     Line_Click(mousePos);
                 else if (radioButtonCutter.Checked)
                     Cutter_Click(mousePos);
+            }
+            else if ((((MouseEventArgs)e).Button == MouseButtons.Right) && (radioButtonCutter.Checked))
+            {
+                cutter.finished_input = true;
+                g.DrawLine(pen_cutter, cutter.GetVertex(-1), cutter.GetVertex(0));
             }
         }
 
@@ -192,6 +201,14 @@ namespace lab_08
         // Отсечение
         private void buttonCut_Click(object sender, EventArgs e)
         {
+            cutter.finished_input = true;
+            g.DrawLine(pen_cutter, cutter.GetVertex(0), cutter.GetVertex(-1));
+            if (!cutter.IsConvex())
+            {
+                MessageBox.Show("Многоугольник не выпуклый.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             Line tmp;
             for (int i = 0; i < lines.Count(); i++)
             {
