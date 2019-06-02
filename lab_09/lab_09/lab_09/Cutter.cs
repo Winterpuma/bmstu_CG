@@ -9,29 +9,29 @@ namespace lab_09
 {
     class Cutter
     {
-        private List<PointF> vertex;
+        private List<PointF> W;
         private List<Vector> normal;
         private bool finished_input = false;
         private int walk_direction = 0;
 
         public Cutter()
         {
-            vertex = new List<PointF>();
+            W = new List<PointF>();
             normal = new List<Vector>();
         }
 
         public void AddVertex(PointF dot)
         {
-            vertex.Add(dot);
+            W.Add(dot);
         }
         public void AddVertex(float x, float y)
         {
-            vertex.Add(new PointF(x, y));
+            W.Add(new PointF(x, y));
         }
 
         public void Clear()
         {
-            vertex.Clear();
+            W.Clear();
             normal.Clear();
             finished_input = false;
             walk_direction = 0;
@@ -52,31 +52,31 @@ namespace lab_09
 
         public bool IsEmpty()
         {
-            return true ? (vertex.Count == 0) : false;
+            return true ? (W.Count == 0) : false;
         }
 
         // Получение вершины по индексу
         public PointF GetVertex(int index)
         {
             if (index < 0)
-                return vertex[vertex.Count + index]; // Вершина с конца
+                return W[W.Count + index]; // Вершина с конца
             else
-                return vertex[index % vertex.Count];
+                return W[index % W.Count];
         }
 
         // Проверка выпуклости; возвращает направление обхода
         private int ConvexityCheck()
         {
-            if (vertex.Count < 3)
+            if (W.Count < 3)
                 return 0;
 
-            Vector a = new Vector(vertex[1], vertex[0]);
+            Vector a = new Vector(W[1], W[0]);
             Vector b = new Vector();
             Vector res = new Vector();
 
             int sign = 0;
 
-            for (int i = 0; i < vertex.Count; i++)
+            for (int i = 0; i < W.Count; i++)
             {
                 b = new Vector(GetVertex(i + 1), GetVertex(i));
                 Vector.VectorMultiplication(a, b, ref res);
@@ -109,7 +109,7 @@ namespace lab_09
             float tmp;
             normal.Clear();
 
-            for (int i = 0; i < vertex.Count; i++)
+            for (int i = 0; i < W.Count; i++)
             {
                 b = new Vector(GetVertex(i + 1), GetVertex(i));
 
@@ -127,6 +127,7 @@ namespace lab_09
             }
         }
 
+        /*
         // Алгоритм Кируса-Бека по отсечению отрезка
         public Segment CutCyrusBeck(Segment l)
         {
@@ -140,9 +141,9 @@ namespace lab_09
             float D_sc;
             float W_sc;
 
-            for (int i = 0; i < vertex.Count; i++)
+            for (int i = 0; i < W.Count; i++)
             {
-                w = new Vector(l.start, vertex[i]);
+                w = new Vector(l.start, W[i]);
                 D_sc = Vector.ScalarMultiplication(D, normal[i]);
                 W_sc = Vector.ScalarMultiplication(w, normal[i]);
 
@@ -174,6 +175,56 @@ namespace lab_09
                 return new Segment();
 
             return new Segment(l.GetDot(t_down), l.GetDot(t_up));
+        }*/
+
+        // Алгоритм Сазерленда-Ходжмана для отсечения полигонов
+        public List<PointF> CutSutherlandHodgman(List<PointF> P)
+        {
+            List<PointF> Q = new List<PointF>();
+            P.Add(P[0]);
+            
+            PointF F = new PointF();
+            PointF S = new PointF();
+            PointF I = new PointF();
+
+            double Dsk, Wsk, t;
+
+            for (int i = 0; i < W.Count; i++)
+            {
+                for (int j = 0; j < P.Count(); j++)
+                {
+                    if (j == 0)
+                        F = P[j];
+                    else
+                    {
+                        Vector D = new Vector(P[j], S); //Вектор нашего отрезка
+                        Dsk = Vector.ScalarMultiplication(D, normal[i]); //показывает угол и с какой стороны угол
+
+                        if (Dsk != 0)
+                        {
+                            Vector WV = new Vector(S, W[i]); //вектор соединяющий  начало отрезка и вершину многоугольника
+                            Wsk = Vector.ScalarMultiplication(WV, normal[i]); //видимость для паралельных
+                            t = -Wsk / Dsk;
+                            if (t >= 0 && t <= 1)
+                            {
+                                I = new Segment(S, P[j]).GetDot(t);//точка пересечения
+                                Q.Add(I);
+                            }
+                        }
+                    }
+                    S = P[j];
+
+                    if (Vector.VisibleVertex(S, W[i], normal[i]))
+                        Q.Add(S);
+                }
+                
+                P.Clear();
+                P.AddRange(Q);
+
+                Q.Clear();
+            }
+
+            return P;//TODO why change
         }
     }
 }
