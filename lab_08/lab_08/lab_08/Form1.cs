@@ -10,15 +10,28 @@ using System.Windows.Forms;
 
 namespace lab_08
 {
-    struct Line
+    struct Segment
     {
         public PointF start;
         public PointF end;
 
-        public Line(PointF a, PointF b)
+        public Segment(PointF a, PointF b)
         {
             start = a;
             end = b;
+        }
+
+        private float GetCoordX(float t)
+        {
+            return start.X + (end.X - start.X) * t;
+        }
+        private float GetCoordY(float t)
+        {
+            return start.Y + (end.Y - start.Y) * t;
+        }
+        public PointF GetDot(float t)
+        {
+            return new PointF(GetCoordX(t), GetCoordY(t));
         }
     };
 
@@ -26,7 +39,7 @@ namespace lab_08
     public partial class Form1 : Form
     {
         Cutter cutter;
-        List<Line> lines;
+        List<Segment> lines;
         List<PointF> last_line;
 
         Bitmap saved_picture;
@@ -42,7 +55,7 @@ namespace lab_08
             InitializeComponent();
 
             cutter = new Cutter();
-            lines = new List<Line>();
+            lines = new List<Segment>();
             last_line = new List<PointF>();
 
             saved_picture = new Bitmap(canvasBase.Width, canvasBase.Height);
@@ -56,6 +69,17 @@ namespace lab_08
             pictureBoxColor.BackColor = Color.Blue;
 
             radioButtonCutter.Checked = true;
+
+            /*cutter.AddVertex(1, 0);
+            cutter.AddVertex(0, 1);
+            cutter.AddVertex(0, 2);
+            cutter.AddVertex(1, 3);
+            cutter.AddVertex(2, 3);
+            cutter.AddVertex(3, 2);
+            cutter.AddVertex(3, 1);
+            cutter.AddVertex(2, 0);
+
+            cutter.CutCyrusBeck(new Segment(new PointF(-1, 1), new PointF(3, 3)));*/
         }
 
         // Рисует линии к мыши из последней точки    
@@ -72,7 +96,7 @@ namespace lab_08
                 a = last_line[0];
                 flag_draw = true;
             }
-            else if (radioButtonCutter.Checked && (!cutter.IsEmpty()) && (!cutter.finished_input))
+            else if (radioButtonCutter.Checked && (!cutter.IsEmpty()) && (!cutter.IsFinished()))
             {
                 pen = pen_cutter;
                 a = cutter.GetVertex(-1);
@@ -122,7 +146,7 @@ namespace lab_08
 
                 g.DrawLine(pen_lines, last_line[0], last_line[1]);
                 canvasBase.Refresh();
-                lines.Add(new Line(last_line[0], last_line[1]));
+                lines.Add(new Segment(last_line[0], last_line[1]));
                 last_line.Clear();
             }
         }
@@ -130,7 +154,7 @@ namespace lab_08
         // Нажатие на холст при вводе отсекателя
         private void Cutter_Click(PointF mousePos)
         {
-            if (cutter.finished_input)
+            if (cutter.IsFinished())
                 return;
 
             if (cutter.IsEmpty())
@@ -172,7 +196,7 @@ namespace lab_08
             }
             else if ((((MouseEventArgs)e).Button == MouseButtons.Right) && (radioButtonCutter.Checked))
             {
-                cutter.finished_input = true;
+                cutter.Finish();
                 g.DrawLine(pen_cutter, cutter.GetVertex(-1), cutter.GetVertex(0));
             }
         }
@@ -201,15 +225,15 @@ namespace lab_08
         // Отсечение
         private void buttonCut_Click(object sender, EventArgs e)
         {
-            cutter.finished_input = true;
+            cutter.Finish();
             g.DrawLine(pen_cutter, cutter.GetVertex(0), cutter.GetVertex(-1));
-            if (!cutter.IsConvex())
+            if (cutter.IsConvex() == 0)
             {
                 MessageBox.Show("Многоугольник не выпуклый.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            Line tmp;
+            Segment tmp;
             for (int i = 0; i < lines.Count(); i++)
             {
                 tmp = cutter.CutCyrusBeck(lines[i]);
