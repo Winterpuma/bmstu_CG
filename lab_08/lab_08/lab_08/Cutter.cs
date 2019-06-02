@@ -34,13 +34,14 @@ namespace lab_08
             vertex.Clear();
             normal.Clear();
             finished_input = false;
+            walk_direction = 0;
         }
 
         // Закончен ввод отсекателя
         public void Finish()
         {
             finished_input = true;
-            walk_direction = IsConvex();
+            walk_direction = ConvexityCheck();
             FindNormalVectors(walk_direction);
         }
 
@@ -64,7 +65,7 @@ namespace lab_08
         }
       
         // Проверка выпуклости; возвращает направление обхода
-        public int IsConvex()
+        private int ConvexityCheck()
         {
             if (vertex.Count < 3)
                 return 0;
@@ -94,6 +95,14 @@ namespace lab_08
             return sign;
         }
 
+        public bool IsConvex()
+        {
+            if (walk_direction == 0)
+                return false;
+            return true;
+        }
+
+        // Нахождение векторов нормали для отсекателя
         private void FindNormalVectors(int direction)
         {
             Vector b;
@@ -151,14 +160,12 @@ namespace lab_08
                         if (t_tmp > 1)
                             return new Segment();
                         t_down = Math.Max(t_down, t_tmp);
-                        //continue;
                     }
                     else // поиск верхнего предела
                     {
                         if (t_tmp < 0)
                             return new Segment();
                         t_up = Math.Min(t_up, t_tmp);
-                        //continue;
                     }
                 }
             }

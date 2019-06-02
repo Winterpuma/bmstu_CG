@@ -227,7 +227,7 @@ namespace lab_08
         {
             cutter.Finish();
             g.DrawLine(pen_cutter, cutter.GetVertex(0), cutter.GetVertex(-1));
-            if (cutter.IsConvex() == 0)
+            if (!cutter.IsConvex())
             {
                 MessageBox.Show("Многоугольник не выпуклый.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
