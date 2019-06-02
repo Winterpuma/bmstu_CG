@@ -27,6 +27,13 @@ namespace lab_09
             z = 0;
         }
 
+        public Vector(Segment s)
+        {
+            x = s.end.X - s.start.X;
+            y = s.end.Y - s.start.Y;
+            z = 0;
+        }
+
         public static void VectorMultiplication(Vector a, Vector b, ref Vector res)
         {
             res.x = a.y * b.z - a.z * b.y;
@@ -37,6 +44,13 @@ namespace lab_09
         public static float ScalarMultiplication(Vector a, Vector b)
         {
             return a.x * b.x + a.y * b.y + a.z * b.z;
+        }
+
+        public static bool VisibleVertex(PointF vertex, PointF p1, Vector norm)
+        {
+            Vector v1 = new Vector(vertex, p1);
+            float mult = ScalarMultiplication(v1, norm);
+            return mult > 0;
         }
     }
 }

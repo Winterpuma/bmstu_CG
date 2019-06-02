@@ -10,31 +10,6 @@ using System.Windows.Forms;
 
 namespace lab_09
 {
-    struct Segment
-    {
-        public PointF start;
-        public PointF end;
-
-        public Segment(PointF a, PointF b)
-        {
-            start = a;
-            end = b;
-        }
-
-        private float GetCoordX(float t)
-        {
-            return start.X + (end.X - start.X) * t;
-        }
-        private float GetCoordY(float t)
-        {
-            return start.Y + (end.Y - start.Y) * t;
-        }
-        public PointF GetDot(float t)
-        {
-            return new PointF(GetCoordX(t), GetCoordY(t));
-        }
-    };
-
     public partial class Form1 : Form
     {
         Cutter cutter;
@@ -229,13 +204,8 @@ namespace lab_09
                 return;
             }
 
-            Segment tmp;
-            for (int i = 0; i < polygon.Count() - 1; i++) // -1!!
-            {
-                tmp = cutter.CutCyrusBeck(new Segment(polygon[i], polygon[i+1]));//polygon[i]);
-                g.DrawLine(pen_highlight, tmp.start, tmp.end);
-                canvasBase.Refresh();
-            }
+            List<PointF> tmp = cutter.CutSutherlandHodgman(polygon);
+            g.FillPolygon(Brushes.Aqua, tmp.ToArray());
             canvasBase.Refresh();
         }
     }
