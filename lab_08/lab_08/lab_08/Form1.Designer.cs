@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButtonLines = new System.Windows.Forms.RadioButton();
+            this.radioButtonCutter = new System.Windows.Forms.RadioButton();
             this.labelLocation = new System.Windows.Forms.Label();
             this.buttonCut = new System.Windows.Forms.Button();
             this.pictureBoxColor = new System.Windows.Forms.PictureBox();
@@ -36,8 +38,11 @@
             this.buttonColorCut = new System.Windows.Forms.Button();
             this.canvasBase = new System.Windows.Forms.PictureBox();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.radioButtonCutter = new System.Windows.Forms.RadioButton();
-            this.radioButtonLines = new System.Windows.Forms.RadioButton();
+            this.textBoxX = new System.Windows.Forms.TextBox();
+            this.textBoxY = new System.Windows.Forms.TextBox();
+            this.labelX = new System.Windows.Forms.Label();
+            this.labelY = new System.Windows.Forms.Label();
+            this.buttonAddDot = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.canvasBase)).BeginInit();
@@ -45,6 +50,11 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.buttonAddDot);
+            this.groupBox1.Controls.Add(this.labelY);
+            this.groupBox1.Controls.Add(this.labelX);
+            this.groupBox1.Controls.Add(this.textBoxY);
+            this.groupBox1.Controls.Add(this.textBoxX);
             this.groupBox1.Controls.Add(this.radioButtonLines);
             this.groupBox1.Controls.Add(this.radioButtonCutter);
             this.groupBox1.Controls.Add(this.labelLocation);
@@ -59,6 +69,30 @@
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Панель управления";
+            // 
+            // radioButtonLines
+            // 
+            this.radioButtonLines.AutoSize = true;
+            this.radioButtonLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.radioButtonLines.Location = new System.Drawing.Point(9, 197);
+            this.radioButtonLines.Name = "radioButtonLines";
+            this.radioButtonLines.Size = new System.Drawing.Size(102, 21);
+            this.radioButtonLines.TabIndex = 9;
+            this.radioButtonLines.TabStop = true;
+            this.radioButtonLines.Text = "Ввод линий";
+            this.radioButtonLines.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonCutter
+            // 
+            this.radioButtonCutter.AutoSize = true;
+            this.radioButtonCutter.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.radioButtonCutter.Location = new System.Drawing.Point(9, 174);
+            this.radioButtonCutter.Name = "radioButtonCutter";
+            this.radioButtonCutter.Size = new System.Drawing.Size(138, 21);
+            this.radioButtonCutter.TabIndex = 8;
+            this.radioButtonCutter.TabStop = true;
+            this.radioButtonCutter.Text = "Ввод отсекателя";
+            this.radioButtonCutter.UseVisualStyleBackColor = true;
             // 
             // labelLocation
             // 
@@ -75,7 +109,7 @@
             // buttonCut
             // 
             this.buttonCut.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.buttonCut.Location = new System.Drawing.Point(1, 248);
+            this.buttonCut.Location = new System.Drawing.Point(0, 421);
             this.buttonCut.Name = "buttonCut";
             this.buttonCut.Size = new System.Drawing.Size(215, 23);
             this.buttonCut.TabIndex = 2;
@@ -94,7 +128,7 @@
             // buttonClear
             // 
             this.buttonClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.buttonClear.Location = new System.Drawing.Point(1, 289);
+            this.buttonClear.Location = new System.Drawing.Point(0, 462);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(215, 23);
             this.buttonClear.TabIndex = 4;
@@ -128,27 +162,48 @@
             this.canvasBase.Click += new System.EventHandler(this.canvasBase_Click);
             this.canvasBase.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvasBase_MouseMove);
             // 
-            // radioButtonCutter
+            // textBoxX
             // 
-            this.radioButtonCutter.AutoSize = true;
-            this.radioButtonCutter.Location = new System.Drawing.Point(9, 174);
-            this.radioButtonCutter.Name = "radioButtonCutter";
-            this.radioButtonCutter.Size = new System.Drawing.Size(111, 17);
-            this.radioButtonCutter.TabIndex = 8;
-            this.radioButtonCutter.TabStop = true;
-            this.radioButtonCutter.Text = "Ввод отсекателя";
-            this.radioButtonCutter.UseVisualStyleBackColor = true;
+            this.textBoxX.Location = new System.Drawing.Point(9, 289);
+            this.textBoxX.Name = "textBoxX";
+            this.textBoxX.Size = new System.Drawing.Size(83, 20);
+            this.textBoxX.TabIndex = 10;
             // 
-            // radioButtonLines
+            // textBoxY
             // 
-            this.radioButtonLines.AutoSize = true;
-            this.radioButtonLines.Location = new System.Drawing.Point(9, 197);
-            this.radioButtonLines.Name = "radioButtonLines";
-            this.radioButtonLines.Size = new System.Drawing.Size(83, 17);
-            this.radioButtonLines.TabIndex = 9;
-            this.radioButtonLines.TabStop = true;
-            this.radioButtonLines.Text = "Ввод линий";
-            this.radioButtonLines.UseVisualStyleBackColor = true;
+            this.textBoxY.Location = new System.Drawing.Point(121, 289);
+            this.textBoxY.Name = "textBoxY";
+            this.textBoxY.Size = new System.Drawing.Size(83, 20);
+            this.textBoxY.TabIndex = 11;
+            // 
+            // labelX
+            // 
+            this.labelX.AutoSize = true;
+            this.labelX.Location = new System.Drawing.Point(10, 270);
+            this.labelX.Name = "labelX";
+            this.labelX.Size = new System.Drawing.Size(17, 13);
+            this.labelX.TabIndex = 12;
+            this.labelX.Text = "X:";
+            // 
+            // labelY
+            // 
+            this.labelY.AutoSize = true;
+            this.labelY.Location = new System.Drawing.Point(118, 273);
+            this.labelY.Name = "labelY";
+            this.labelY.Size = new System.Drawing.Size(17, 13);
+            this.labelY.TabIndex = 13;
+            this.labelY.Text = "Y:";
+            // 
+            // buttonAddDot
+            // 
+            this.buttonAddDot.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonAddDot.Location = new System.Drawing.Point(0, 341);
+            this.buttonAddDot.Name = "buttonAddDot";
+            this.buttonAddDot.Size = new System.Drawing.Size(215, 23);
+            this.buttonAddDot.TabIndex = 14;
+            this.buttonAddDot.Text = "Добавить точку";
+            this.buttonAddDot.UseVisualStyleBackColor = true;
+            this.buttonAddDot.Click += new System.EventHandler(this.buttonAddDot_Click);
             // 
             // Form1
             // 
@@ -179,6 +234,11 @@
         private System.Windows.Forms.ColorDialog colorDialog;
         private System.Windows.Forms.RadioButton radioButtonLines;
         private System.Windows.Forms.RadioButton radioButtonCutter;
+        private System.Windows.Forms.Button buttonAddDot;
+        private System.Windows.Forms.Label labelY;
+        private System.Windows.Forms.Label labelX;
+        private System.Windows.Forms.TextBox textBoxY;
+        private System.Windows.Forms.TextBox textBoxX;
     }
 }
 

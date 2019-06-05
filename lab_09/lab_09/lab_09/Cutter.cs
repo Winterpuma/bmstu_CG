@@ -183,7 +183,6 @@ namespace lab_09
             List<PointF> Q = new List<PointF>();
             P.Add(P[0]);
             
-            PointF F = new PointF();
             PointF S = new PointF();
             PointF I = new PointF();
 
@@ -191,40 +190,38 @@ namespace lab_09
 
             for (int i = 0; i < W.Count; i++)
             {
-                for (int j = 0; j < P.Count(); j++)
+                if (Vector.VisibleVertex(P[0], W[i], normal[i]))
+                    Q.Add(P[0]);
+                for (int j = 1; j < P.Count(); j++)
                 {
-                    if (j == 0)
-                        F = P[j];
-                    else
-                    {
-                        Vector D = new Vector(P[j], S); //Вектор нашего отрезка
-                        Dsk = Vector.ScalarMultiplication(D, normal[i]); //показывает угол и с какой стороны угол
+                    Vector D = new Vector(P[j], P[j-1]); // Вектор нашего отрезка
+                    Dsk = Vector.ScalarMultiplication(D, normal[i]); //показывает угол и с какой стороны угол
 
-                        if (Dsk != 0)
+                    if (Dsk != 0) // Провека, что не точка и не парралельно
+                    {
+                        Vector WV = new Vector(P[j-1], W[i]); //вектор соединяющий  начало отрезка и вершину многоугольника
+                        Wsk = Vector.ScalarMultiplication(WV, normal[i]); //видимость для паралельных
+                        t = -Wsk / Dsk;
+                        if (t >= 0 && t <= 1)
                         {
-                            Vector WV = new Vector(S, W[i]); //вектор соединяющий  начало отрезка и вершину многоугольника
-                            Wsk = Vector.ScalarMultiplication(WV, normal[i]); //видимость для паралельных
-                            t = -Wsk / Dsk;
-                            if (t >= 0 && t <= 1)
-                            {
-                                I = new Segment(S, P[j]).GetDot(t);//точка пересечения
-                                Q.Add(I);
-                            }
+                            I = new Segment(P[j-1], P[j]).GetDot(t);//точка пересечения
+                            Q.Add(I);
                         }
                     }
-                    S = P[j];
-
-                    if (Vector.VisibleVertex(S, W[i], normal[i]))
-                        Q.Add(S);
+                    
+                    if (Vector.VisibleVertex(P[j], W[i], normal[i]))
+                        Q.Add(P[j]);
                 }
-                
+
+                Q.Add(Q[0]);
                 P.Clear();
                 P.AddRange(Q);
+            
 
                 Q.Clear();
             }
 
-            return P;//TODO why change
+            return P;
         }
     }
 }

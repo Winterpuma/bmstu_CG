@@ -38,7 +38,7 @@ namespace lab_09
 
             pen_cutter = new Pen(Color.Black, 1);
             pen_lines = new Pen(Color.Red, 1);
-            pen_highlight = new Pen(Color.Blue, 1);
+            pen_highlight = new Pen(Color.Blue, 2);
             pictureBoxColor.BackColor = Color.Blue;
 
             radioButtonCutter.Checked = true;
@@ -205,8 +205,27 @@ namespace lab_09
             }
 
             List<PointF> tmp = cutter.CutSutherlandHodgman(polygon);
-            g.FillPolygon(Brushes.Aqua, tmp.ToArray());
+
+            if (checkBoxFill.Checked)
+                g.FillPolygon(Brushes.Blue, tmp.ToArray());
+            g.DrawPolygon(pen_highlight, tmp.ToArray());
+
             canvasBase.Refresh();
+        }
+
+        // Добавить точку в отсекатель или многоугольник
+        private void buttonAddDot_Click(object sender, EventArgs e)
+        {
+            // оставить фичей добавление таким способом горизонтальных/вертикальных или добавить флаг в функции??
+            PointF dot = new PointF((float)Convert.ToDouble(textBoxX.Text), (float)Convert.ToDouble(textBoxY.Text));
+            if (radioButtonCutter.Checked)
+            {
+                Cutter_Click(dot);
+            }
+            else if (radioButtonLines.Checked)
+            {
+                Polygon_Click(dot);
+            }
         }
     }
 }

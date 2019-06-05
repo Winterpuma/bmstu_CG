@@ -242,6 +242,21 @@ namespace lab_08
             }
             canvasBase.Refresh();
         }
+
+        // Добавить точку в отсекатель или линию
+        private void buttonAddDot_Click(object sender, EventArgs e)
+        {
+            // оставить фичей добавление таким способом горизонтальных/вертикальных или добавить флаг в функции??
+            PointF dot = new PointF((float)Convert.ToDouble(textBoxX.Text), (float)Convert.ToDouble(textBoxY.Text));
+            if (radioButtonCutter.Checked) 
+            {
+                Cutter_Click(dot);
+            }
+            else if (radioButtonLines.Checked)
+            {
+                Line_Click(dot);
+            }
+        }
     }
 }
 

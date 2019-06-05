@@ -29,6 +29,12 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.buttonAddDot = new System.Windows.Forms.Button();
+            this.labelY = new System.Windows.Forms.Label();
+            this.labelX = new System.Windows.Forms.Label();
+            this.textBoxY = new System.Windows.Forms.TextBox();
+            this.textBoxX = new System.Windows.Forms.TextBox();
+            this.checkBoxFill = new System.Windows.Forms.CheckBox();
             this.radioButtonLines = new System.Windows.Forms.RadioButton();
             this.radioButtonCutter = new System.Windows.Forms.RadioButton();
             this.labelLocation = new System.Windows.Forms.Label();
@@ -45,6 +51,12 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.buttonAddDot);
+            this.groupBox1.Controls.Add(this.labelY);
+            this.groupBox1.Controls.Add(this.labelX);
+            this.groupBox1.Controls.Add(this.textBoxY);
+            this.groupBox1.Controls.Add(this.textBoxX);
+            this.groupBox1.Controls.Add(this.checkBoxFill);
             this.groupBox1.Controls.Add(this.radioButtonLines);
             this.groupBox1.Controls.Add(this.radioButtonCutter);
             this.groupBox1.Controls.Add(this.labelLocation);
@@ -60,15 +72,68 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Панель управления";
             // 
+            // buttonAddDot
+            // 
+            this.buttonAddDot.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonAddDot.Location = new System.Drawing.Point(1, 339);
+            this.buttonAddDot.Name = "buttonAddDot";
+            this.buttonAddDot.Size = new System.Drawing.Size(215, 23);
+            this.buttonAddDot.TabIndex = 19;
+            this.buttonAddDot.Text = "Добавить точку";
+            this.buttonAddDot.UseVisualStyleBackColor = true;
+            this.buttonAddDot.Click += new System.EventHandler(this.buttonAddDot_Click);
+            // 
+            // labelY
+            // 
+            this.labelY.AutoSize = true;
+            this.labelY.Location = new System.Drawing.Point(119, 271);
+            this.labelY.Name = "labelY";
+            this.labelY.Size = new System.Drawing.Size(17, 13);
+            this.labelY.TabIndex = 18;
+            this.labelY.Text = "Y:";
+            // 
+            // labelX
+            // 
+            this.labelX.AutoSize = true;
+            this.labelX.Location = new System.Drawing.Point(11, 268);
+            this.labelX.Name = "labelX";
+            this.labelX.Size = new System.Drawing.Size(17, 13);
+            this.labelX.TabIndex = 17;
+            this.labelX.Text = "X:";
+            // 
+            // textBoxY
+            // 
+            this.textBoxY.Location = new System.Drawing.Point(122, 287);
+            this.textBoxY.Name = "textBoxY";
+            this.textBoxY.Size = new System.Drawing.Size(83, 20);
+            this.textBoxY.TabIndex = 16;
+            // 
+            // textBoxX
+            // 
+            this.textBoxX.Location = new System.Drawing.Point(10, 287);
+            this.textBoxX.Name = "textBoxX";
+            this.textBoxX.Size = new System.Drawing.Size(83, 20);
+            this.textBoxX.TabIndex = 15;
+            // 
+            // checkBoxFill
+            // 
+            this.checkBoxFill.AutoSize = true;
+            this.checkBoxFill.Location = new System.Drawing.Point(6, 443);
+            this.checkBoxFill.Name = "checkBoxFill";
+            this.checkBoxFill.Size = new System.Drawing.Size(69, 17);
+            this.checkBoxFill.TabIndex = 10;
+            this.checkBoxFill.Text = "Заливка";
+            this.checkBoxFill.UseVisualStyleBackColor = true;
+            // 
             // radioButtonLines
             // 
             this.radioButtonLines.AutoSize = true;
             this.radioButtonLines.Location = new System.Drawing.Point(9, 197);
             this.radioButtonLines.Name = "radioButtonLines";
-            this.radioButtonLines.Size = new System.Drawing.Size(83, 17);
+            this.radioButtonLines.Size = new System.Drawing.Size(136, 17);
             this.radioButtonLines.TabIndex = 9;
             this.radioButtonLines.TabStop = true;
-            this.radioButtonLines.Text = "Ввод линий";
+            this.radioButtonLines.Text = "Ввод многоугольника";
             this.radioButtonLines.UseVisualStyleBackColor = true;
             // 
             // radioButtonCutter
@@ -97,7 +162,7 @@
             // buttonCut
             // 
             this.buttonCut.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.buttonCut.Location = new System.Drawing.Point(1, 248);
+            this.buttonCut.Location = new System.Drawing.Point(0, 466);
             this.buttonCut.Name = "buttonCut";
             this.buttonCut.Size = new System.Drawing.Size(215, 23);
             this.buttonCut.TabIndex = 2;
@@ -116,7 +181,7 @@
             // buttonClear
             // 
             this.buttonClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.buttonClear.Location = new System.Drawing.Point(1, 289);
+            this.buttonClear.Location = new System.Drawing.Point(0, 507);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(215, 23);
             this.buttonClear.TabIndex = 4;
@@ -179,6 +244,12 @@
         private System.Windows.Forms.Button buttonColorCut;
         private System.Windows.Forms.PictureBox canvasBase;
         private System.Windows.Forms.ColorDialog colorDialog;
+        private System.Windows.Forms.CheckBox checkBoxFill;
+        private System.Windows.Forms.Button buttonAddDot;
+        private System.Windows.Forms.Label labelY;
+        private System.Windows.Forms.Label labelX;
+        private System.Windows.Forms.TextBox textBoxY;
+        private System.Windows.Forms.TextBox textBoxX;
     }
 }
 
