@@ -45,8 +45,8 @@ namespace lab_10
 
     public class Horizon
     {
-        private spacing x, z;
-        private double[][] y;
+        private spacing x, y, z;
+        private double[][] yArr;
 
         private int[] horMax, horMin;
         private Func<double, double, double> f;
@@ -58,11 +58,12 @@ namespace lab_10
             this.x = x;
             this.z = z;
             this.f = f;
-            y = GetArray();
+            yArr = GetYData();
         }
 
-        public double[][] GetArray()
+        public double[][] GetYData()
         {
+            double min = f(0, 0), max = f(0, 0);
             double[][] res = new double[z.amount][];
             double x_cur = x.min, z_cur = z.min;
             for (int i = 0; i < z.amount; i++)
@@ -71,21 +72,27 @@ namespace lab_10
                 for (int j = 0; j < x.amount; j++)
                 {
                     res[i][j] = f(x_cur, z_cur);
+                    if (res[i][j] > max)
+                        max = res[i][j];
+                    if (res[i][j] < min)
+                        min = res[i][j];
                     x_cur += x.step;
                 }
                 z_cur += z.step;
             }
+            y = new spacing(min, max, 0);
             return res;
         }
 
-        public void Draw(Graphics g, Pen pen)
+        public void Draw(Graphics g, Pen pen, Size s)
         {
+            Transformator trans = new Transformator(s, x, y, z);
             double Xright = -1, Yright = -1, x_left = -1, y_left = -1;
-            horMin = new int[(int)g.DpiX];
-            horMax = new int[(int)g.DpiX];
-            for (int i = 0; i < (int)g.DpiX; i++)
+            horMin = new int[s.Width];
+            horMax = new int[s.Width];
+            for (int i = 0; i < s.Width; i++)
             {
-                horMin[i] = (int)g.DpiY;
+                horMin[i] = s.Height;
                 horMax[i] = 0;
             }
 
@@ -96,7 +103,7 @@ namespace lab_10
                 double Xpred = x.min, Ypred = f(x.min, z_cur);
                 double x_cur = Xpred, y = Ypred;
                 // Видовое преобразование к xпред и yпред, z
-
+                trans.Transform(ref Xpred, ref Ypred, ref z_cur); //!
                 // Обработка левого бокового ребра
                 ProcessEdge((int)Xpred, (int)Ypred, ref x_left, ref y_left);
                 Visibility Pflag = IsVisible(Xpred, Ypred);

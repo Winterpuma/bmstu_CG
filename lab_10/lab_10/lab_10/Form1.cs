@@ -30,11 +30,11 @@ namespace lab_10
         private void buttonGo_Click(object sender, EventArgs e)
         {
             canvas.Refresh();
-            spacing x = new spacing(10, 20, 0.02);
-            spacing z = new spacing(10, 20, 0.02);
+            spacing x = new spacing(10, 100, 10);
+            spacing z = new spacing(10, 100, 10);
 
-            horizon = new Horizon(FPlane, x, z);
-            horizon.Draw(g, penDraw);
+            horizon = new Horizon(FPeaks, x, z);
+            horizon.Draw(g, penDraw, canvas.Size);
             canvas.Update();
         }
     }
