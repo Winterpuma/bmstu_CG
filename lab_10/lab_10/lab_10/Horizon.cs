@@ -79,14 +79,14 @@ namespace lab_10
             // Начиная с ближайшей к наблюдателю
             for (double z_cur = z.max; z_cur < z.min; z_cur += z.step)
             {
-                double Xpred = x.min, Ypred = f(x.min, z);
+                double Xpred = x.min, Ypred = f(x.min, z_cur);
 
                 // Видовое преобразование к xпред и yпред, z
 
                 // Обработка левого бокового ребра
 
                 // для каждой точки на кривой
-                for (double x_cur = x.min; x_cur < x.max; x_cur += x.dx)
+                for (double x_cur = x.min; x_cur < x.max; x_cur += x.step)
                 {
                     double y = f(x_cur, z_cur); 
                     // видовое преобразование
@@ -127,6 +127,46 @@ namespace lab_10
                 return Visibility.above;
             else
                 return Visibility.below;
+        }
+
+        // Вычисление пересечения текущей кривой с горизонтом
+        private PointF GetIntersection(int x1, int y1, int x2, int y2, int[] hor)
+        {
+            int Xi;
+            double Yi;
+            int Ysign, Csign;
+            double slope;
+
+            if (x2 - x1 == 0) // проверка бесконечности наклона
+            {
+                Xi = x2;
+                Yi = hor[x2];
+            }
+            else // ищем пересечение
+            {
+                slope = (y2 - y1) / (x2 - x1);
+                Ysign = Math.Sign(y1 + slope - hor[x1 + 1]);
+                Csign = Ysign;
+
+                Yi = y1 + slope;
+                Xi = x1 + 1;
+
+                while (Csign == Ysign) // Пока не изменится знак разности значений y
+                {
+                    Yi += slope;
+                    Xi++;
+                    Csign = Math.Sign(Yi - hor[Xi]);
+                }
+                
+                if (Math.Abs(Yi - slope - hor[Xi - 1]) <=
+                    Math.Abs(Yi - hor[Xi - 1]))
+                {
+                    Yi -= slope;
+                    Xi--;
+                }
+            }
+
+            return new PointF(Xi, (float)Yi);
         }
     }
 }
