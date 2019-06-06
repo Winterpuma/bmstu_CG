@@ -31,13 +31,27 @@ namespace lab_10
 
     }
 
+    public struct dot
+    {
+        public double x;
+        public double y;
+
+        public dot(double x, double y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     public class Horizon
     {
         private spacing x, z;
         private double[][] y;
 
-        private int[] upperHor, lowerHor;
+        private int[] horMax, horMin;
         private Func<double, double, double> f;
+
+        private Color color = Color.Red;
         
         public Horizon(Func<double, double, double> f, spacing x, spacing z)
         {
@@ -64,37 +78,116 @@ namespace lab_10
             return res;
         }
 
-        public void Calculate(Bitmap b)
+        public void Draw(Graphics g, Pen pen)
         {
             double Xright = -1, Yright = -1, x_left = -1, y_left = -1;
-            int[] horMin = new int[b.Width];
-            int[] horMax = new int[b.Width];
-            for (int i = 0; i < b.Width; i++)
+            horMin = new int[(int)g.DpiX];
+            horMax = new int[(int)g.DpiX];
+            for (int i = 0; i < (int)g.DpiX; i++)
             {
-                horMin[i] = b.Height;
+                horMin[i] = (int)g.DpiY;
                 horMax[i] = 0;
             }
 
             // Вычисление ф-и на каждой плоскости z = const 
             // Начиная с ближайшей к наблюдателю
-            for (double z_cur = z.max; z_cur < z.min; z_cur += z.step)
+            for (double z_cur = z.min; z_cur < z.max; z_cur += z.step)
             {
                 double Xpred = x.min, Ypred = f(x.min, z_cur);
-
+                double x_cur = Xpred, y = Ypred;
                 // Видовое преобразование к xпред и yпред, z
 
                 // Обработка левого бокового ребра
-
-                // для каждой точки на кривой
-                for (double x_cur = x.min; x_cur < x.max; x_cur += x.step)
+                ProcessEdge((int)Xpred, (int)Ypred, ref x_left, ref y_left);
+                Visibility Pflag = IsVisible(Xpred, Ypred);
+                
+                // для каждой точки на кривой лежащей в плоскости z = const
+                for (x_cur = x.min; x_cur < x.max; x_cur += x.step)
                 {
-                    double y = f(x_cur, z_cur); 
+                    y = f(x_cur, z_cur);
                     // видовое преобразование
 
                     // проверка видимости текущей точки, заполениние горизонта
+                    Visibility Tflag = IsVisible(x_cur, y);
 
-                }
-            }
+                    if (Tflag == Pflag)
+                    {
+                        if (Tflag == Visibility.above || Tflag == Visibility.below)
+                        {
+                            g.DrawLine(pen, (float)Xpred, (float)Ypred, (float)x_cur, (float)y);
+                            UpdateHorizons((int)Xpred, (int)Ypred, (int)x_cur, (int)y);
+                        }
+                    }
+                    else // видимость изменилась->вочисляем пересечение, заполняем массив горизонта
+                    {
+                        double Xi, Yi;
+                        dot i;
+
+                        if (Tflag == Visibility.notVisible)
+                        {
+                            if (Pflag == Visibility.above)
+                                i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMax);
+                            else
+                                i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMin);
+                            DrawAndUpdate(g, pen, Xpred, Ypred, i.x, i.y);
+                        }
+                        else
+                        {
+                            if (Tflag == Visibility.above)
+                            {
+                                if (Pflag == Visibility.notVisible)
+                                {
+                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMax);
+                                    DrawAndUpdate(g, pen, i.x, i.y, x_cur, y);
+                                }
+                                else
+                                {
+                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMin);
+                                    DrawAndUpdate(g, pen, Xpred, Ypred, i.x, i.y);
+                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMax);
+                                    DrawAndUpdate(g, pen, i.x, i.y, x_cur, y);
+                                }
+                            }
+                            else
+                            {
+                                if (Pflag == Visibility.notVisible)
+                                {
+                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMax);
+                                    DrawAndUpdate(g, pen, i.x, i.y, x_cur, y);
+                                }
+                                else
+                                {
+                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMax);
+                                    DrawAndUpdate(g, pen, Xpred, Ypred, i.x, i.y);
+                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMin);
+                                    DrawAndUpdate(g, pen, i.x, i.y, x_cur, y);
+                                }
+                            }
+                        }
+                    }
+                    // Вновь инициализировать
+                    Pflag = Tflag;
+                    Xpred = x_cur;
+                    Ypred = y;
+                } // след x
+                ProcessEdge(x_cur, y, ref Xright, ref Yright);  // обработка правого концевого ребра
+            } //след z
+        }
+
+        private void DrawAndUpdate(Graphics g, Pen pen, double x1, double y1, double x2, double y2)
+        {
+            g.DrawLine(pen, (float)x1, (float)y1, (float)x2, (float)y2);
+            UpdateHorizons((int)x1, (int)y2, (int)x2, (int)y2);
+
+        }
+
+        // Обработка бокового ребра
+        private void ProcessEdge(double x, double y, ref double xEdge, ref double yEdge)
+        {
+            if (xEdge != -1) // Если не первая кривая
+                UpdateHorizons((int)xEdge, (int)yEdge, (int)x, (int)y);
+            xEdge = x;
+            yEdge = y;
         }
 
         // Линейная интерполяция для заполения массивов горизонтов между x1 и x2
@@ -103,8 +196,8 @@ namespace lab_10
             int y;
             if (x2 - x1 == 0) // вертикальный
             {
-                upperHor[x2] = Math.Max(upperHor[x2], y2);
-                lowerHor[x2] = Math.Min(lowerHor[x2], y2);
+                horMax[x2] = Math.Max(horMax[x2], y2);
+                horMin[x2] = Math.Min(horMin[x2], y2);
             }
             else
             {
@@ -112,25 +205,25 @@ namespace lab_10
                 for (int x = x1; x < x2; x++)
                 {
                     y = (int) slope * (x - x1) + y1;
-                    upperHor[x] = Math.Max(upperHor[x], y);
-                    lowerHor[x] = Math.Min(lowerHor[x], y);
+                    horMax[x] = Math.Max(horMax[x], y);
+                    horMin[x] = Math.Min(horMin[x], y);
                 }
             }
         }
 
         // Проверка видимости точки относительно текущего горизонта
-        private Visibility IsVisible(int x, int y)
+        private Visibility IsVisible(double x, double y)
         {
-            if (y < upperHor[x] && y > lowerHor[x])
+            if (y < horMax[(int)x] && y > horMin[(int)x])
                 return Visibility.notVisible;
-            else if (y >= upperHor[x])
+            else if (y >= horMax[(int)x])
                 return Visibility.above;
             else
                 return Visibility.below;
         }
 
         // Вычисление пересечения текущей кривой с горизонтом
-        private PointF GetIntersection(int x1, int y1, int x2, int y2, int[] hor)
+        private dot GetIntersection(int x1, int y1, int x2, int y2, int[] hor)
         {
             int Xi;
             double Yi;
@@ -166,7 +259,7 @@ namespace lab_10
                 }
             }
 
-            return new PointF(Xi, (float)Yi);
+            return new dot(Xi, Yi);
         }
     }
 }

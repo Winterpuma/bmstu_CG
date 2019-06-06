@@ -12,15 +12,15 @@ namespace lab_10
 {
     public partial class Form1 : Form
     {
-        
-        Bitmap img;
+        Graphics g;
         Horizon horizon;
-        Pen penCutter;
+        Pen penDraw;
 
         public Form1()
         {
             InitializeComponent();
-            img = new Bitmap(canvas.Width, canvas.Height);
+            g = canvas.CreateGraphics();
+            penDraw = new Pen(Color.Red, 1);
         }
 
         private double F(double x, double z) => x * x + z * z * z;
@@ -29,10 +29,13 @@ namespace lab_10
 
         private void buttonGo_Click(object sender, EventArgs e)
         {
-            spacing x = new spacing(-1, 1, 0.02);
-            spacing z = new spacing(-1, 1, 0.02);
+            canvas.Refresh();
+            spacing x = new spacing(10, 20, 0.02);
+            spacing z = new spacing(10, 20, 0.02);
 
             horizon = new Horizon(FPlane, x, z);
+            horizon.Draw(g, penDraw);
+            canvas.Update();
         }
     }
 }
