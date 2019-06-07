@@ -168,7 +168,7 @@ namespace lab_10_2
             prepareArrays();
 
             int x_left = -1, y_left = -1, x_right = -1, y_right = -1;
-            int x_prev = 0, y_prev = 0; //?
+            int x_prev = 0, y_prev = 0; 
             for (double z = parZ.E; z >= parZ.B; z -= parZ.D)
             {
                     double y_p = f(parX.B, z);
