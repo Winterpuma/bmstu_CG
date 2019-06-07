@@ -62,7 +62,7 @@ namespace lab_10_2
         private double f1(double x, double z) => (x + z)/2;
         public double f2(double x, double z) => Math.Sin(x) * Math.Cos(z);
         public double f3(double x, double z) => Math.Sin(x) + Math.Cos(z);
-        public double f4(double x, double z) => Math.Sqrt(x*x + z*z);
+        public double f4(double x, double z) => Math.Sqrt(x*x + z*z) - 3;
         public double f5(double x, double z)
         {
             double sX = Math.Sin(x);

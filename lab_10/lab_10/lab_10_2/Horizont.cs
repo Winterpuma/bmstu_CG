@@ -77,6 +77,11 @@ namespace lab_10_2
         
         void horizon(int x1, int y1, int x2, int y2, Graphics painter)
         {
+            if (x2 < 0 || x2 > screenSize.Width - 1)
+                return;
+            if (x1 < 0 || x1 > screenSize.Width - 1)
+                return;
+
             if (x2 < x1)
             {
                 Swap(ref x1, ref x2);
@@ -151,16 +156,17 @@ namespace lab_10_2
         }
         void transform(ref double x, ref double y, ref double z, double tetax, double tetay, double tetaz, ref int res_x, ref int res_y)
         {
+            double coef = 35;
             double x_center = screenSize.Width / 2;
-            double y_center = screenSize.Width / 2 - 130;
+            double y_center = screenSize.Width / 2;
             double x_tmp = x;
             double y_tmp = y;
             double z_tmp = z;
             rotate_x(ref y_tmp, ref z_tmp, ref tetax);
             rotate_y(ref x_tmp, ref z_tmp, tetay);
             rotate_z(ref x_tmp, ref y_tmp, tetaz);
-            res_x = (int)(Math.Round(x_tmp * 48 + x_center));
-            res_y = (int)(Math.Round(y_tmp * 48 + y_center));
+            res_x = (int)(Math.Round(x_tmp * coef + x_center));
+            res_y = (int)(Math.Round(y_tmp * coef + y_center));
         }
 
         public void HorizonAlgo(spacing parX, spacing parZ, Graphics painter, double tetax, double tetay, double tetaz)
