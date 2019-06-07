@@ -50,8 +50,6 @@ namespace lab_10
 
         private int[] horMax, horMin;
         private Func<double, double, double> f;
-
-        private Color color = Color.Red;
         
         public Horizon(Func<double, double, double> f, spacing x, spacing z)
         {
@@ -103,7 +101,7 @@ namespace lab_10
                 double Xpred = x.min, Ypred = f(x.min, z_cur);
                 double x_cur = Xpred, y = Ypred;
                 // Видовое преобразование к xпред и yпред, z
-                trans.Transform(ref Xpred, ref Ypred, ref z_cur); //!
+                trans.Transform(ref Xpred, ref Ypred); //!
                 // Обработка левого бокового ребра
                 ProcessEdge((int)Xpred, (int)Ypred, ref x_left, ref y_left);
                 Visibility Pflag = IsVisible(Xpred, Ypred);
@@ -113,29 +111,29 @@ namespace lab_10
                 {
                     y = f(x_cur, z_cur);
                     // видовое преобразование
-
+                    double x_trans = x_cur;
+                    trans.Transform(ref x_trans, ref y);
                     // проверка видимости текущей точки, заполениние горизонта
-                    Visibility Tflag = IsVisible(x_cur, y);
+                    Visibility Tflag = IsVisible(x_trans, y);
 
                     if (Tflag == Pflag)
                     {
                         if (Tflag == Visibility.above || Tflag == Visibility.below)
                         {
-                            g.DrawLine(pen, (float)Xpred, (float)Ypred, (float)x_cur, (float)y);
-                            UpdateHorizons((int)Xpred, (int)Ypred, (int)x_cur, (int)y);
+                            g.DrawLine(pen, (float)Xpred, (float)Ypred, (float)x_trans, (float)y);
+                            UpdateHorizons((int)Xpred, (int)Ypred, (int)x_trans, (int)y);
                         }
                     }
                     else // видимость изменилась->вочисляем пересечение, заполняем массив горизонта
                     {
-                        double Xi, Yi;
                         dot i;
 
                         if (Tflag == Visibility.notVisible)
                         {
                             if (Pflag == Visibility.above)
-                                i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMax);
+                                i = GetIntersection((int)Xpred, (int)Ypred, (int)x_trans, (int)y, horMax);
                             else
-                                i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMin);
+                                i = GetIntersection((int)Xpred, (int)Ypred, (int)x_trans, (int)y, horMin);
                             DrawAndUpdate(g, pen, Xpred, Ypred, i.x, i.y);
                         }
                         else
@@ -144,37 +142,37 @@ namespace lab_10
                             {
                                 if (Pflag == Visibility.notVisible)
                                 {
-                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMax);
-                                    DrawAndUpdate(g, pen, i.x, i.y, x_cur, y);
+                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_trans, (int)y, horMax);
+                                    DrawAndUpdate(g, pen, i.x, i.y, x_trans, y);
                                 }
                                 else
                                 {
-                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMin);
+                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_trans, (int)y, horMin);
                                     DrawAndUpdate(g, pen, Xpred, Ypred, i.x, i.y);
-                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMax);
-                                    DrawAndUpdate(g, pen, i.x, i.y, x_cur, y);
+                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_trans, (int)y, horMax);
+                                    DrawAndUpdate(g, pen, i.x, i.y, x_trans, y);
                                 }
                             }
                             else
                             {
                                 if (Pflag == Visibility.notVisible)
                                 {
-                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMax);
-                                    DrawAndUpdate(g, pen, i.x, i.y, x_cur, y);
+                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_trans, (int)y, horMax);
+                                    DrawAndUpdate(g, pen, i.x, i.y, x_trans, y);
                                 }
                                 else
                                 {
-                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMax);
+                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_trans, (int)y, horMax);
                                     DrawAndUpdate(g, pen, Xpred, Ypred, i.x, i.y);
-                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_cur, (int)y, horMin);
-                                    DrawAndUpdate(g, pen, i.x, i.y, x_cur, y);
+                                    i = GetIntersection((int)Xpred, (int)Ypred, (int)x_trans, (int)y, horMin);
+                                    DrawAndUpdate(g, pen, i.x, i.y, x_trans, y);
                                 }
                             }
                         }
                     }
                     // Вновь инициализировать
                     Pflag = Tflag;
-                    Xpred = x_cur;
+                    Xpred = x_trans;
                     Ypred = y;
                 } // след x
                 ProcessEdge(x_cur, y, ref Xright, ref Yright);  // обработка правого концевого ребра

@@ -20,11 +20,11 @@ namespace lab_10
             scale = Math.Min(size.Height, size.Width) / (2 * (x.max - x.min));
         }
 
-        public void Transform(ref double x, ref double y, ref double z)
+        public void Transform(ref double x, ref double y)// ref double z)
         {
             x = (x - this.x.min) * scale + border;
             y = (this.y.max - y) * scale + border;
-            z = (z - this.z.min) * scale + border;
+            //z = (z - this.z.min) * scale + border;
         }
     }
 }
