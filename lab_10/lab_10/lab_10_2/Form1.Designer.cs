@@ -62,6 +62,8 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.canvas = new System.Windows.Forms.PictureBox();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
+            this.buttonColor = new System.Windows.Forms.Button();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBoxZ.SuspendLayout();
@@ -75,6 +77,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.buttonColor);
             this.groupBox1.Controls.Add(this.numericUpDown1);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.button7);
@@ -468,6 +471,16 @@
             this.radioButton5.Text = "Sin(x)^2 - Cos(z)^2 ";
             this.radioButton5.UseVisualStyleBackColor = true;
             // 
+            // buttonColor
+            // 
+            this.buttonColor.BackColor = System.Drawing.Color.Black;
+            this.buttonColor.Location = new System.Drawing.Point(251, 47);
+            this.buttonColor.Name = "buttonColor";
+            this.buttonColor.Size = new System.Drawing.Size(51, 50);
+            this.buttonColor.TabIndex = 16;
+            this.buttonColor.UseVisualStyleBackColor = false;
+            this.buttonColor.Click += new System.EventHandler(this.buttonColor_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -530,6 +543,8 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.Button buttonColor;
+        private System.Windows.Forms.ColorDialog colorDialog1;
     }
 }
 

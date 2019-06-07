@@ -30,13 +30,13 @@ namespace lab_10_2
         private Func<double, double, double> f;
         Pen penDraw;
 
-        public Horizont(Size s, Func<double, double, double> function)
+        public Horizont(Pen p, Size s, Func<double, double, double> function)
         {
             DOWN = new int[s.Width];
             TOP = new int[s.Width];
             screenSize = s;
             f = function;
-            penDraw = new Pen(Color.Black, 1);
+            penDraw = p;
         }
 
         private void prepareArrays()

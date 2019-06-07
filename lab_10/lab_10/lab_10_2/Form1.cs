@@ -15,6 +15,7 @@ namespace lab_10_2
         Bitmap result;
         Graphics g;
         Horizont horizon;
+        Pen penDraw;
 
         int step = 5;
 
@@ -23,6 +24,7 @@ namespace lab_10_2
             InitializeComponent();
             result = new Bitmap(canvas.Width, canvas.Height);
             g = Graphics.FromImage(result);
+            penDraw = new Pen(Color.Black, 1);
             canvas.Image = result;
         }
         
@@ -80,7 +82,7 @@ namespace lab_10_2
             double oz = Convert.ToDouble(numericUpDownZ.Value);
             var f = GetFunction();
 
-            horizon = new Horizont(canvas.Size, f);
+            horizon = new Horizont(penDraw, canvas.Size, f);
             horizon.HorizonAlgo(x, z, g, ox, oy, oz);
             canvas.Refresh();
         }
@@ -147,6 +149,15 @@ namespace lab_10_2
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             step = Convert.ToInt32(numericUpDown1.Value);
+        }
+
+        private void buttonColor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                buttonColor.BackColor = colorDialog1.Color;
+                penDraw.Color = colorDialog1.Color;
+            }
         }
     }
 }
