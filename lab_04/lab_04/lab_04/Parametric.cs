@@ -25,32 +25,35 @@ namespace lab_04
             }
         }
 
-        public static void DrawEllipse(Bitmap b, Point center, int radiusX, int radiusY, Color color)
+        public static void DrawEllipse(Bitmap bitmap, Point center, int a, int b, Color color)
         {
             int x, y;
             double t = 0;
-            double step1 = 1 / (double)Math.Min(radiusX, radiusY);
-            double step2 = 1 / (double)Math.Max(radiusX, radiusY);
-
-            int rx2 = radiusX * radiusX; // a^2
-            int ry2 = radiusY * radiusY; // b^2
+            //double step1 = 1 / (double)Math.Min(a, b);
+            //double step2 = 1 / (double)Math.Max(a, b);
             
-            int rdel2 = (int)Math.Round(rx2 / Math.Sqrt(rx2 + ry2));
+            double step1 = 1 / (double)a;
+            double step2 = 1 / (double)b;
 
-            for (t = 0, x = 0; x <= rdel2; t += step1)
+            int aa = a * a;
+            int bb = b * b;
+
+            //int rdel2 = (int)Math.Round(Math.Min(aa, bb) / Math.Sqrt(aa + bb));
+            double tSwap = (a / b) * (Math.PI / 4);
+            for (t = 0, x = 0; t < tSwap; t += step1)
             {
-                x = Convert.ToInt32(radiusX * Math.Cos(t));
-                y = Convert.ToInt32(radiusY * Math.Sin(t));
+                x = Convert.ToInt32(a * Math.Cos(t));
+                y = Convert.ToInt32(b * Math.Sin(t));
 
-                DrawHack.DrawSymmetric(b, center, x, y, color);
+                DrawHack.DrawSymmetric(bitmap, center, x, y, color);
             }
 
-            for (t = 0, x = 0; t <= Math.PI / 2; t += step2)
+            for (; t <= Math.PI / 2; t += step2)
             {
-                x = Convert.ToInt32(radiusX * Math.Cos(t));
-                y = Convert.ToInt32(radiusY * Math.Sin(t));
+                x = Convert.ToInt32(a * Math.Cos(t));
+                y = Convert.ToInt32(b * Math.Sin(t));
 
-                DrawHack.DrawSymmetric(b, center, x, y, color);
+                DrawHack.DrawSymmetric(bitmap, center, x, y, color);
             }
             
         }

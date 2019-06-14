@@ -60,9 +60,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.radioButton6 = new System.Windows.Forms.RadioButton();
             this.radioButton7 = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -94,7 +92,7 @@
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(1076, 41);
+            this.groupBox1.Location = new System.Drawing.Point(1076, 158);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
@@ -109,7 +107,7 @@
             this.radioButton1.Location = new System.Drawing.Point(9, 28);
             this.radioButton1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(153, 26);
+            this.radioButton1.Size = new System.Drawing.Size(115, 21);
             this.radioButton1.TabIndex = 0;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Стандартный";
@@ -121,7 +119,7 @@
             this.radioButton2.Location = new System.Drawing.Point(9, 62);
             this.radioButton2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(260, 26);
+            this.radioButton2.Size = new System.Drawing.Size(195, 21);
             this.radioButton2.TabIndex = 1;
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "Каноническое уравнение";
@@ -133,7 +131,7 @@
             this.radioButton3.Location = new System.Drawing.Point(8, 161);
             this.radioButton3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(129, 26);
+            this.radioButton3.Size = new System.Drawing.Size(97, 21);
             this.radioButton3.TabIndex = 2;
             this.radioButton3.TabStop = true;
             this.radioButton3.Text = "Брезенхем";
@@ -145,7 +143,7 @@
             this.radioButton4.Location = new System.Drawing.Point(9, 95);
             this.radioButton4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(293, 26);
+            this.radioButton4.Size = new System.Drawing.Size(220, 21);
             this.radioButton4.TabIndex = 3;
             this.radioButton4.TabStop = true;
             this.radioButton4.Text = "Параметрическое уравнение";
@@ -157,7 +155,7 @@
             this.radioButton5.Location = new System.Drawing.Point(9, 128);
             this.radioButton5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(167, 26);
+            this.radioButton5.Size = new System.Drawing.Size(125, 21);
             this.radioButton5.TabIndex = 4;
             this.radioButton5.TabStop = true;
             this.radioButton5.Text = "Средняя точка";
@@ -396,78 +394,57 @@
             this.panel3.Controls.Add(this.button3);
             this.panel3.Controls.Add(this.checkBox1);
             this.panel3.Controls.Add(this.button2);
-            this.panel3.Controls.Add(this.button1);
             this.panel3.Controls.Add(this.label5);
-            this.panel3.Controls.Add(this.label4);
             this.panel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.panel3.Location = new System.Drawing.Point(1073, 596);
             this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(320, 159);
+            this.panel3.Size = new System.Drawing.Size(320, 139);
             this.panel3.TabIndex = 17;
+            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(21, 116);
+            this.button3.Location = new System.Drawing.Point(20, 86);
             this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(276, 32);
             this.button3.TabIndex = 12;
-            this.button3.Text = "Сброс";
+            this.button3.Text = "Очистить";
             this.button3.UseVisualStyleBackColor = true;
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox1.Location = new System.Drawing.Point(21, 82);
+            this.checkBox1.Location = new System.Drawing.Point(21, 57);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(237, 26);
+            this.checkBox1.Size = new System.Drawing.Size(178, 21);
             this.checkBox1.TabIndex = 11;
             this.checkBox1.Text = "Рисовать цветом фона";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(155, 49);
+            this.button2.Location = new System.Drawing.Point(156, 21);
             this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(100, 28);
             this.button2.TabIndex = 10;
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(155, 12);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 28);
-            this.button1.TabIndex = 9;
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(16, 53);
+            this.label5.Location = new System.Drawing.Point(17, 21);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(85, 17);
             this.label5.TabIndex = 8;
             this.label5.Text = "Цвет линии";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(16, 16);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(80, 17);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Цвет фона";
             // 
             // radioButton6
             // 
@@ -500,7 +477,7 @@
             this.groupBox2.BackColor = System.Drawing.Color.White;
             this.groupBox2.Controls.Add(this.radioButton6);
             this.groupBox2.Controls.Add(this.radioButton7);
-            this.groupBox2.Location = new System.Drawing.Point(1079, 261);
+            this.groupBox2.Location = new System.Drawing.Point(1076, 32);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(200, 100);
             this.groupBox2.TabIndex = 20;
@@ -514,13 +491,13 @@
             this.ClientSize = new System.Drawing.Size(1451, 805);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.panel3);
-            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.canvas);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
-            this.Text = "Лабораторная №4 Отрезки, эллипсы";
+            this.Text = "Лабораторная №4 Окружности, эллипсы";
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -571,9 +548,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RadioButton radioButton6;
         private System.Windows.Forms.RadioButton radioButton7;
         private System.Windows.Forms.GroupBox groupBox2;
