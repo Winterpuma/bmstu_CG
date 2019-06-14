@@ -47,8 +47,10 @@ namespace lab_04
             h(new Point(500, 250), 50, 100, Color.Black, Color.White);
             h2(new Point(250, 500), 100, 50, Color.White, Color.Black);
             h2(new Point(500, 500), 50, 100, Color.White, Color.Black);*/
-            Bresenham.DrawEllipse(result, new Point(250, 250), 100, 50, Color.Black);
-            Canonical.DrawEllipse(result, new Point(250, 250), 100, 50, Color.White);
+            Canonical.DrawEllipse(result, new Point(250, 250), 100, 50, Color.Black);
+            MiddleDot.DrawEllipse(result, new Point(250, 250), 100, 50, Color.White);
+            //Canonical.DrawCircle(result, new Point(250, 250), 50, Color.Black);
+            //MiddleDot.DrawCircle(result, new Point(250, 250), 50, Color.White);
 
             canvas.Update();
             canvas.Refresh();

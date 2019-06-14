@@ -70,21 +70,21 @@ namespace lab_04
         }
 
 
-        private static void DiagonalStep(ref int x, ref int y, ref int d, int rrx, int rrx2, int rry, int rry2)
+        private static void DiagonalStep(ref int x, ref int y, ref int d, int aa, int aa2, int bb, int bb2)
         {
             x++;
             y--;
-            d += rry2 * x + rry + rrx - rrx2 * y; //b^2 (2x+1)+a^2(1-2y)
+            d += bb2 * x + bb + aa - aa2 * y; //b*b(2x+1)+a*a(1-2y)
         }
-        private static void HorizontalStep(ref int x, ref int d, int rry, int rry2)
+        private static void HorizontalStep(ref int x, ref int d, int bb, int bb2)
         {
             x++;
-            d += rry2 * x + rry;    //+b^2 (2x+1)
+            d += bb2 * x + bb; // b*b(2x+1)
         }
-        private static void VerticalStep(ref int y, ref int d, int rrx, int rrx2)
+        private static void VerticalStep(ref int y, ref int d, int aa, int aa2)
         {
             y--;
-            d += rrx - rrx2 * y;  //a^2(1-2y)
+            d += aa - aa2 * y;  // a*a(1-2y)
         }
 
         public static void DrawEllipse(Bitmap bitmap, Point center, int a, int b, Color color)
