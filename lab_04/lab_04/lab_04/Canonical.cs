@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 namespace lab_04
@@ -10,7 +6,7 @@ namespace lab_04
     class Canonical
     {
         // Нарисовать окружность
-        public static void drawCircle(Bitmap b, Point center, int radius, Color color)
+        public static void DrawCircle(Bitmap b, Point center, int radius, Color color)
         {
             int x = 0, y;
             int rr = radius * radius;
@@ -22,7 +18,6 @@ namespace lab_04
 
                 DrawHack.DrawSymmetric(b, center, x, y, color);
                 DrawHack.DrawSymmetric(b, center, y, x, color);
-                
             }
         }
 
