@@ -26,6 +26,9 @@ namespace lab_04
 
             Canonical.drawCircle(result, new Point(250, 250), 50, Color.Black);
             Canonical.DrawEllipse(result, new Point(250, 250), 100, 50, Color.Black);
+
+            Parametric.DrawCircle(result, new Point(450, 250), 50, Color.Black);
+            Parametric.DrawEllipse(result, new Point(450, 250), 100, 50, Color.Black);
             canvas.Update();
             canvas.Refresh();
 

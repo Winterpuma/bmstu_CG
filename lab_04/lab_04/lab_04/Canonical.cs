@@ -9,23 +9,6 @@ namespace lab_04
 {
     class Canonical
     {
-        // Отобразить симметрично точку относительно центра
-        private static void DrawSymmetric(Bitmap b, Point center, Point diff, Color color)
-        {
-            b.SetPixel(center.X + diff.X, center.Y + diff.Y, color);
-            b.SetPixel(center.X - diff.X, center.Y - diff.Y, color);
-            b.SetPixel(center.X + diff.X, center.Y - diff.Y, color);
-            b.SetPixel(center.X - diff.X, center.Y + diff.Y, color);
-        }
-
-        private static void DrawSymmetric(Bitmap b, Point center, int diffX, int diffY, Color color)
-        {
-            b.SetPixel(center.X + diffX, center.Y + diffY, color);
-            b.SetPixel(center.X - diffX, center.Y - diffY, color);
-            b.SetPixel(center.X + diffX, center.Y - diffY, color);
-            b.SetPixel(center.X - diffX, center.Y + diffY, color);
-        }
-
         // Нарисовать окружность
         public static void drawCircle(Bitmap b, Point center, int radius, Color color)
         {
@@ -37,8 +20,8 @@ namespace lab_04
             {
                 y = Convert.ToInt32(Math.Sqrt(rr - x * x));
 
-                DrawSymmetric(b, center, x, y, color);
-                DrawSymmetric(b, center, y, x, color);
+                DrawHack.DrawSymmetric(b, center, x, y, color);
+                DrawHack.DrawSymmetric(b, center, y, x, color);
                 
             }
         }
@@ -60,7 +43,7 @@ namespace lab_04
             for (x = 0; x <= rdel2; x++)
             {
                 y = (int)Math.Round(Math.Sqrt(rx2 - x * x) * m);  //y=b/a*sqrt(a^2-x^2)
-                DrawSymmetric(b, center, x, y, color);
+                DrawHack.DrawSymmetric(b, center, x, y, color);
             }
 
             // Производная , является границей для оптимального рисования
@@ -70,7 +53,7 @@ namespace lab_04
             for (y = 0; y <= rdel2; y++)
             {
                 x = (int)Math.Round(Math.Sqrt(ry2 - y * y) * m); //аналогично выше
-                DrawSymmetric(b, center, x, y, color);
+                DrawHack.DrawSymmetric(b, center, x, y, color);
             }
         }
 
