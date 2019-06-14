@@ -49,7 +49,7 @@ namespace lab_10_2
         }
         
 
-        void SearchIntersection(int x1, int y1, int x2, int y2, int[] horizon, ref int xi, ref int yi)
+        void GetIntersection(int x1, int y1, int x2, int y2, int[] horizon, ref int xi, ref int yi)
         {
             xi = x1;
             yi = y1;
@@ -114,7 +114,8 @@ namespace lab_10_2
             }
         }
 
-        void EdgeWhatcher(ref int x, ref int y, ref int xEdge, ref int yEdge, Graphics painter)
+        // Обработка ребер
+        void ProcessEdge(ref int x, ref int y, ref int xEdge, ref int yEdge, Graphics painter)
         {
             if (xEdge != -1)
             {
@@ -133,6 +134,7 @@ namespace lab_10_2
 
         }
 
+        // Преобразование координат
         void rotate_x(ref double y, ref double z, ref double tetax)
         {
             tetax = tetax * Math.PI / 180;
@@ -179,7 +181,7 @@ namespace lab_10_2
             {
                     double y_p = f(parX.B, z);
                     transform(ref parX.B, ref y_p, ref z, tetax, tetay, tetaz, ref x_prev, ref y_prev);
-                    EdgeWhatcher(ref x_prev, ref y_prev, ref x_left, ref y_left, painter);
+                    ProcessEdge(ref x_prev, ref y_prev, ref x_left, ref y_left, painter);
                     int Pflag = Visible(x_prev, y_prev);
                     for (double x = parX.B; x <= parX.E; x += parX.D)
                     {
@@ -199,11 +201,11 @@ namespace lab_10_2
                         {
                             if (Pflag == 1)
                             {
-                                SearchIntersection(x_prev, y_prev, x_curr, y_curr, TOP, ref xi, ref yi);
+                                GetIntersection(x_prev, y_prev, x_curr, y_curr, TOP, ref xi, ref yi);
                             }
                             else
                             {
-                                SearchIntersection(x_prev, y_prev, x_curr, y_curr, DOWN, ref xi, ref yi);
+                                GetIntersection(x_prev, y_prev, x_curr, y_curr, DOWN, ref xi, ref yi);
                             }
                             horizon(x_prev, y_prev, xi, yi, painter);
                         }
@@ -211,14 +213,14 @@ namespace lab_10_2
                         {
                             if (Pflag == 0)
                             {
-                                SearchIntersection(x_prev, y_prev, x_curr, y_curr, TOP, ref xi, ref yi);
+                                GetIntersection(x_prev, y_prev, x_curr, y_curr, TOP, ref xi, ref yi);
                                 horizon(x_prev, y_prev, xi, yi, painter);
                             }
                             else
                             {
-                                SearchIntersection(x_prev, y_prev, x_curr, y_curr, TOP, ref xi, ref yi);
+                                GetIntersection(x_prev, y_prev, x_curr, y_curr, TOP, ref xi, ref yi);
                                 horizon(x_prev, y_prev, xi, yi, painter);
-                                SearchIntersection(x_prev, y_prev, x_curr, y_curr, DOWN, ref xi, ref yi);
+                                GetIntersection(x_prev, y_prev, x_curr, y_curr, DOWN, ref xi, ref yi);
                                 horizon(xi, yi, x_curr, y_curr, painter);
                             }
                         }
@@ -226,14 +228,14 @@ namespace lab_10_2
                         {
                             if (Pflag == 0)
                             {
-                                SearchIntersection(x_prev, y_prev, x_curr, y_curr, DOWN, ref xi, ref yi);
+                                GetIntersection(x_prev, y_prev, x_curr, y_curr, DOWN, ref xi, ref yi);
                                 horizon(x_prev, y_prev, xi, yi, painter);
                             }
                             else
                             {
-                                SearchIntersection(x_prev, y_prev, x_curr, y_curr, TOP, ref xi, ref yi);
+                                GetIntersection(x_prev, y_prev, x_curr, y_curr, TOP, ref xi, ref yi);
                                 horizon(x_prev, y_prev, xi, yi, painter);
-                                SearchIntersection(x_prev, y_prev, x_curr, y_curr, DOWN, ref xi, ref yi);
+                                GetIntersection(x_prev, y_prev, x_curr, y_curr, DOWN, ref xi, ref yi);
                                 horizon(xi, yi, x_curr, y_curr, painter);
                             }
                         }
@@ -241,7 +243,7 @@ namespace lab_10_2
                         x_prev = x_curr;
                         y_prev = y_curr;
                     }
-                    EdgeWhatcher(ref x_prev, ref y_prev, ref x_right, ref y_right, painter);
+                    ProcessEdge(ref x_prev, ref y_prev, ref x_right, ref y_right, painter);
 
                 }
             }
