@@ -28,7 +28,6 @@ namespace lab_02
         public Form1()
         {
             InitializeComponent();
-            this.Text = "Obergan's lab02";
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -56,7 +55,7 @@ namespace lab_02
             g = panel6.CreateGraphics();
         }
         
-        private void panel1_Resize(object sender, EventArgs e)
+        private void panel6_Resize(object sender, EventArgs e)
         {
             g = panel6.CreateGraphics();
         }
@@ -111,17 +110,8 @@ namespace lab_02
             datalist.PanelAddInfo(panel1);
             memory.Push(datalist);
         }
-        private bool IsDataWrong(int a, int b, int w, int h, int step)
-        {
-            if (a <= 0 || b <= 0 || w <= 0 || h <= 0 || step <= 0)
-            {
-                MessageBox.Show("Некорректные данные.\nНачальные параметры должны быть целыми числами больше нуля.", "Ошибка");
-                return true;
-            }
-            return false;
-        }
-
-// ****Generate coords****
+        
+        #region Generate coords
         private void GenerateCardioid(DataPack datalist, float centerX, float centerY, float radius, int a, int b)
         {
             int sum = a + b;
@@ -179,9 +169,10 @@ namespace lab_02
                 if (x1 < max.X)
                     datalist.HatchingAddPoint(x1, y1, x2, y2);
             }
-        }      
+        }
+        #endregion
 
-//****Transform****
+        #region Transformations
         //turn
         private void button2_Click(object sender, EventArgs e)
         {
@@ -244,8 +235,9 @@ namespace lab_02
             g.FillRectangle(filling, 0, 0, panel6.Width, panel6.Height);
             datalist.Draw(g, myPen, filling);
         }
+        #endregion
 
-//****Input check****
+        #region Check input
         private float getFloat(TextBox tb,ref float rez)
         {
             double val = 0;
@@ -261,10 +253,21 @@ namespace lab_02
             }
             rez = (float)val;
             return 0;
-
         }
 
-//****Step back****
+        private bool IsDataWrong(int a, int b, int w, int h, int step)
+        {
+            if (a <= 0 || b <= 0 || w <= 0 || h <= 0 || step <= 0)
+            {
+                MessageBox.Show("Некорректные данные.\nНачальные параметры должны быть целыми числами больше нуля.", "Ошибка");
+                return true;
+            }
+            return false;
+        }
+
+        #endregion
+
+        //****Step back****
         private void button5_Click(object sender, EventArgs e)
         {
             if (memory.Count == 0)

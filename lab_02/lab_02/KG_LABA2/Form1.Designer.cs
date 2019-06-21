@@ -29,6 +29,13 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.button4 = new System.Windows.Forms.Button();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
@@ -65,21 +72,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.button4 = new System.Windows.Forms.Button();
-            this.textBox13 = new System.Windows.Forms.TextBox();
-            this.textBox14 = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.button5 = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -95,7 +95,78 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(262, 569);
             this.panel1.TabIndex = 0;
-            this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
+            this.panel1.Resize += new System.EventHandler(this.panel6_Resize);
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.button4);
+            this.panel5.Controls.Add(this.textBox13);
+            this.panel5.Controls.Add(this.textBox14);
+            this.panel5.Controls.Add(this.label17);
+            this.panel5.Controls.Add(this.label18);
+            this.panel5.Controls.Add(this.label19);
+            this.panel5.Location = new System.Drawing.Point(0, 473);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(255, 93);
+            this.panel5.TabIndex = 14;
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(218)))), ((int)(((byte)(218)))));
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button4.Location = new System.Drawing.Point(81, 54);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(94, 23);
+            this.button4.TabIndex = 9;
+            this.button4.Text = "Применить";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // textBox13
+            // 
+            this.textBox13.Location = new System.Drawing.Point(139, 28);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.Size = new System.Drawing.Size(61, 20);
+            this.textBox13.TabIndex = 7;
+            // 
+            // textBox14
+            // 
+            this.textBox14.Location = new System.Drawing.Point(49, 27);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.Size = new System.Drawing.Size(61, 20);
+            this.textBox14.TabIndex = 6;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label17.Location = new System.Drawing.Point(116, 27);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(25, 16);
+            this.label17.TabIndex = 4;
+            this.label17.Text = "dY";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label18.Location = new System.Drawing.Point(27, 28);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(24, 16);
+            this.label18.TabIndex = 3;
+            this.label18.Text = "dX";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label19.Location = new System.Drawing.Point(4, 4);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(65, 16);
+            this.label19.TabIndex = 0;
+            this.label19.Text = "Перенос";
             // 
             // panel4
             // 
@@ -457,77 +528,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Кардиоида:";
             // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel5.Controls.Add(this.button4);
-            this.panel5.Controls.Add(this.textBox13);
-            this.panel5.Controls.Add(this.textBox14);
-            this.panel5.Controls.Add(this.label17);
-            this.panel5.Controls.Add(this.label18);
-            this.panel5.Controls.Add(this.label19);
-            this.panel5.Location = new System.Drawing.Point(0, 473);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(255, 93);
-            this.panel5.TabIndex = 14;
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(218)))), ((int)(((byte)(218)))));
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button4.Location = new System.Drawing.Point(81, 54);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(94, 23);
-            this.button4.TabIndex = 9;
-            this.button4.Text = "Применить";
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // textBox13
-            // 
-            this.textBox13.Location = new System.Drawing.Point(139, 28);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(61, 20);
-            this.textBox13.TabIndex = 7;
-            // 
-            // textBox14
-            // 
-            this.textBox14.Location = new System.Drawing.Point(49, 27);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(61, 20);
-            this.textBox14.TabIndex = 6;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label17.Location = new System.Drawing.Point(116, 27);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(25, 16);
-            this.label17.TabIndex = 4;
-            this.label17.Text = "dY";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label18.Location = new System.Drawing.Point(27, 28);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(24, 16);
-            this.label18.TabIndex = 3;
-            this.label18.Text = "dX";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label19.Location = new System.Drawing.Point(4, 4);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(65, 16);
-            this.label19.TabIndex = 0;
-            this.label19.Text = "Перенос";
-            // 
             // panel6
             // 
             this.panel6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -540,20 +540,7 @@
             this.panel6.Size = new System.Drawing.Size(817, 611);
             this.panel6.TabIndex = 1;
             this.panel6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel6_MouseDown);
-            this.panel6.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel6_MouseMove);
-            // 
-            // button5
-            // 
-            this.button5.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(218)))), ((int)(((byte)(218)))));
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button5.Location = new System.Drawing.Point(836, 587);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(255, 42);
-            this.button5.TabIndex = 2;
-            this.button5.Text = "Шаг назад";
-            this.button5.UseVisualStyleBackColor = false;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.panel6.Resize += new System.EventHandler(this.panel6_Resize);
             // 
             // label15
             // 
@@ -564,6 +551,19 @@
             this.label15.Size = new System.Drawing.Size(41, 13);
             this.label15.TabIndex = 4;
             this.label15.Text = "label15";
+            // 
+            // button5
+            // 
+            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(218)))), ((int)(((byte)(218)))));
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button5.Location = new System.Drawing.Point(836, 587);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(255, 42);
+            this.button5.TabIndex = 2;
+            this.button5.Text = "Шаг назад";
+            this.button5.UseVisualStyleBackColor = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form1
             // 
@@ -579,14 +579,14 @@
             this.Text = "Лаб. работа 2";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.ResumeLayout(false);
