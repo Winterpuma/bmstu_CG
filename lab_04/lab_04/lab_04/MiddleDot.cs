@@ -14,18 +14,18 @@ namespace lab_04
 
             int x = 0;
             int y = RX;
-            int p = 1 - RX;
+            int p = 1 - RX; // 5/4 значение 
             DrawHack.DrawSymmetric(bitmap, center, x, y, color);
             DrawHack.DrawSymmetric(bitmap, center, y, x, color);
 
             while (x < y)
             {
                 x++;
-                if (p < 0)
+                if (p < 0) // выбираем правый
                 {
                     p += 2 * x + 1;
                 }
-                else
+                else // выбираем диагональный
                 {
                     y--;
                     p += 2 * (x - y) + 1;
@@ -53,7 +53,7 @@ namespace lab_04
             int f = (int)(bb - aa * y + 0.25 * aa + 0.5);
 
             int delta = -aa2 * y;
-            for (x = 0; x <= rdel2; x += 1)
+            for (x = 0; x <= rdel2; x++)
             {
                 DrawHack.DrawSymmetric(bitmap, center, x, y, color);
 
@@ -71,7 +71,7 @@ namespace lab_04
             f += (int)(-bb * (x + 0.75) - aa * (y - 0.75));
             df = -aa2 * y;
             
-            for (; y >= 0; y -= 1)
+            for (; y >= 0; y--)
             {
                 DrawHack.DrawSymmetric(bitmap, center, x, y, color);
 

@@ -27,35 +27,37 @@ namespace lab_04
 
         public static void DrawEllipse(Bitmap bitmap, Point center, int a, int b, Color color)
         {
-            int x, y;
-            double t = 0;
-            //double step1 = 1 / (double)Math.Min(a, b);
-            //double step2 = 1 / (double)Math.Max(a, b);
-            
-            double step1 = 1 / (double)a;
-            double step2 = 1 / (double)b;
+            double angle = 0;
 
+            int x = a, y = 0;
             int aa = a * a;
             int bb = b * b;
-
-            //int rdel2 = (int)Math.Round(Math.Min(aa, bb) / Math.Sqrt(aa + bb));
-            double tSwap = (a / b) * (Math.PI / 4);
-            for (t = 0, x = 0; t < tSwap; t += step1)
-            {
-                x = Convert.ToInt32(a * Math.Cos(t));
-                y = Convert.ToInt32(b * Math.Sin(t));
-
-                DrawHack.DrawSymmetric(bitmap, center, x, y, color);
-            }
-
-            for (; t <= Math.PI / 2; t += step2)
-            {
-                x = Convert.ToInt32(a * Math.Cos(t));
-                y = Convert.ToInt32(b * Math.Sin(t));
-
-                DrawHack.DrawSymmetric(bitmap, center, x, y, color);
-            }
             
+            int y_dot = (int)Math.Round(bb / Math.Sqrt(aa + bb)); // точка перегиба
+
+            // 1 октанта
+            double step = 1 / (double)b;
+            while (y <= y_dot)
+            {
+                x = Convert.ToInt32(a * Math.Cos(angle));
+                y = Convert.ToInt32(b * Math.Sin(angle));
+
+                DrawHack.DrawSymmetric(bitmap, center, x, y, color);
+
+                angle += step;
+            }
+
+            // 2 октанта
+            step = 1 / (double)a;
+            while (x > 0)
+            {
+                x = Convert.ToInt32(a * Math.Cos(angle));
+                y = Convert.ToInt32(b * Math.Sin(angle));
+
+                DrawHack.DrawSymmetric(bitmap, center, x, y, color);
+
+                angle += step;
+            }
         }
     }
 }
