@@ -188,21 +188,21 @@ namespace lab_09
 
             double Dsk, Wsk, t;
 
-            for (int i = 0; i < W.Count; i++)
+            for (int i = 0; i < W.Count; i++) // по всем сторонам отсекателя
             {
                 if (Vector.VisibleVertex(P[0], W[i], normal[i]))
                     Q.Add(P[0]);
-                for (int j = 1; j < P.Count(); j++)
+                for (int j = 1; j < P.Count(); j++) // по всем сторонам многоугольника
                 {
                     Vector D = new Vector(P[j], P[j-1]); // Вектор нашего отрезка
                     Dsk = Vector.ScalarMultiplication(D, normal[i]); //показывает угол и с какой стороны угол
 
                     if (Dsk != 0) // Провека, что не точка и не парралельно
                     {
-                        Vector WV = new Vector(P[j-1], W[i]); //вектор соединяющий  начало отрезка и вершину многоугольника
-                        Wsk = Vector.ScalarMultiplication(WV, normal[i]); //видимость для паралельных
+                        Vector WV = new Vector(P[j-1], W[i]); //вектор соединяющий  начало отрезка и вершину многоугольника                                                                      
+                        Wsk = Vector.ScalarMultiplication(WV, normal[i]);
                         t = -Wsk / Dsk;
-                        if (t >= 0 && t <= 1)
+                        if (t >= 0 && t <= 1)  // заменить проверку на проверку знаков видимости точек
                         {
                             I = new Segment(P[j-1], P[j]).GetDot(t);//точка пересечения
                             Q.Add(I);
